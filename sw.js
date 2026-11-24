@@ -1,7 +1,31 @@
 /* Hamster Gym – Service Worker: macht die App offline-fähig.
    Bei jeder neuen Version CACHE hochzählen, damit Geräte das Update laden. */
-const CACHE = 'hamster-gym-v6';
+const CACHE = 'hamster-gym-v7';
 const FONT_CACHE = 'hamster-gym-fonts';
+const DATA_CACHE = 'hamster-gym-data';
+
+/* Erinnerungen im Hintergrund (Periodic Background Sync – nur wo der Browser es erlaubt,
+   z. B. Chrome auf Android bei installierter App). Die App legt die Liste in reminders.json ab. */
+async function fireDueReminders() {
+  const c = await caches.open(DATA_CACHE);
+  const res = await c.match('reminders.json'); if (!res) return;
+  const data = await res.json(), now = Date.now(), sent = new Set(data.sent || []);
+  for (const r of data.items || []) {
+    if (sent.has(r.key) || now < r.ts || now > r.ts + 45 * 60000 || (data.blocked || []).includes(r.day)) continue;
+    sent.add(r.key);
+    await self.registration.showNotification(r.title, { body: r.body, icon: 'icon-192.png', badge: 'icon-192.png', tag: 'hg-' + r.id, vibrate: [200, 100, 200], data: { url: './' } });
+  }
+  data.sent = [...sent];
+  await c.put('reminders.json', new Response(JSON.stringify(data)));
+}
+self.addEventListener('periodicsync', e => { if (e.tag === 'hamster-reminders') e.waitUntil(fireDueReminders()); });
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  e.waitUntil(self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+    for (const cl of list) if ('focus' in cl) return cl.focus();
+    return self.clients.openWindow('./');
+  }));
+});
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
@@ -10,7 +34,7 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys()
-    .then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== FONT_CACHE).map(k => caches.delete(k))))
+    .then(keys => Promise.all(keys.filter(k => k !== CACHE && k !== FONT_CACHE && k !== DATA_CACHE).map(k => caches.delete(k))))
     .then(() => self.clients.claim()));
 });
 

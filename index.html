@@ -306,6 +306,24 @@ select.inp{text-align:left;padding:0 8px}
 .rb-prog{height:8px;border-radius:5px;background:#0A1320;margin-top:8px;overflow:hidden}
 .rb-prog i{display:block;height:100%;background:linear-gradient(90deg,#FFE27A,#F5A91C);transition:width 1s linear}
 
+.tapgame{display:flex;align-items:center;gap:10px;margin-top:10px;background:#0D1A2C;border-radius:14px;padding:6px 10px 6px 6px;border:2px solid #07101C}
+#tapHam{width:64px;height:64px;flex:none;border-radius:50%;background:radial-gradient(circle,#FFF3D6,#FFD99A);border:3px solid var(--ol);position:relative;touch-action:manipulation;overflow:visible}
+#tapHam svg{width:100%;height:100%;border-radius:50%;pointer-events:none}
+#tapHam.bop{animation:bop .15s ease-out}
+@keyframes bop{50%{transform:scale(.86)}}
+.tapplus{position:absolute;top:-4px;font-family:'Lilita One','Fredoka',system-ui,sans-serif;color:#FFE45C;font-size:16px;pointer-events:none;animation:tapup .6s ease-out forwards;text-shadow:0 2px 0 var(--ol)}
+@keyframes tapup{to{transform:translateY(-26px);opacity:0}}
+.tapinfo{flex:1;min-width:0}
+.tapinfo b{font-size:14px;display:block}
+.tapinfo span{font-size:12px;font-weight:700;color:#BFD3EE}
+.tapbar{height:8px;border-radius:5px;background:#26406A;margin-top:4px;overflow:hidden}
+.tapbar i{display:block;height:100%;background:linear-gradient(90deg,#FFF27A,#FFC83D)}
+.exnote{height:36px;font-size:13.5px;margin:0 0 8px;border-width:2px;background:#FFFBEF}
+.stars{display:flex;justify-content:center;gap:6px;margin:4px 0 2px}
+.stars button{font-size:34px;line-height:1;color:#D9C7A5;filter:drop-shadow(0 2px 0 var(--ol))}
+.stars button.on{color:#FFC83D}
+.rating{color:#F5A91C;letter-spacing:1px}
+
 /* ---------- Gewicht ---------- */
 .wchart{width:100%;display:block;touch-action:none}
 .wtip{position:absolute;pointer-events:none;background:var(--panel);color:#fff;border:2.5px solid var(--ol);border-radius:10px;padding:3px 8px;font-size:12px;font-weight:700;white-space:nowrap;transform:translate(-50%,-115%);display:none}
@@ -604,7 +622,8 @@ function defaultState() {
     upgrades: { xp: 0, str: 0, end: 0, energy: 0, memory: 0, coin: 0, regen: 0, dis: 0, pr: 0, luck: 0, lab: 0, titan: 0, god: 0 },
     boosts: [], owned: { band_green: 1, skin_gold: 1 },
     equipped: { band: 'green', eyes: null, hat: null, neck: null, shorts: null, skin: 'gold', deco: [] },
-    plans: [], schedule: {}, weights: {}, weightGoal: null, weightCoinDay: null, shieldUntil: 0, restCfg: { on: true, dur: 120 },
+    plans: [], schedule: {}, schedTimes: {}, weights: {}, weightGoal: null,
+    exNotes: {}, bolts: 0, notifyOn: false, remindersSent: {}, weightCoinDay: null, shieldUntil: 0, restCfg: { on: true, dur: 120 },
     config: { xp: { kraft: 50, cardio: 30, ausdauer: 35, custom: 25 } },
     session: null, debugOffsetDays: 0,
   };
@@ -719,7 +738,7 @@ function hamsterParams(extra = {}) {
 }
 
 /* Training abschließen: XP, Münzen, Attribute, Körper, Rekorde */
-function completeWorkout(durationMin) {
+function completeWorkout(durationMin, rating = 0) {
   applyDecay();
   const s = state.session, type = s.type, T = TYPES[type], up = state.upgrades;
   const before = levelInfo(), stageBefore = stageIdx(before.level);
@@ -794,7 +813,8 @@ function completeWorkout(durationMin) {
   state.boosts = state.boosts.filter(b => !used.includes(b.id));
   state.lastActiveDay = day; state.lastDecayDay = day;
   const w = { id: 'w' + Date.now().toString(36), ts: nowTs(), day, type, durationMin, exercises: exs, volume, sets, reps, km,
-    xp, coins: coins + levelCoins, gains: g, prs: prs.map(p => p.name), planId: s.planId || null, planName: s.planName || null };
+    xp, coins: coins + levelCoins, gains: g, prs: prs.map(p => p.name), planId: s.planId || null, planName: s.planName || null,
+    rating: rating || null, taps: s.taps || 0 };
   const prev = findPrev(w);
   state.workouts.push(w);
   state.session = null;
@@ -891,13 +911,24 @@ function startScheduled() {
 function editDay(i) {
   const cur = state.schedule[i] || null;
   const opt = (v, label, sub) => `<button class="dayopt ${cur === v ? 'on' : ''}" data-v="${v ?? ''}"><b>${label}</b>${sub ? `<span>${sub}</span>` : ''}</button>`;
-  openModal(`<h2>${WD_LONG[i].toUpperCase()}</h2><p class="center" style="font-weight:600;margin:0 0 10px">Was machst du an diesem Tag?</p>
+  openModal(`<h2>${WD_LONG[i].toUpperCase()}</h2>
+    <label class="fl">⏰ UHRZEIT (für Erinnerungen)</label><div class="row"><input class="inp" type="time" id="dayTime" value="${state.schedTimes?.[i] || ''}"><button class="gbtn gray sm" data-notime style="flex:none">KEINE</button></div>
+    ${state.notifyOn ? '<div class="muted" style="font-weight:600;margin-top:4px">🔔 Erinnerungen sind an: 4 Nachrichten vorher, und wenn du um diese Zeit nicht trainierst, alle 30 Min. ein „Faules Schwein“-Popup (4×).</div>' : '<button class="gbtn gold wide sm" data-notif style="margin-top:8px">🔔 ERINNERUNGEN AKTIVIEREN</button>'}
+    <p class="center" style="font-weight:600;margin:12px 0 10px">Was machst du an diesem Tag?</p>
     ${opt(null, '😴 Ruhetag', 'Kein Gym – Erholung')}
     ${opt('free', '🏋️ Gym-Tag (freies Training)', 'Übungen spontan wählen')}
     ${state.plans.map(p => opt(p.id, '📋 ' + esc(p.name), `${TYPES[p.type].short} · ${p.exercises.map(e => esc(e.name)).join(', ')}`)).join('')}
     ${state.plans.length ? '' : '<p class="muted center" style="opacity:1;font-weight:600">Tipp: Speichere zuerst einen Trainingsplan, dann kannst du ihn hier einem Tag zuordnen.</p>'}
     <button class="gbtn gray wide" data-x style="margin-top:6px">SCHLIESSEN</button>`, mc => {
     mc.querySelector('[data-x]').onclick = closeModal;
+    state.schedTimes = state.schedTimes || {};
+    mc.querySelector('#dayTime').onchange = ev => {
+      const v = ev.target.value;
+      if (v) { state.schedTimes[i] = v; if (!state.schedule[i]) state.schedule[i] = 'free'; } else delete state.schedTimes[i];
+      save(true); renderAll(); toast(v ? `⏰ ${WD_LONG[i]}: ${v} Uhr` : 'Uhrzeit entfernt');
+    };
+    mc.querySelector('[data-notime]').onclick = () => { delete state.schedTimes[i]; mc.querySelector('#dayTime').value = ''; save(true); renderAll(); };
+    mc.querySelector('[data-notif]')?.addEventListener('click', async () => { if (await enableNotifications()) editDay(i); });
     mc.querySelectorAll('[data-v]').forEach(b => b.onclick = () => {
       const v = b.dataset.v || null;
       if (v) state.schedule[i] = v; else delete state.schedule[i];
@@ -907,7 +938,7 @@ function editDay(i) {
 }
 function weekPlanHTML() {
   const ti = dowIdx(dayNum(today())), n = Object.keys(state.schedule).length;
-  return `<div class="panel"><h3>📅 MEIN WOCHENPLAN</h3><div class="week">${WD.map((d, i) => { const v = state.schedule[i]; return `<button class="wday ${v ? 'on' : ''} ${i === ti ? 'today' : ''}" data-wday="${i}"><b>${d}</b><span>${esc(schedLabel(v, true))}</span></button>`; }).join('')}</div>
+  return `<div class="panel"><h3>📅 MEIN WOCHENPLAN</h3><div class="week">${WD.map((d, i) => { const v = state.schedule[i]; return `<button class="wday ${v ? 'on' : ''} ${i === ti ? 'today' : ''}" data-wday="${i}"><b>${d}</b><span>${esc(schedLabel(v, true))}</span>${v && state.schedTimes?.[i] ? `<span>${state.schedTimes[i]}</span>` : ''}</button>`; }).join('')}</div>
     <div class="muted" style="opacity:1;font-weight:600;margin-top:8px">${n ? `${n} Gym-Tag${n > 1 ? 'e' : ''} pro Woche. Tippe auf einen Tag, um ihn zu ändern.` : 'Tippe auf die Tage, an denen du ins Gym gehst, und hinterlege deinen Plan.'}</div></div>`;
 }
 function startSession(type, plan) {
@@ -1427,7 +1458,7 @@ function renderHome() {
 function fmtLeft(until) { const ms = until - nowTs(); if (ms <= 0) return '0 Min'; const h = Math.floor(ms / HOUR), m = Math.ceil((ms % HOUR) / 60000); return h ? `${h} Std ${m} Min` : `${m} Min`; }
 
 function renderAll() {
-  renderTopbar(); renderHome();
+  renderTopbar(); renderHome(); syncReminderCache();
   if (currentScreen) renderScreen(currentScreen);
   $$('.scr-ham').forEach(el => {
     const k = el.dataset.ham;
@@ -1497,7 +1528,8 @@ function exCard(e, i) {
   const prTag = e.kind === 'strength' && pr ? `<span class="prtag">Rekord: ${fmtKg(pr.kg)} kg × ${pr.reps}</span>` : '';
   const head = `<div class="exhead"><b class="disp">${esc(e.name)}</b>${prTag}<button class="iconbtn" data-act="rmex" data-i="${i}" aria-label="Übung entfernen">✕</button></div>`;
   const last = lastExercise(e.name);
-  const lastLine = last ? `<div class="lasttime">Letztes Mal (${fmtDate(last.w.ts)}): ${setsTxt(last.e)}</div>` : '';
+  const lastLine = (last ? `<div class="lasttime">Letztes Mal (${fmtDate(last.w.ts)}): ${setsTxt(last.e)}</div>` : '') +
+    `<input class="inp left exnote" data-note="${i}" maxlength="120" placeholder="📝 Notiz, z. B. Sitzhöhe 4, enger Griff …" value="${esc(state.exNotes?.[e.name] || '')}">`;
   const no = (st, j, ok) => `<button class="setno${st.done ? ' ok' : ''}" data-act="done" data-i="${i}" data-j="${j}" aria-label="Satz abhaken">${st.done ? '✓' : j + 1}</button>`;
   if (e.kind === 'strength') {
     return `<div class="panel ex">${head}${lastLine}<div class="setgrid h"><span>SATZ</span><span>KG</span><span>WDH</span><span></span></div>${e.sets.map((st, j) => `<div class="setgrid">${no(st, j)}<input class="inp" inputmode="decimal" placeholder="0" data-i="${i}" data-j="${j}" data-k="kg" value="${esc(st.kg)}"><input class="inp" inputmode="numeric" placeholder="${st.hint ? esc(st.hint) : '0'}" data-i="${i}" data-j="${j}" data-k="reps" value="${esc(st.reps)}"><button class="rmset" data-act="rmset" data-i="${i}" data-j="${j}" aria-label="Satz löschen">✕</button></div>`).join('')}<button class="addset" data-act="addset" data-i="${i}">+ SATZ</button></div>`;
@@ -1535,11 +1567,35 @@ function renderRest(full) {
   }
   if (full || !bar.querySelector('.rb-time') || bar.classList.contains('done')) {
     bar.className = 'show';
-    bar.innerHTML = `<div class="rb-top"><div><div class="rb-time disp ol" id="rbTime"></div><div class="rb-lbl">SATZPAUSE</div></div><div class="rb-btns"><button class="gbtn gray sm" data-rb="-15">−15s</button><button class="gbtn gray sm" data-rb="15">+15s</button><button class="gbtn sm" data-rb="next">WEITER ›</button></div></div><div class="rb-prog"><i id="rbProg"></i></div>`;
+    bar.innerHTML = `<div class="rb-top"><div><div class="rb-time disp ol" id="rbTime"></div><div class="rb-lbl">SATZPAUSE</div></div><div class="rb-btns"><button class="gbtn gray sm" data-rb="-15">−15s</button><button class="gbtn gray sm" data-rb="15">+15s</button><button class="gbtn sm" data-rb="next">WEITER ›</button></div></div><div class="rb-prog"><i id="rbProg"></i></div>
+      <div class="tapgame"><button id="tapHam" aria-label="Hamster antippen">${hamsterSVG(hamsterParams({ crop: true, static: true, mood: 'cheer' }))}</button><div class="tapinfo"><b class="disp">👆 TAP-CHALLENGE</b><span id="tapTxt"></span><div class="tapbar"><i id="tapProg"></i></div></div></div>`;
+    updateTap();
   }
   $('#rbTime').textContent = fmtClock(left);
   $('#rbProg').style.width = (left / r.total * 100) + '%';
 }
+/* Tap-Spiel: nur während der Satzpause. 10.000 Taps in einem Training = ⚡ Blitz */
+const TAP_GOAL = 10000;
+function updateTap() {
+  const s = state.session; if (!s || !$('#tapTxt')) return;
+  const n = s.taps || 0;
+  $('#tapTxt').textContent = s.tapDone ? `${fmt(n)} Taps – ⚡ Blitz kassiert!` : `${fmt(n)} / ${fmt(TAP_GOAL)} Taps → ⚡ Blitz`;
+  $('#tapProg').style.width = Math.min(100, n / TAP_GOAL * 100) + '%';
+}
+$('#restBar').addEventListener('pointerdown', e => {
+  const h = e.target.closest('#tapHam'); if (!h) return;
+  e.preventDefault();
+  const s = state.session; if (!s?.rest || s.rest.end <= Date.now()) return;
+  s.taps = (s.taps || 0) + 1;
+  h.classList.remove('bop'); void h.offsetWidth; h.classList.add('bop');
+  const p = document.createElement('span'); p.className = 'tapplus'; p.textContent = '+1';
+  p.style.left = (e.offsetX || 30) + 'px'; h.appendChild(p); setTimeout(() => p.remove(), 600);
+  if (!s.tapDone && s.taps >= TAP_GOAL) {
+    s.tapDone = true; state.energy += 1; state.bolts = (state.bolts || 0) + 1;
+    confetti(50); toast('⚡ 10.000 Taps! Du bekommst einen BLITZ (+1 Energie)!'); renderTopbar();
+  }
+  updateTap(); save();
+});
 $('#restBar').addEventListener('click', e => {
   const b = e.target.closest('[data-rb]'); if (!b || !state.session?.rest) return;
   const v = b.dataset.rb, r = state.session.rest;
@@ -1589,7 +1645,14 @@ $('#trainingBody').addEventListener('click', e => {
   }
 });
 $('#trainingBody').addEventListener('input', e => {
-  const t = e.target; if (!t.dataset.k || !state.session) return;
+  const t = e.target;
+  if (t.dataset.note != null && state.session) {
+    const name = state.session.exercises[+t.dataset.note].name;
+    state.exNotes = state.exNotes || {};
+    if (t.value.trim()) state.exNotes[name] = t.value.slice(0, 120); else delete state.exNotes[name];
+    save(); return;
+  }
+  if (!t.dataset.k || !state.session) return;
   const v = t.value.replace(',', '.').replace(/[^0-9.]/g, '');
   state.session.exercises[+t.dataset.i].sets[+t.dataset.j][t.dataset.k] = v;
   save();
@@ -1644,14 +1707,24 @@ function finishDialog() {
   const elapsed = Math.max(1, Math.round((Date.now() - s.realStart) / 60000));
   const cardioMin = s.exercises.filter(e => e.kind === 'cardio').reduce((a, e) => a + e.sets.reduce((b, st) => b + (+st.min || 0), 0), 0);
   const suggest = Math.max(elapsed, Math.round(cardioMin));
-  openModal(`<h2>TRAINING BEENDEN</h2><p class="center" style="font-weight:600;margin:4px 0 8px">Wie lange hast du trainiert?</p>
+  openModal(`<h2>TRAINING BEENDEN</h2>
+    <label class="fl">WIE WAR DAS TRAINING?</label>
+    <div class="stars" id="stars">${[1, 2, 3, 4, 5].map(n => `<button data-star="${n}" aria-label="${n} Sterne">★</button>`).join('')}</div>
+    <div class="center muted" id="starTxt" style="font-weight:600">Tippe auf die Sterne</div>
     <label class="fl">DAUER IN MINUTEN</label><input class="inp" id="durIn" inputmode="numeric" value="${suggest}">
     <div class="row" style="margin-top:14px"><button class="gbtn gray" data-x>WEITER TRAINIEREN</button><button class="gbtn" data-ok>SPEICHERN</button></div>`, mc => {
+    let rating = 0;
+    const STXT = ['', 'Zäh heute 😩', 'Ging so 😐', 'Solide 🙂', 'Richtig gut 💪', 'Bestes Training ever! 🔥'];
+    mc.querySelectorAll('[data-star]').forEach(b => b.onclick = () => {
+      rating = +b.dataset.star;
+      mc.querySelectorAll('[data-star]').forEach(x => x.classList.toggle('on', +x.dataset.star <= rating));
+      mc.querySelector('#starTxt').textContent = STXT[rating];
+    });
     mc.querySelector('[data-x]').onclick = closeModal;
     mc.querySelector('[data-ok]').onclick = () => {
       const d = Math.round(+mc.querySelector('#durIn').value.replace(',', '.'));
       if (!(d >= 1 && d <= 600)) return toast('Bitte eine Dauer zwischen 1 und 600 Minuten eingeben.');
-      const res = completeWorkout(d);
+      const res = completeWorkout(d, rating);
       closeModal(); closeScreen(); renderAll(); renderRest();
       showResult(res);
     };
@@ -1669,6 +1742,8 @@ function showResult(r) {
     <div class="reward"><span>${ICONS.coin}+${fmt(r.coins)}</span><span>${ICONS.bolt}+1</span>${r.levelCoins ? `<span>${ICONS.star}+${fmt(r.levelCoins)} Level-Bonus</span>` : ''}</div>
     <div class="center" style="font-weight:700;font-size:14px">${gains}</div>
     <div class="center muted" style="margin-top:2px">${body}${r.dFat > .05 ? ' · Bauch −' + r.dFat.toFixed(1).replace('.', ',') : ''}</div>
+    ${r.w.rating ? `<p class="center rating" style="font-size:24px;margin:4px 0">${'★'.repeat(r.w.rating)}${'☆'.repeat(5 - r.w.rating)}</p>` : ''}
+    ${r.w.taps ? `<p class="center" style="font-weight:700;margin:4px 0">👆 ${fmt(r.w.taps)} Taps in den Satzpausen${r.w.taps >= TAP_GOAL ? ' – ⚡ Blitz verdient!' : ''}</p>` : ''}
     ${r.lucky ? '<p class="center" style="font-weight:700;margin:4px 0">🍀 Glückshamster: doppelte Münzen!</p>' : ''}
     ${prHtml}
     <div class="panel" style="margin:10px 0 0;padding:8px 10px;background:#fff"><b class="disp" style="font-size:16px">📊 VERGLEICH ZUM LETZTEN MAL</b>${compareHTML(r.w, r.prev)}</div>
@@ -1760,7 +1835,7 @@ function histCard(w) {
   const rows = w.exercises.map(e => e.kind === 'strength'
     ? `<tr><td><b>${esc(e.name)}</b></td><td>${e.sets.length}</td><td>${e.sets.map(s => s.reps).join('/')}</td><td>${e.sets.map(s => fmtKg(s.kg)).join('/')}</td><td>${fmt(e.sets.reduce((a, s) => a + s.kg * s.reps, 0))}</td></tr>`
     : `<tr><td><b>${esc(e.name)}</b></td><td>${e.sets.length}</td><td colspan="3">${fmtKg(e.sets.reduce((a, s) => a + s.min, 0))} min · ${fmtKg(e.sets.reduce((a, s) => a + s.km, 0))} km</td></tr>`).join('');
-  return `<details class="panel hist"><summary><div class="ti" style="background:linear-gradient(${T.c1},${T.c2})">${ICONS[TYPE_ICON[w.type]]}</div><div class="hm-t"><b>${T.name}</b><span>${fmtDate(w.ts)} · ${w.durationMin} min · ${w.sets} Sätze${w.volume ? ' · ' + fmt(w.volume) + ' kg' : ''}${w.prs?.length ? ' · 🏆' : ''}</span></div><div class="xpb">+${w.xp} XP</div></summary>
+  return `<details class="panel hist"><summary><div class="ti" style="background:linear-gradient(${T.c1},${T.c2})">${ICONS[TYPE_ICON[w.type]]}</div><div class="hm-t"><b>${esc(w.planName || T.name)}${w.rating ? ` <span class="rating">${'★'.repeat(w.rating)}${'☆'.repeat(5 - w.rating)}</span>` : ''}</b><span>${fmtDate(w.ts)} · ${w.durationMin} min · ${w.sets} Sätze${w.volume ? ' · ' + fmt(w.volume) + ' kg' : ''}${w.prs?.length ? ' · 🏆' : ''}</span></div><div class="xpb">+${w.xp} XP</div></summary>
     <div class="body"><table><tr><th>ÜBUNG</th><th>SÄTZE</th><th>WDH</th><th>KG</th><th>VOLUMEN</th></tr>${rows}</table>
     <div style="margin-top:10px"><b class="disp" style="font-size:15px">VS. VORHERIGES TRAINING</b>${compareHTML(w, findPrev(w))}</div>
     <div class="row" style="margin-top:10px;justify-content:space-between"><span class="muted" style="font-weight:600">Volumen gesamt: ${fmt(w.volume || 0)} kg</span><button class="gbtn red sm" data-del="${w.id}" style="flex:none">LÖSCHEN</button></div></div></details>`;
@@ -2015,6 +2090,67 @@ $('#weightBody').addEventListener('click', e => {
 });
 $('#weightBody').addEventListener('change', e => { if (e.target.id === 'wDate') { const v = state.weights[e.target.value]; $('#wVal').value = v != null ? String(v).replace('.', ',') : ''; } });
 
+/* ---------- Erinnerungen (Benachrichtigungen) ---------- */
+const PRE_MSGS = [
+  [-240, t => `Heute ist Gym-Tag! Um ${t} geht’s los. Dein Hamster hat schon Hunger auf Gains 🐹`],
+  [-120, t => `Noch 2 Stunden bis zum Training (${t}). Dein Hamster knabbert schon an den Hanteln …`],
+  [-60, t => `In 1 Stunde ist Gym! Pack die Tasche – sonst verhungert dein Hamster! 🥺`],
+  [-15, t => `Noch 15 Minuten! Dein Hamster macht sich schon warm. Los geht’s! 💪`],
+];
+const NAG_MSGS = [
+  'Faules Schwein, geh ins Gym! 🐷 Dein Hamster verhungert!',
+  'Immer noch nicht im Gym?! Faules Schwein! 🐷 Dein Hamster wird schon ganz dünn …',
+  'Faules Schwein, geh ins Gym! 🐷 Dein Hamster knabbert vor Hunger die Hanteln an!',
+  'Letzte Warnung, faules Schwein! 🐷 Ab ins Gym, sonst schrumpft dein Hamster!',
+];
+const notifSupported = () => 'Notification' in window;
+function remindersFor(dk) {
+  const n = dayNum(dk), tm = schedOf(n) && state.schedTimes?.[dowIdx(n)];
+  if (!tm) return [];
+  const [h, m] = tm.split(':').map(Number);
+  const base = new Date(+dk.slice(0, 4), +dk.slice(5, 7) - 1, +dk.slice(8), h, m).getTime();
+  const out = PRE_MSGS.map(([o, f], i) => ({ id: 'p' + i, ts: base + o * 60000, kind: 'pre', body: f(tm) })).filter(r => dayKey(r.ts) === dk);
+  NAG_MSGS.forEach((b, i) => out.push({ id: 'n' + i, ts: base + i * 30 * 60000, kind: 'nag', body: b }));
+  return out;
+}
+function notify(title, body, tag) {
+  if (!notifSupported() || Notification.permission !== 'granted') { toast(body); return; }
+  const opts = { body, icon: 'icon-192.png', badge: 'icon-192.png', tag, renotify: true, vibrate: [200, 100, 200], data: { url: './' } };
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.ready.then(r => r.showNotification(title, opts)).catch(() => new Notification(title, opts));
+  else new Notification(title, opts);
+  if (document.visibilityState === 'visible') toast(body);
+}
+function checkReminders() {
+  if (!state.notifyOn) return;
+  const dk = today(), now = nowTs(), started = !!state.session || trainedToday();
+  for (const k of Object.keys(state.remindersSent)) if (k !== dk) delete state.remindersSent[k];
+  const sent = state.remindersSent[dk] = state.remindersSent[dk] || [];
+  for (const r of remindersFor(dk)) {
+    if (sent.includes(r.id) || now < r.ts) continue;
+    sent.push(r.id); save();
+    if (started || now > r.ts + 10 * 60000) continue; // schon trainiert oder zu alt → nicht nachholen
+    notify(r.kind === 'nag' ? '🐷 FAULES SCHWEIN!' : '🐹 Hamster Gym', r.body, 'hg-' + r.id);
+  }
+}
+/* Für den Service Worker (Hintergrund-Sync, wo der Browser es erlaubt) */
+function syncReminderCache() {
+  if (!('caches' in window) || !location.protocol.startsWith('http')) return;
+  const t = dayNum(today()), items = [];
+  if (state.notifyOn) for (let d = 0; d < 3; d++) { const dk = keyFromNum(t + d); for (const r of remindersFor(dk)) items.push({ ...r, day: dk, key: dk + r.id, title: r.kind === 'nag' ? '🐷 FAULES SCHWEIN!' : '🐹 Hamster Gym' }); }
+  const blocked = [...new Set(state.workouts.map(w => w.day))].filter(d => dayNum(d) >= t);
+  if (state.session) blocked.push(today());
+  caches.open('hamster-gym-data').then(c => c.put('reminders.json', new Response(JSON.stringify({ items, blocked, sent: Object.entries(state.remindersSent).flatMap(([d, a]) => a.map(id => d + id)) }))));
+}
+async function enableNotifications() {
+  if (!notifSupported()) { toast('Dieser Browser unterstützt keine Benachrichtigungen.'); return false; }
+  const p = await Notification.requestPermission();
+  if (p !== 'granted') { toast('Benachrichtigungen wurden nicht erlaubt. Du kannst sie in den Browser-Einstellungen freigeben.'); state.notifyOn = false; save(true); return false; }
+  state.notifyOn = true; save(true); syncReminderCache();
+  try { const reg = await navigator.serviceWorker?.ready; await reg?.periodicSync?.register('hamster-reminders', { minInterval: 30 * 60000 }); } catch {}
+  toast('🔔 Erinnerungen sind an!'); return true;
+}
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') syncReminderCache(); else checkReminders(); });
+
 /* ---------- Einstellungen ---------- */
 function openSettings() {
   const off = state.debugOffsetDays, L = levelInfo().level;
@@ -2028,6 +2164,9 @@ function openSettings() {
       <b class="disp" style="font-size:16px">SCHRUMPF-REGELN</b>
       <div class="muted" style="opacity:1;font-weight:600;line-height:1.45">1–2 Tage Pause: nichts passiert · ab Tag 3: Hamster wird faul, leichter Muskelabbau · ab Tag 5: Bauch wächst · ab Tag 7: sichtbarer Rückgang · ab Tag 14: deutliche Rückentwicklung. Level &amp; XP bleiben immer erhalten. Ruhetage zählen nicht als Pause.</div>
     </div>
+    <label class="fl">🔔 ERINNERUNGEN</label>
+    <div class="row">${state.notifyOn ? '<button class="gbtn gray sm" data-notifoff>AUSSCHALTEN</button>' : '<button class="gbtn gold sm" data-notifon>AKTIVIEREN</button>'}<button class="gbtn blue sm" data-notiftest>TEST-POPUP</button></div>
+    <div class="muted" style="opacity:1;font-weight:600;line-height:1.4;margin-top:4px">Uhrzeiten stellst du im Wochenplan (Training → Tag antippen) ein. Hinweis: Die Popups kommen zuverlässig, solange die App geöffnet ist oder im Hintergrund läuft. Ist sie komplett geschlossen, kann der Browser sie verzögern oder auslassen.</div>
     <label class="fl">APP</label>
     ${installEvt ? '<button class="gbtn wide sm" data-install>📲 ALS APP INSTALLIEREN</button>' : `<div class="muted" style="opacity:1;font-weight:600;line-height:1.4">${matchMedia('(display-mode: standalone)').matches ? '✅ Läuft als installierte App – funktioniert auch offline.' : 'Installieren: Android/Chrome → Menü ⋮ → „App installieren“. iPhone/Safari → Teilen → „Zum Home-Bildschirm“.'}</div>`}
     <label class="fl">DATEN</label>
@@ -2038,6 +2177,12 @@ function openSettings() {
     <button class="gbtn red wide sm" data-reset style="margin-top:14px">FORTSCHRITT LÖSCHEN</button>
     <button class="gbtn gray wide" data-x style="margin-top:10px">SCHLIESSEN</button>`, mc => {
     mc.querySelector('[data-x]').onclick = closeModal;
+    mc.querySelector('[data-notifon]')?.addEventListener('click', async () => { if (await enableNotifications()) { closeModal(); openSettings(); } });
+    mc.querySelector('[data-notifoff]')?.addEventListener('click', () => { state.notifyOn = false; save(true); syncReminderCache(); closeModal(); openSettings(); toast('🔕 Erinnerungen aus'); });
+    mc.querySelector('[data-notiftest]').onclick = async () => {
+      if (notifSupported() && Notification.permission !== 'granted') { if (!(await enableNotifications())) return; }
+      notify('🐷 FAULES SCHWEIN!', NAG_MSGS[0], 'hg-test');
+    };
     mc.querySelector('[data-install]')?.addEventListener('click', async () => { installEvt.prompt(); await installEvt.userChoice; installEvt = null; closeModal(); });
     mc.querySelector('[data-save]').onclick = () => {
       state.name = mc.querySelector('#setName').value.trim().slice(0, 14) || 'Hamster';
@@ -2132,7 +2277,7 @@ function boot() {
     showBubble();
   }, 600);
   setInterval(() => {
-    updateSessTimer(); tickEnergy(); renderEnergy(); renderRest();
+    updateSessTimer(); tickEnergy(); renderEnergy(); renderRest(); checkReminders();
     if (cleanBoosts()) { renderAll(); toast('Ein Boost ist abgelaufen.'); }
     if (today() !== lastDay) { lastDay = today(); const d = applyDecay(); renderAll(); if (d && d.lost > .05) toast('Ein neuer Tag – Zeit fürs Training! 🐹'); }
   }, 1000);
