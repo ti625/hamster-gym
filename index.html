@@ -202,6 +202,12 @@ label.fl{display:block;font-weight:700;font-size:13px;margin:8px 0 4px}
 .cal .d.w{background:#35C95B;border-color:var(--ol);color:#fff}
 .cal .d.r{background:#78D8FF;border-color:var(--ol);color:#0D3A57}
 .cal .d.t{outline:3px solid #F5A91C}
+.cal .d.r{cursor:pointer}
+.calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.calhead h3{margin:0}
+.calnav{width:36px;height:34px;border-radius:10px;border:3px solid var(--ol);background:#FFC83D;font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-size:20px;color:var(--brown);box-shadow:0 2px 0 var(--ol)}
+.calnav:disabled{opacity:.35}
+.linkbtn{color:#1F6FB8;text-decoration:underline;font-weight:700}
 .cal .d.p{background:#E4FFD6;border:2px dashed #1E8F45;color:#1E8F45}
 .week{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .wday{border:3px solid var(--ol);border-radius:12px;background:#E9D6B3;color:#8a6a45;padding:6px 1px 5px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 3px 0 var(--ol);min-width:0}
@@ -306,6 +312,10 @@ select.inp{text-align:left;padding:0 8px}
 .rb-prog{height:8px;border-radius:5px;background:#0A1320;margin-top:8px;overflow:hidden}
 .rb-prog i{display:block;height:100%;background:linear-gradient(90deg,#FFE27A,#F5A91C);transition:width 1s linear}
 
+.parts{display:flex;align-items:center;gap:5px;margin-top:10px;flex-wrap:wrap}
+.parts span{font-size:13px;margin-right:2px}
+.parts button{font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-size:13px;padding:4px 9px;border-radius:10px;border:2.5px solid var(--ol);background:#0D1A2C;color:#BFD3EE}
+.parts button.on{background:linear-gradient(var(--c1),var(--c2));color:#fff;text-shadow:0 1px 0 rgba(0,0,0,.4)}
 .tapgame{display:flex;align-items:center;gap:10px;margin-top:10px;background:#0D1A2C;border-radius:14px;padding:6px 10px 6px 6px;border:2px solid #07101C}
 #tapHam{width:64px;height:64px;flex:none;border-radius:50%;background:radial-gradient(circle,#FFF3D6,#FFD99A);border:3px solid var(--ol);position:relative;touch-action:manipulation;overflow:visible}
 #tapHam svg{width:100%;height:100%;border-radius:50%;pointer-events:none}
@@ -323,6 +333,95 @@ select.inp{text-align:left;padding:0 8px}
 .stars button{font-size:34px;line-height:1;color:#D9C7A5;filter:drop-shadow(0 2px 0 var(--ol))}
 .stars button.on{color:#FFC83D}
 .rating{color:#F5A91C;letter-spacing:1px}
+
+/* ---------- Minispiele ---------- */
+#gameLayer{position:fixed;inset:0;z-index:58;display:none;align-items:center;justify-content:center;background:rgba(5,12,24,.75);padding:10px}
+#gameLayer.open{display:flex}
+.gl-card{width:min(420px,100%);max-height:100%;display:flex;flex-direction:column;background:linear-gradient(#26406A,#17283F);border:4px solid var(--ol);border-radius:24px;box-shadow:0 6px 0 var(--ol);padding:10px;animation:pop .35s cubic-bezier(.3,1.5,.5,1);overflow:hidden}
+.gl-head{display:flex;align-items:center;gap:8px}
+.gl-x{width:38px;height:38px;border-radius:12px;background:linear-gradient(#FF8D7D,#E0443A);border:3px solid var(--ol);box-shadow:0 3px 0 var(--ol);font-weight:800;flex:none}
+.gl-title{flex:1;font-size:20px;line-height:1;min-width:0}
+.gl-time{font-size:22px;color:#FFE08A;background:#0D1A2C;border:2px solid #07101C;border-radius:10px;padding:2px 8px}
+.gl-time.low{color:#FF8D7D;animation:pulsetxt .6s infinite alternate}
+@keyframes pulsetxt{to{transform:scale(1.1)}}
+.gl-score{display:flex;flex-direction:column;align-items:center;background:linear-gradient(#FFE27A,#F5A91C);color:var(--brown);border:3px solid var(--ol);border-radius:12px;padding:1px 9px;min-width:62px}
+.gl-score b{font-size:20px;line-height:1.05}
+.gl-score small{font-size:8.5px;font-weight:800}
+.gl-info{font-size:12px;font-weight:700;color:#BFD3EE;margin:6px 2px;min-height:16px;text-align:center}
+.gl-area{position:relative;flex:1;min-height:330px;max-height:62vh;aspect-ratio:7/8;width:100%;margin:0 auto;background:#0D1A2C;border:3px solid #07101C;border-radius:18px;overflow:hidden;touch-action:none;user-select:none}
+.gl-ctrl{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;justify-content:center}
+.gl-ctrl .gbtn{flex:1;min-width:58px;font-size:16px;padding:9px 6px}
+.gl-float{position:absolute;z-index:5;pointer-events:none;font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-size:20px;color:#FFE45C;text-shadow:0 2px 0 var(--ol),0 0 6px #000;animation:glfloat 1s ease-out forwards;transform:translate(-50%,-50%);white-space:nowrap}
+.gl-float.bad{color:#FF8D7D}
+@keyframes glfloat{to{transform:translate(-50%,-160%);opacity:0}}
+.gl-banner{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);z-index:6;background:linear-gradient(#FFE27A,#F5A91C);color:var(--brown);border:3px solid var(--ol);border-radius:14px;padding:8px 14px;font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-size:18px;text-align:center;box-shadow:0 4px 0 var(--ol);animation:banner 1.8s ease-out forwards;pointer-events:none;width:max-content;max-width:90%}
+@keyframes banner{0%{transform:translate(-50%,-50%) scale(.4);opacity:0}15%{transform:translate(-50%,-50%) scale(1.08);opacity:1}25%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0}}
+.gl-end{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(13,26,44,.92);text-align:center;padding:16px}
+.gl-end .big{font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-size:56px;color:#FFC83D;-webkit-text-stroke:2.5px var(--ol);text-shadow:0 4px 0 var(--ol);line-height:1}
+.gl-end .mh{width:110px;height:110px}
+.gl-end .mh svg{width:100%;height:100%}
+.gcell{position:absolute;border-radius:7px;box-sizing:border-box}
+/* Paketpanik */
+.pp-trucks{position:absolute;left:0;right:0;top:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 8px}
+.pp-truck{background:#17283F;border:3px solid var(--ol);border-radius:14px;padding:4px 2px 3px;text-align:center;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
+.pp-truck svg{width:70%;display:block;margin:0 auto}
+.pp-truck span{font-size:20px;display:block;line-height:1.1}
+.pp-truck b{font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:12px;color:var(--c)}
+.pp-truck.flash{animation:flashok .4s}
+@keyframes flashok{50%{transform:scale(1.12);background:#2DBB45}}
+.pp-belt{position:absolute;left:0;right:0;top:56%;height:78px;background:repeating-linear-gradient(90deg,#3D4660 0 18px,#46506B 18px 36px);border-top:4px solid var(--ol);border-bottom:4px solid var(--ol);animation:belt 1s linear infinite}
+@keyframes belt{to{background-position:36px 0}}
+.pp-pkg{position:absolute;top:8px;left:0;width:58px;height:58px;border-radius:10px;background:linear-gradient(#E2A866,#C98A4B);border:3px solid var(--ol);display:grid;place-items:center;box-shadow:inset 0 -5px 0 rgba(0,0,0,.15)}
+.pp-pkg::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:#F4D9A8;opacity:.7}
+.pp-pkg span{position:relative;font-size:26px}
+.pp-pkg.cov span{font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-size:30px;color:#fff;text-shadow:0 2px 0 var(--ol)}
+.pp-pkg.cov{background:linear-gradient(#8790A8,#5F6B80)}
+.pp-pkg.frag{background:linear-gradient(#FFB3C7,#E57FA0)}
+.pp-pkg i{position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;font-weight:800;background:#F0504A;color:#fff;border:2px solid var(--ol);border-radius:6px;padding:0 3px;white-space:nowrap}
+.pp-pkg.front{outline:3px solid #FFE45C;outline-offset:2px}
+.pp-hint{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-size:12px;font-weight:700;color:#BFD3EE;padding:0 10px}
+/* Raster-Spiele */
+.gg{position:absolute;inset:8px;display:grid;gap:3px}
+.gg>div{border-radius:7px;position:relative;display:grid;place-items:center;font-size:20px;line-height:1}
+.st-cell{background:#17283F}
+.st-cell.tg{background:#22395A;outline:2px dashed #7FA6D8;outline-offset:-4px}
+.st-cell.f{border:3px solid var(--ol);box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)}
+.st-cell.ghost{background:rgba(255,255,255,.18)!important;outline:2px dashed #fff}
+.st-cell.cur{border:3px solid #FFE45C}
+.wk-cell{background:#7FD3F7}
+.wk-cell.cloud{background:#fff;border:3px solid #BFE6F7;border-radius:40%}
+.wk-cell.goal{background:#35C95B;border:3px solid var(--ol)}
+.wk-cell.start{background:#BDEBFF}
+.wk-cell svg{width:90%;height:90%}
+.wk-drone{position:absolute;z-index:3;transition:left .25s linear,top .25s linear;display:grid;place-items:center}
+.wk-drone .hm{width:100%;height:100%}
+.wk-drone::before{content:'';position:absolute;top:-4px;left:12%;right:12%;height:6px;border-radius:4px;background:#2B2F3A;border:2px solid var(--ol);animation:prop .12s linear infinite}
+@keyframes prop{50%{transform:scaleX(.3)}}
+.wk-arrow{position:absolute;z-index:4;font-size:16px;color:#F0504A;text-shadow:0 1px 0 #fff}
+.kk-grid{position:absolute;left:10px;right:10px;top:78px;bottom:96px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(5,1fr);gap:3px;background:#DDEBF5;border:4px solid var(--ol);border-radius:14px;padding:4px}
+.kk-grid>div{background:#F4FAFF;border-radius:6px}
+.kk-grid>div.ice{background:#9EE3FF;box-shadow:inset 0 0 0 3px #fff}
+.kk-item{position:absolute;z-index:2;border-radius:9px;border:3px solid var(--ol);display:grid;place-items:center;font-size:24px;pointer-events:none;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
+.kk-orders{position:absolute;left:8px;right:8px;top:6px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.kk-order{background:var(--cream);color:var(--brown);border:3px solid var(--ol);border-radius:12px;padding:3px 6px;font-size:18px;text-align:center;box-shadow:0 3px 0 var(--ol)}
+.kk-order small{display:block;font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-size:10px}
+.kk-order.ready{background:#9DF77A;animation:pulsetxt .5s infinite alternate}
+.kk-queue{position:absolute;left:8px;right:8px;bottom:6px;height:82px;display:flex;align-items:center;gap:6px;background:#17283F;border:3px solid #07101C;border-radius:14px;padding:4px 8px;overflow:hidden}
+.kk-queue .q{flex:none;border-radius:8px;border:3px solid var(--ol);display:grid;place-items:center;font-size:20px}
+.kk-queue .q.next{outline:3px solid #FFE45C;outline-offset:2px}
+.ld-cell{background:#1B2438}
+.ld-cell.crate{background:linear-gradient(#C98A4B,#9A6531);border:3px solid var(--ol)}
+.ld-cell.exit{background:#35C95B;border:3px solid var(--ol)}
+.ld-cell.lit{background:#FFE45C;box-shadow:0 0 14px #FFE45C}
+.ld-cell.warn{outline:2px dashed #FFE45C;outline-offset:-4px}
+.ld-cell.near{background:#26324A}
+.ld-gem{width:62%;height:62%}
+.ld-thief{position:absolute;z-index:3;transition:left .15s,top .15s}
+.ld-thief .hm{width:100%;height:100%}
+.ld-thief::after{content:'';position:absolute;left:16%;right:16%;top:38%;height:18%;background:#141821;border-radius:8px;border:2px solid var(--ol)}
+.ld-thief.caught{animation:caught .5s 2}
+@keyframes caught{50%{transform:scale(1.3) rotate(15deg)}}
+.ld-lamp{position:absolute;z-index:2;font-size:14px;pointer-events:none}
 
 /* ---------- Gewicht ---------- */
 .wchart{width:100%;display:block;touch-action:none}
@@ -464,6 +563,7 @@ select.inp{text-align:left;padding:0 8px}
     <button class="navbtn disp ol" data-nav="weight"><span data-ico="scale"></span>GEWICHT</button>
   </nav>
   <div id="restBar"></div>
+  <div id="gameLayer"><div class="gl-card"><div class="gl-head"><button class="gl-x" id="glClose" aria-label="Spiel beenden">✕</button><div class="gl-title disp ol" id="glTitle"></div><div class="gl-time disp" id="glTime">0:00</div><div class="gl-score"><b class="disp" id="glScore">0</b><small>PUNKTE</small></div></div><div class="gl-info" id="glInfo"></div><div class="gl-area" id="glArea"></div><div class="gl-ctrl" id="glCtrl"></div></div></div>
 </div>
 <div class="modal" id="modal"><div class="mcard" id="mcard"></div></div>
 <div id="toasts"></div>
@@ -623,7 +723,7 @@ function defaultState() {
     boosts: [], owned: { band_green: 1, skin_gold: 1 },
     equipped: { band: 'green', eyes: null, hat: null, neck: null, shorts: null, skin: 'gold', deco: [] },
     plans: [], schedule: {}, schedTimes: {}, weights: {}, weightGoal: null,
-    exNotes: {}, bolts: 0, notifyOn: false, remindersSent: {}, weightCoinDay: null, shieldUntil: 0, restCfg: { on: true, dur: 120 },
+    exNotes: {}, bolts: 0, notifyOn: false, remindersSent: {}, gameRecords: {}, weightCoinDay: null, shieldUntil: 0, restCfg: { on: true, dur: 120 },
     config: { xp: { kraft: 50, cardio: 30, ausdauer: 35, custom: 25 } },
     session: null, debugOffsetDays: 0,
   };
@@ -632,7 +732,8 @@ let state = null;
 let saveTimer = 0;
 function save(now = false) {
   clearTimeout(saveTimer);
-  if (now) Store.save(state); else saveTimer = setTimeout(() => Store.save(state), 250);
+  // Speichern + Erinnerungs-Liste für den Service Worker aktuell halten (z. B. Training gestartet → keine Alarme)
+  if (now) { Store.save(state); syncReminderCache(); } else saveTimer = setTimeout(() => { Store.save(state); syncReminderCache(); }, 250);
 }
 
 /* ============================== ZEIT ================================= */
@@ -740,14 +841,17 @@ function hamsterParams(extra = {}) {
 /* Training abschließen: XP, Münzen, Attribute, Körper, Rekorde */
 function completeWorkout(durationMin, rating = 0) {
   applyDecay();
-  const s = state.session, type = s.type, T = TYPES[type], up = state.upgrades;
+  const s = state.session, up = state.upgrades;
   const before = levelInfo(), stageBefore = stageIdx(before.level);
   const day = today();
   const exs = s.exercises.map(e => ({
-    name: e.name, kind: e.kind,
+    name: e.name, kind: e.kind, part: e.part || s.type,
     sets: e.sets.filter(st => e.kind === 'strength' ? +st.reps > 0 : (+st.min > 0 || +st.km > 0))
       .map(st => e.kind === 'strength' ? { kg: Math.max(0, +st.kg || 0), reps: Math.round(+st.reps) } : { min: +st.min || 0, km: +st.km || 0 }),
   })).filter(e => e.sets.length);
+  // Gemischtes Training: alle benutzten Bereiche zählen, der „stärkste“ ist der Haupt-Typ
+  const types = [...new Set(exs.map(e => e.part))]; if (!types.length) types.push(s.type);
+  const type = types.slice().sort((a, b) => XP_BASE[b] - XP_BASE[a])[0], T = TYPES[type];
   let volume = 0, sets = 0, reps = 0, km = 0;
   const prs = [];
   for (const e of exs) {
@@ -769,6 +873,7 @@ function completeWorkout(durationMin, rating = 0) {
   }
   const streak = computeStreak(day);
   const parts = [[`Basis (${T.short}, Level ${before.level})`, xpFor(type, before.level)]];
+  if (types.length > 1) parts.push([`Kombi-Bonus (${types.map(t => TYPES[t].short).join(' + ')})`, 10 * (types.length - 1)]);
   const durB = Math.min(15, Math.floor(Math.max(0, durationMin - 20) / 4)); if (durB) parts.push(['Dauer-Bonus', durB]);
   const volB = Math.min(20, Math.floor(volume / 500)); if (volB) parts.push(['Volumen-Bonus', volB]);
   const strB = Math.min(50, Math.max(0, streak - 1) * 5); if (strB) parts.push([`Serien-Bonus (${streak})`, strB]);
@@ -784,14 +889,14 @@ function completeWorkout(durationMin, rating = 0) {
   if (mult !== 1) parts.push(['Multiplikator', '×' + mult.toFixed(2).replace('.', ',')]);
 
   const g = { str: 0, end: 0, dis: 1 };
-  if (type === 'kraft') g.str += 2 + up.str;
-  if (type === 'cardio' || type === 'ausdauer') g.end += 2 + up.end;
-  if (type === 'custom') { g.str += 1; g.end += 1; }
+  if (types.includes('kraft')) g.str += 2 + up.str;
+  if (types.includes('cardio') || types.includes('ausdauer')) g.end += 2 + up.end;
+  if (types.includes('custom')) { g.str += 1; g.end += 1; }
   if (streak >= 3) g.dis += 1;
   g.dis += up.dis;
   let muscleMul = (boostActive('frenzy') ? 2 : 1) * (1 + .1 * up.titan);
   const sup = boostActive('strength');
-  if (sup && type === 'kraft') { g.str += 4; muscleMul *= 2; used.push('strength'); }
+  if (sup && types.includes('kraft')) { g.str += 4; muscleMul *= 2; used.push('strength'); }
   if (boostActive('rage')) { g.str *= 2; g.end *= 2; g.dis *= 2; muscleMul *= 2; used.push('rage'); }
   let coins = 20 + 5 * up.coin + (10 + 5 * up.pr) * prs.length;
   const en = boostActive('energy'); if (en) { g.dis += 3; coins += 25; used.push('energy'); }
@@ -807,12 +912,13 @@ function completeWorkout(durationMin, rating = 0) {
   state.stats.str += g.str; state.stats.end += g.end; state.stats.dis += g.dis;
   const lg = 1 + after.level / 10;
   const m0 = state.muscle, f0 = state.fat;
-  state.muscle = Math.max(state.muscle, Math.min(muscleCap(after.level), state.muscle + T.muscle * lg * muscleMul));
-  state.fat = Math.min(state.fat, Math.max(fatFloor(after.level), state.fat - T.fat * lg));
+  const mGain = Math.max(...types.map(t => TYPES[t].muscle)), fLoss = Math.max(...types.map(t => TYPES[t].fat));
+  state.muscle = Math.max(state.muscle, Math.min(muscleCap(after.level), state.muscle + mGain * lg * muscleMul));
+  state.fat = Math.min(state.fat, Math.max(fatFloor(after.level), state.fat - fLoss * lg));
   state.energy = Math.min(maxEnergy(), state.energy + 1);
   state.boosts = state.boosts.filter(b => !used.includes(b.id));
   state.lastActiveDay = day; state.lastDecayDay = day;
-  const w = { id: 'w' + Date.now().toString(36), ts: nowTs(), day, type, durationMin, exercises: exs, volume, sets, reps, km,
+  const w = { id: 'w' + Date.now().toString(36), ts: nowTs(), day, type, types, durationMin, exercises: exs, volume, sets, reps, km,
     xp, coins: coins + levelCoins, gains: g, prs: prs.map(p => p.name), planId: s.planId || null, planName: s.planName || null,
     rating: rating || null, taps: s.taps || 0 };
   const prev = findPrev(w);
@@ -885,7 +991,7 @@ function compareHTML(a, b) {
     <table class="cmpt">${rows}</table>${missing.length ? `<div class="muted">Diesmal nicht dabei: ${missing.join(', ')}</div>` : ''}`;
 }
 function savePlan(name, type, exercises, id) {
-  const ex = exercises.map(e => ({ name: e.name, kind: e.kind, sets: Math.max(1, e.sets.length) }));
+  const ex = exercises.map(e => ({ name: e.name, kind: e.kind, part: e.part || type, sets: Math.max(1, e.sets.length) }));
   if (id) { const p = state.plans.find(x => x.id === id); if (p) { Object.assign(p, { name, type, exercises: ex }); save(true); return p; } }
   const p = { id: 'p' + Date.now().toString(36), name, type, exercises: ex };
   state.plans.push(p); save(true); return p;
@@ -913,7 +1019,7 @@ function editDay(i) {
   const opt = (v, label, sub) => `<button class="dayopt ${cur === v ? 'on' : ''}" data-v="${v ?? ''}"><b>${label}</b>${sub ? `<span>${sub}</span>` : ''}</button>`;
   openModal(`<h2>${WD_LONG[i].toUpperCase()}</h2>
     <label class="fl">⏰ UHRZEIT (für Erinnerungen)</label><div class="row"><input class="inp" type="time" id="dayTime" value="${state.schedTimes?.[i] || ''}"><button class="gbtn gray sm" data-notime style="flex:none">KEINE</button></div>
-    ${state.notifyOn ? '<div class="muted" style="font-weight:600;margin-top:4px">🔔 Erinnerungen sind an: 4 Nachrichten vorher, und wenn du um diese Zeit nicht trainierst, alle 30 Min. ein „Faules Schwein“-Popup (4×).</div>' : '<button class="gbtn gold wide sm" data-notif style="margin-top:8px">🔔 ERINNERUNGEN AKTIVIEREN</button>'}
+    ${state.notifyOn ? '<div class="muted" style="font-weight:600;margin-top:4px">🔔 Erinnerungen sind an: 4 Nachrichten vorher, und wenn du kein Training startest, nach 15 Min. und dann alle 30 Min. ein „Faules Schwein“-Popup (4×). Verpasst du einen Gym-Tag, erinnert dich dein Hamster am nächsten Tag öfter. Sobald du trainierst, ist Ruhe.</div>' : '<button class="gbtn gold wide sm" data-notif style="margin-top:8px">🔔 ERINNERUNGEN AKTIVIEREN</button>'}
     <p class="center" style="font-weight:600;margin:12px 0 10px">Was machst du an diesem Tag?</p>
     ${opt(null, '😴 Ruhetag', 'Kein Gym – Erholung')}
     ${opt('free', '🏋️ Gym-Tag (freies Training)', 'Übungen spontan wählen')}
@@ -950,7 +1056,7 @@ function startSession(type, plan) {
       const ls = last?.sets[Math.min(i, last.sets.length - 1)];
       sets.push(pe.kind === 'strength' ? { kg: ls ? ls.kg : '', reps: '', hint: ls ? ls.reps : '' } : { min: '', km: '', hint: ls ? ls.min : '' });
     }
-    state.session.exercises.push({ name: pe.name, kind: pe.kind, sets });
+    state.session.exercises.push({ name: pe.name, kind: pe.kind, part: pe.part || type, sets });
   }
   save(true);
 }
@@ -1277,6 +1383,7 @@ function titleSVG() {
 }
 
 /* ================================ UI ================================= */
+let calMonth = 0; // 0 = aktueller Monat, -1 = Vormonat …
 let currentScreen = null, bubbleTimer = 0, lastSceneKey = '', shopCat = 'band';
 function toast(msg) { const t = document.createElement('div'); t.className = 'toast'; t.innerHTML = msg; $('#toasts').appendChild(t); setTimeout(() => t.remove(), 3100); }
 function confetti(n = 60) {
@@ -1514,6 +1621,7 @@ function renderTraining() {
   const T = TYPES[s.type], rc = state.restCfg;
   $('#trainSub').textContent = (s.planName ? s.planName + ' · ' : '') + T.name + ' läuft';
   el.innerHTML = boostLine + `<div class="panel dark"><div class="sess-head"><div class="mh">${hamsterSVG(hamsterParams({ pose: hamsterParams().m < .42 ? 'curl' : 'flex', mood: 'determined' }))}</div><div style="flex:1;min-width:0"><div class="disp" style="font-size:19px">${s.planName ? esc(s.planName) : T.name}</div><div class="timer disp" id="sessTimer">00:00</div><div class="muted">${s.exercises.length} Übung${s.exercises.length === 1 ? '' : 'en'}</div></div><button class="gbtn red sm" data-act="cancel">✕</button></div>
+      <div class="parts"><span class="disp">BEREICH:</span>${Object.entries(TYPES).map(([k, t]) => `<button data-act="part" data-p="${k}" class="${s.type === k ? 'on' : ''}" style="--c1:${t.c1};--c2:${t.c2}">${t.short}</button>`).join('')}</div>
       <div class="restcfg"><button class="switch ${rc.on ? 'on' : ''}" data-act="resttoggle" aria-label="Satzpause an/aus"></button><b class="disp" style="font-size:15px">SATZPAUSE</b><div class="durs">${[120, 150, 180].map(d => `<button data-act="restdur" data-d="${d}" class="${rc.dur === d ? 'on' : ''}">${fmtClock(d)}</button>`).join('')}</div><button class="gbtn blue sm" data-act="reststart" style="margin-left:auto">${ICONS.timer}</button></div>
       <div class="muted" style="margin-top:6px">Tippe nach jedem Satz auf die Satznummer ✓ – ${rc.on ? 'dann startet die Pause automatisch.' : 'die Pause ist ausgeschaltet.'}</div></div>
     ${s.exercises.map((e, i) => exCard(e, i)).join('')}
@@ -1568,7 +1676,7 @@ function renderRest(full) {
   if (full || !bar.querySelector('.rb-time') || bar.classList.contains('done')) {
     bar.className = 'show';
     bar.innerHTML = `<div class="rb-top"><div><div class="rb-time disp ol" id="rbTime"></div><div class="rb-lbl">SATZPAUSE</div></div><div class="rb-btns"><button class="gbtn gray sm" data-rb="-15">−15s</button><button class="gbtn gray sm" data-rb="15">+15s</button><button class="gbtn sm" data-rb="next">WEITER ›</button></div></div><div class="rb-prog"><i id="rbProg"></i></div>
-      <div class="tapgame"><button id="tapHam" aria-label="Hamster antippen">${hamsterSVG(hamsterParams({ crop: true, static: true, mood: 'cheer' }))}</button><div class="tapinfo"><b class="disp">👆 TAP-CHALLENGE</b><span id="tapTxt"></span><div class="tapbar"><i id="tapProg"></i></div></div></div>`;
+      <div class="tapgame"><button id="tapHam" aria-label="Hamster antippen">${hamsterSVG(hamsterParams({ crop: true, static: true, mood: 'cheer' }))}</button><div class="tapinfo"><b class="disp">👆 TAP-CHALLENGE</b><span id="tapTxt"></span><div class="tapbar"><i id="tapProg"></i></div></div><button class="gbtn purple sm" data-rb="game" style="flex:none">🎮 SPIEL</button></div>`;
     updateTap();
   }
   $('#rbTime').textContent = fmtClock(left);
@@ -1599,6 +1707,7 @@ $('#restBar').addEventListener('pointerdown', e => {
 $('#restBar').addEventListener('click', e => {
   const b = e.target.closest('[data-rb]'); if (!b || !state.session?.rest) return;
   const v = b.dataset.rb, r = state.session.rest;
+  if (v === 'game') { offerGame(); return; }
   if (v === 'next') { stopRest(); return; }
   const d = +v * 1000;
   r.end = Math.max(Date.now() + 1000, r.end + d); r.total = Math.max(r.total + +v, Math.ceil((r.end - Date.now()) / 1000));
@@ -1632,6 +1741,9 @@ $('#trainingBody').addEventListener('click', e => {
       if (set.done && state.restCfg.on) startRest();
       break;
     }
+    case 'part':
+      if (s.type !== b.dataset.p) { s.type = b.dataset.p; save(); renderTraining(); toast(`🔁 Weiter mit ${TYPES[s.type].name} – neue Übungen zählen jetzt dazu.`); pickExercise(); }
+      break;
     case 'resttoggle': state.restCfg.on = !state.restCfg.on; save(); renderTraining(); break;
     case 'restdur': state.restCfg.dur = +b.dataset.d; save(); renderTraining(); if (s.rest) startRest(); break;
     case 'reststart': startRest(); break;
@@ -1689,7 +1801,7 @@ function pickExercise() {
     let ck = kinds[0];
     const add = (name, kind) => {
       name = name.trim(); if (!name) return toast('Bitte einen Namen eingeben.');
-      s.exercises.push({ name, kind, sets: [kind === 'strength' ? { kg: state.prs[name]?.kg ?? '', reps: '' } : { min: '', km: '' }] });
+      s.exercises.push({ name, kind, part: s.type, sets: [kind === 'strength' ? { kg: state.prs[name]?.kg ?? '', reps: '' } : { min: '', km: '' }] });
       save(); closeModal(); renderTraining();
       setTimeout(() => { const inputs = $$('#trainingBody input'); const target = inputs[inputs.length - (inputs.length ? 1 : 0)]; target?.focus(); }, 50);
     };
@@ -1793,11 +1905,19 @@ function renderTracker() {
   const W = state.workouts, totalMin = W.reduce((a, w) => a + w.durationMin, 0), vol = W.reduce((a, w) => a + (w.volume || 0), 0);
   const streak = computeStreak();
   let best = 0; { const ds = [...new Set(W.map(w => w.day))].map(dayNum).sort((a, b) => a - b); let c = 0, p = null; const rs = new Set(state.restDays.map(dayNum)); for (const d of ds) { if (p !== null) { let gap = true; for (let x = p + 1; x < d; x++) if (!rs.has(x) && !rs.has(x - 1) && x - p > 1) { gap = d - p > 2; break; } c = (d - p <= 2 || !gap) ? c + 1 : 1; } else c = 1; best = Math.max(best, c); p = d; } }
-  // Kalender: 4 Wochen ab Montag
-  const t = dayNum(today()); const dow = (new Date(nowTs()).getDay() + 6) % 7; const start = t - dow - 21;
+  // Kalender: ganzer Monat (mit Blättern)
+  const t = dayNum(today());
+  const [ty, tm] = today().split('-').map(Number), mIdx = (ty * 12 + tm - 1) + calMonth, cy = Math.floor(mIdx / 12), cmo = mIdx % 12;
+  const first = dayNum(`${cy}-${pad(cmo + 1)}-01`), daysIn = new Date(Date.UTC(cy, cmo + 1, 0)).getUTCDate();
   const wd = new Set(W.map(w => w.day)), rd = new Set(state.restDays);
-  let cal = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'].map(d => `<div class="wd">${d}</div>`).join('');
-  for (let n = start; n < start + 28; n++) { const k = keyFromNum(n); const c = wd.has(k) ? 'w' : rd.has(k) ? 'r' : (n >= t && schedOf(n)) ? 'p' : ''; cal += `<div class="d ${c}${n === t ? ' t' : ''}${n > t && c !== 'p' ? ' f' : ''}">${+k.slice(8)}</div>`; }
+  let cal = WD.map(d => `<div class="wd">${d}</div>`).join('') + '<div></div>'.repeat(dowIdx(first));
+  let mW = 0, mR = 0;
+  for (let n = first; n < first + daysIn; n++) {
+    const k = keyFromNum(n); const c = wd.has(k) ? 'w' : rd.has(k) ? 'r' : (n >= t && schedOf(n)) ? 'p' : '';
+    if (c === 'w') mW++; if (c === 'r') mR++;
+    cal += `<div class="d ${c}${n === t ? ' t' : ''}${n > t && c !== 'p' ? ' f' : ''}"${c === 'r' ? ` data-calrest="${k}" role="button"` : ''}>${+k.slice(8)}</div>`;
+  }
+  const calHead = `<div class="calhead"><button class="calnav" data-cal="-1" aria-label="Vormonat">‹</button><h3>${MONTHS[cmo].toUpperCase()} ${cy}</h3><button class="calnav" data-cal="1" aria-label="Nächster Monat" ${calMonth >= 1 ? 'disabled' : ''}>›</button></div><div class="muted" style="font-weight:600;margin:-4px 0 8px;text-align:center">${mW} Training${mW === 1 ? '' : 's'} · ${mR} Ruhetag${mR === 1 ? '' : 'e'}${calMonth ? ' · <button class="linkbtn" data-cal="0">Heute</button>' : ''}</div>`;
   const prs = Object.entries(state.prs).sort((a, b) => (b[1].e1 || 0) - (a[1].e1 || 0)).slice(0, 8);
   const restInfo = restAllowed();
   $('#trackerBody').innerHTML = `
@@ -1809,8 +1929,8 @@ function renderTracker() {
     </div>
     <div class="row" style="margin-bottom:14px"><button class="gbtn" data-go="training">${ICONS.dumbbell} TRAINIEREN</button><button class="gbtn blue" data-rest ${restInfo.ok ? '' : 'disabled'}>${ICONS.moon} RUHETAG</button></div>
     ${restInfo.ok ? '' : `<div class="muted" style="margin:-8px 0 12px;font-weight:600;color:#fff;opacity:.9">${restInfo.why}</div>`}
-    <div class="panel"><h3>LETZTE 4 WOCHEN</h3><div class="cal">${cal}</div><div class="legend"><span><i style="background:#35C95B"></i>Training</span><span><i style="background:#E4FFD6;border-style:dashed;border-color:#1E8F45"></i>Gym-Tag geplant</span><span><i style="background:#78D8FF"></i>Ruhetag</span><span><i style="background:#E9D6B3"></i>Pause</span></div>
-      <div class="muted" style="margin-top:6px;font-weight:600">Geplante Ruhetage (max. 2 pro Woche) zählen nicht als Pause – dein Hamster schrumpft dadurch nicht.</div></div>
+    <div class="panel">${calHead}<div class="cal">${cal}</div><div class="legend"><span><i style="background:#35C95B"></i>Training</span><span><i style="background:#E4FFD6;border-style:dashed;border-color:#1E8F45"></i>Gym-Tag geplant</span><span><i style="background:#78D8FF"></i>Ruhetag</span><span><i style="background:#E9D6B3"></i>Pause</span></div>
+      <div class="muted" style="margin-top:6px;font-weight:600">Geplante Ruhetage (max. 2 pro Woche) zählen nicht als Pause – dein Hamster schrumpft dadurch nicht. Aus Versehen eingetragen? Tippe auf den blauen Tag, um ihn zu entfernen.</div></div>
     <div class="panel prlist"><h3>PERSÖNLICHE REKORDE</h3>${prs.length ? prs.map(([n, p]) => `<div class="pr"><span>${esc(n)}</span><span><b>${fmtKg(p.kg)} kg × ${p.reps}</b> <span class="muted">≈ ${fmtKg(p.e1)} kg 1RM</span></span></div>`).join('') : '<div class="muted">Noch keine Rekorde. Trag Krafttrainings mit Gewicht ein!</div>'}</div>
     ${W.length >= 2 ? `<div class="panel"><h3>📊 TRAININGS VERGLEICHEN</h3>
       <div class="row"><select class="inp" id="cmpA">${wOpts(W[W.length - 1].id)}</select></div>
@@ -1835,7 +1955,7 @@ function histCard(w) {
   const rows = w.exercises.map(e => e.kind === 'strength'
     ? `<tr><td><b>${esc(e.name)}</b></td><td>${e.sets.length}</td><td>${e.sets.map(s => s.reps).join('/')}</td><td>${e.sets.map(s => fmtKg(s.kg)).join('/')}</td><td>${fmt(e.sets.reduce((a, s) => a + s.kg * s.reps, 0))}</td></tr>`
     : `<tr><td><b>${esc(e.name)}</b></td><td>${e.sets.length}</td><td colspan="3">${fmtKg(e.sets.reduce((a, s) => a + s.min, 0))} min · ${fmtKg(e.sets.reduce((a, s) => a + s.km, 0))} km</td></tr>`).join('');
-  return `<details class="panel hist"><summary><div class="ti" style="background:linear-gradient(${T.c1},${T.c2})">${ICONS[TYPE_ICON[w.type]]}</div><div class="hm-t"><b>${esc(w.planName || T.name)}${w.rating ? ` <span class="rating">${'★'.repeat(w.rating)}${'☆'.repeat(5 - w.rating)}</span>` : ''}</b><span>${fmtDate(w.ts)} · ${w.durationMin} min · ${w.sets} Sätze${w.volume ? ' · ' + fmt(w.volume) + ' kg' : ''}${w.prs?.length ? ' · 🏆' : ''}</span></div><div class="xpb">+${w.xp} XP</div></summary>
+  return `<details class="panel hist"><summary><div class="ti" style="background:linear-gradient(${T.c1},${T.c2})">${ICONS[TYPE_ICON[w.type]]}</div><div class="hm-t"><b>${esc(w.planName || (w.types?.length > 1 ? w.types.map(t => TYPES[t].short).join(' + ') : T.name))}${w.rating ? ` <span class="rating">${'★'.repeat(w.rating)}${'☆'.repeat(5 - w.rating)}</span>` : ''}</b><span>${fmtDate(w.ts)} · ${w.durationMin} min · ${w.sets} Sätze${w.volume ? ' · ' + fmt(w.volume) + ' kg' : ''}${w.prs?.length ? ' · 🏆' : ''}</span></div><div class="xpb">+${w.xp} XP</div></summary>
     <div class="body"><table><tr><th>ÜBUNG</th><th>SÄTZE</th><th>WDH</th><th>KG</th><th>VOLUMEN</th></tr>${rows}</table>
     <div style="margin-top:10px"><b class="disp" style="font-size:15px">VS. VORHERIGES TRAINING</b>${compareHTML(w, findPrev(w))}</div>
     <div class="row" style="margin-top:10px;justify-content:space-between"><span class="muted" style="font-weight:600">Volumen gesamt: ${fmt(w.volume || 0)} kg</span><button class="gbtn red sm" data-del="${w.id}" style="flex:none">LÖSCHEN</button></div></div></details>`;
@@ -1849,6 +1969,19 @@ function restAllowed() {
 }
 $('#trackerBody').addEventListener('click', e => {
   if (e.target.closest('[data-go]')) { openScreen('training'); return; }
+  const cn = e.target.closest('[data-cal]');
+  if (cn && !cn.disabled) { const v = +cn.dataset.cal; calMonth = v === 0 ? 0 : Math.min(1, calMonth + v); renderTracker(); return; }
+  const cr = e.target.closest('[data-calrest]');
+  if (cr) {
+    const k = cr.dataset.calrest;
+    confirmBox('RUHETAG ENTFERNEN?', `Der Ruhetag am ${fmtDate(dayNum(k) * DAY + 12 * HOUR)} wird gelöscht.`, 'ENTFERNEN', 'red', () => {
+      state.restDays = state.restDays.filter(d => d !== k);
+      const days = [...state.workouts.map(w => w.day), ...state.restDays].sort();
+      state.lastActiveDay = days.length ? days[days.length - 1] : null;
+      save(true); renderAll(); toast('Ruhetag entfernt.');
+    });
+    return;
+  }
   if (e.target.closest('[data-rest]')) {
     if (!restAllowed().ok) return;
     applyDecay();
@@ -1928,6 +2061,453 @@ $('#shopBody').addEventListener('click', ev => {
   if (k.dataset.unequip) { if (cat === 'deco') state.equipped.deco = state.equipped.deco.filter(x => x !== id); else if (cat !== 'skin') state.equipped[cat] = null; }
   save(true); renderAll();
 });
+
+/* ====================== MINISPIELE FÜR DIE SATZPAUSE ======================
+   Erscheinen nur nach Bestätigung, laufen genau so lange wie die Satzpause. */
+const rnd = n => Math.floor(Math.random() * n);
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const GAMES = [
+  { id: 'paket', name: 'PAKETPANIK', icon: '📦', desc: 'Sortiere die Pakete vom Förderband in den richtigen Lieferwagen – es wird immer hektischer!',
+    how: 'Wische das vorderste (gelb umrandete) Paket nach links, oben oder rechts – oder tippe die Tasten. Graue Pakete erst antippen, zerbrechliche nur per Taste senden!', make: gamePaket },
+  { id: 'stapel', name: 'SCHATTENSTAPEL', icon: '🧱', desc: 'Staple verrückte Gegenstände so, dass sie genau die Schattenform treffen.',
+    how: '◀ ▶ verschieben, ⟳ drehen, ⬇ absetzen (oder wischen). Gestrichelte Felder sind die Zielform. Zu wenig Halt = es kippt! FERTIG wertet aus.', make: gameStapel },
+  { id: 'kurier', name: 'WOLKENKURIER', icon: '🚁', desc: 'Fliege die Hamster-Drohne zur Insel – aber du darfst nur ein paar Mal abbiegen!',
+    how: 'Die erste Wischbewegung startet die Drohne. Jeder weitere Richtungswechsel kostet ein ↻. Wolken = Crash. ⚡ = +1 Wechsel, ✉️ = Bonus.', make: gameKurier },
+  { id: 'fridge', name: 'KÜHLSCHRANK-KOMMANDO', icon: '🧊', desc: 'Räum den Kühlschrank ein und liefere Bestellungen aus, bevor alles überquillt.',
+    how: 'Tippe ein Feld, um das gelb markierte Teil dort einzuräumen (⟳ dreht es). Leuchtet eine Bestellung grün, tippe sie zum Liefern. ⭐ ersetzt eine fehlende Zutat.', make: gameFridge },
+  { id: 'licht', name: 'LICHTDIEB', icon: '💎', desc: 'Schleich als Bandit-Hamster an den Scheinwerfern vorbei und klau die Kristalle.',
+    how: 'Tippe ein Nachbarfeld oder wische für einen Schritt. Gestrichelte Felder leuchten gleich auf! Erwischt = Kristalle weg. Ab durch die grüne Tür 🚪.', make: gameLicht },
+];
+let G = null, lastGameId = null;
+const restLeft = () => { const r = state.session?.rest; return r ? Math.max(0, r.end - Date.now()) : 0; };
+function offerGame(def) {
+  if (!state.session?.rest || restLeft() < 5000) { toast('Die Satzpause ist gleich vorbei!'); return; }
+  if (!def) { const pool = GAMES.filter(g => g.id !== lastGameId); def = pool[rnd(pool.length)]; }
+  const rec = state.gameRecords?.[def.id] || 0;
+  openModal(`<h2>${def.icon} ${def.name}</h2><p class="center" style="font-weight:600;margin:2px 0 8px">${def.desc}</p>
+    <div class="panel" style="padding:8px 10px;margin-bottom:8px;background:#fff;font-size:13px;font-weight:600;line-height:1.4">🎮 ${def.how}</div>
+    <p class="center" style="font-weight:700;margin:4px 0 10px">⏱ Läuft, bis die Satzpause vorbei ist · 🏆 Rekord: ${fmt(rec)}</p>
+    <div class="row"><button class="gbtn gray" data-x>NEIN, NUR PAUSE</button><button class="gbtn" data-ok>SPIELEN!</button></div>
+    <button class="gbtn blue wide sm" data-other style="margin-top:8px">🎲 ANDERES SPIEL</button>`, mc => {
+    mc.querySelector('[data-x]').onclick = closeModal;
+    mc.querySelector('[data-ok]').onclick = () => { closeModal(); startGame(def); };
+    mc.querySelector('[data-other]').onclick = () => { lastGameId = def.id; offerGame(); };
+  });
+}
+function startGame(def) {
+  lastGameId = def.id;
+  const area = $('#glArea'), ctrl = $('#glCtrl');
+  area.innerHTML = ''; ctrl.innerHTML = ''; $('#glInfo').textContent = ''; $('#glScore').textContent = '0';
+  $('#glTitle').textContent = def.icon + ' ' + def.name;
+  $('#gameLayer').classList.add('open');
+  G = { def, score: 0, over: false };
+  const api = {
+    area, ctrl,
+    info: t => { $('#glInfo').innerHTML = t; },
+    float(t, x, y, bad) {
+      const f = document.createElement('div'); f.className = 'gl-float' + (bad ? ' bad' : ''); f.textContent = t;
+      f.style.left = (x ?? area.clientWidth / 2) + 'px'; f.style.top = (y ?? area.clientHeight / 2) + 'px';
+      area.appendChild(f); setTimeout(() => f.remove(), 1000);
+    },
+    add(n, x, y) {
+      if (!G || G.over || !n) return;
+      G.score = Math.max(0, G.score + n); $('#glScore').textContent = fmt(G.score);
+      api.float((n > 0 ? '+' : '') + n, x, y, n < 0);
+    },
+    banner(t) { const b = document.createElement('div'); b.className = 'gl-banner'; b.innerHTML = t; area.appendChild(b); setTimeout(() => b.remove(), 1800); },
+  };
+  G.inst = def.make(api);
+  // Wischen & Tippen (für alle Spiele gleich)
+  let sx = null, sy, st;
+  area.onpointerdown = e => { sx = e.clientX; sy = e.clientY; st = e.target; };
+  area.onpointerup = e => {
+    if (!G || G.over || sx == null) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy; sx = null;
+    if (Math.hypot(dx, dy) < 24) G.inst.tap?.(st, e);
+    else G.inst.swipe?.(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'r' : 'l') : (dy > 0 ? 'd' : 'u'));
+  };
+  ctrl.onclick = e => { const b = e.target.closest('[data-c]'); if (b && G && !G.over) G.inst.ctrl?.(b.dataset.c); };
+  const tickT = () => {
+    const ms = restLeft(), s = Math.ceil(ms / 1000);
+    $('#glTime').textContent = fmtClock(s); $('#glTime').classList.toggle('low', s <= 10);
+    if (ms <= 0) endGame('time');
+  };
+  tickT(); G.timer = setInterval(tickT, 200);
+}
+function endGame(reason) {
+  if (!G || G.over) return;
+  G.over = true; clearInterval(G.timer); G.inst?.destroy?.();
+  const id = G.def.id, rec = state.gameRecords?.[id] || 0, isRec = G.score > rec;
+  state.gameRecords = state.gameRecords || {};
+  if (isRec) { state.gameRecords[id] = G.score; confetti(50); }
+  save();
+  const timeUp = reason === 'time';
+  const end = document.createElement('div'); end.className = 'gl-end';
+  end.innerHTML = `<div class="mh">${hamsterSVG(hamsterParams({ crop: true, mood: 'cheer', excite: true }))}</div>
+    <div class="disp ol" style="font-size:22px">${timeUp ? 'PAUSE VORBEI – NÄCHSTER SATZ!' : 'SPIEL BEENDET'}</div>
+    <div class="big">${fmt(G.score)}</div>
+    <div style="font-weight:700">${isRec ? '🏆 NEUER REKORD!' : `🏆 Rekord: ${fmt(rec)}`}</div>
+    <button class="gbtn wide big" data-endok style="margin-top:10px">${timeUp ? 'WEITER TRAINIEREN 💪' : 'ZURÜCK ZUR PAUSE'}</button>`;
+  $('#glArea').appendChild(end); $('#glCtrl').innerHTML = ''; $('#glInfo').textContent = '';
+  end.querySelector('[data-endok]').onclick = () => closeGame();
+}
+function closeGame() {
+  $('#gameLayer').classList.remove('open'); $('#glArea').innerHTML = ''; $('#glCtrl').innerHTML = ''; G = null;
+  if (state.session?.rest && restLeft() <= 0) stopRest();
+}
+$('#glClose').onclick = () => { if (G && !G.over) endGame('quit'); else closeGame(); };
+/* Kleine Grafik-Helfer für die Spiele */
+const truckSVG = c => `<svg viewBox="0 0 64 40"><rect x="3" y="5" width="38" height="25" rx="4" fill="${c}" stroke="${IK}" stroke-width="3"/><path d="M41 13h11l9 9v8H41z" fill="#fff" stroke="${IK}" stroke-width="3" stroke-linejoin="round"/><path d="M45 16h6l5 6H45z" fill="#9BD6FF"/><circle cx="15" cy="32" r="5.5" fill="#2B2F3A" stroke="${IK}" stroke-width="2.5"/><circle cx="50" cy="32" r="5.5" fill="#2B2F3A" stroke="${IK}" stroke-width="2.5"/></svg>`;
+const gemSVG = `<svg class="ld-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#7FE3FF" stroke="${IK}" stroke-width="2" stroke-linejoin="round"/><path d="M2 9h20M9 3l3 18 3-18" stroke="${IK}" stroke-width="1.2" fill="none" opacity=".45"/><path d="M7 5l-2 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+const miniHam = (mood = 'determined') => hamsterSVG({ m: .3, f: .4, band: state.equipped.band || 'green', skin: state.equipped.skin, crop: true, static: true, mood });
+const placeOnCell = (el, cell, grid) => { el.style.left = grid.offsetLeft + cell.offsetLeft + 'px'; el.style.top = grid.offsetTop + cell.offsetTop + 'px'; el.style.width = cell.offsetWidth + 'px'; el.style.height = cell.offsetHeight + 'px'; };
+const DIRS = { u: [0, -1], d: [0, 1], l: [-1, 0], r: [1, 0] }, ARROWS = { l: '◀', u: '▲', d: '▼', r: '▶' };
+const arrowCtrl = () => ['l', 'u', 'd', 'r'].map(k => `<button class="gbtn blue" data-c="${k}">${ARROWS[k]}</button>`).join('');
+
+/* ---------- 1) Paketpanik ---------- */
+function gamePaket(api) {
+  const TY = [{ s: '🏙️', n: 'STADT', c: '#3DA5F5' }, { s: '🌾', n: 'LAND', c: '#35C95B' }, { s: '⚡', n: 'EXPRESS', c: '#F5A91C' }];
+  const A = api.area; let order = [0, 1, 2], pk = [], combo = 0, cover = 0, frag = 0, raf, t0 = performance.now(), last = t0, nextSpawn = 0, nextDis = 30, disN = 0, uid = 0;
+  A.innerHTML = `<div class="pp-trucks"></div><div class="pp-belt"></div><div class="pp-hint">Wische ↖ ↑ ↗ oder tippe unten auf den Laster</div>`;
+  api.ctrl.innerHTML = [0, 1, 2].map(i => `<button class="gbtn blue" data-c="${i}"></button>`).join('');
+  const trucks = A.querySelector('.pp-trucks'), belt = A.querySelector('.pp-belt');
+  const draw = () => {
+    trucks.innerHTML = order.map(t => `<div class="pp-truck" style="--c:${TY[t].c}">${truckSVG(TY[t].c)}<span>${TY[t].s}</span><b>${TY[t].n}</b></div>`).join('');
+    api.ctrl.querySelectorAll('[data-c]').forEach((b, i) => { b.innerHTML = `${['◀', '▲', '▶'][i]} ${TY[order[i]].s}`; });
+  };
+  draw(); api.info('Combo: 0');
+  function spawn() {
+    const p = { id: ++uid, type: rnd(3), x: -64, cov: false, frag: false };
+    if (cover > 0) { p.cov = true; cover--; } else if (frag > 0) { p.frag = true; frag--; }
+    p.el = document.createElement('div'); p.el.className = 'pp-pkg' + (p.cov ? ' cov' : '') + (p.frag ? ' frag' : ''); p.el.dataset.id = p.id;
+    p.el.innerHTML = `<span>${p.cov ? '?' : TY[p.type].s}</span>${p.frag ? '<i>ZERBRECHLICH</i>' : ''}`;
+    p.el.style.transform = `translateX(${p.x}px)`;
+    belt.appendChild(p.el); pk.push(p);
+  }
+  const front = () => pk.reduce((a, b) => !a || b.x > a.x ? b : a, null);
+  function send(slot, swipe) {
+    const p = front(); if (!p) return;
+    if (p.cov) { api.float('Erst antippen!', p.x + 30, belt.offsetTop, true); return; }
+    pk = pk.filter(q => q !== p);
+    const tEl = trucks.children[slot], ar = A.getBoundingClientRect(), tr = tEl.getBoundingClientRect(), br = belt.getBoundingClientRect();
+    const tx = tr.left - ar.left + tr.width / 2 - 29, ty = tr.top - br.top - 6;
+    p.el.style.transition = 'transform .35s ease-in, opacity .35s'; p.el.style.transform = `translate(${tx}px, ${ty}px) scale(.45)`; p.el.style.opacity = '0';
+    setTimeout(() => p.el.remove(), 380);
+    const right = order[slot] === p.type, broke = p.frag && swipe;
+    if (right && !broke) { combo++; api.add(10 * (1 + Math.floor(combo / 3)), tx + 30, 70); tEl.classList.add('flash'); setTimeout(() => tEl.classList.remove('flash'), 420); }
+    else { combo = 0; api.add(-5, tx + 30, 70); api.float(broke ? 'Zerbrochen! 💥' : 'Falscher Laster!', A.clientWidth / 2, belt.offsetTop - 18, true); }
+    api.info(`Combo: ${combo}${combo >= 3 ? ` · Punkte ×${1 + Math.floor(combo / 3)}` : ''}`);
+  }
+  function loop(ts) {
+    const dt = Math.min(.05, (ts - last) / 1000), el = (ts - t0) / 1000; last = ts;
+    const speed = 42 + el * .9, W = A.clientWidth;
+    if (el >= nextSpawn) { spawn(); nextSpawn = el + Math.max(.85, 2.6 - el * .014); }
+    if (el >= nextDis) {
+      nextDis += 30; const k = disN++ % 3;
+      if (k === 0) { shuffle(order); draw(); api.banner('🔀 Die Laster tauschen die Plätze!'); }
+      if (k === 1) { cover = 3; api.banner('❓ Verdeckte Pakete – erst antippen!'); }
+      if (k === 2) { frag = 2; api.banner('🍷 Zerbrechlich – nur per Taste senden!'); }
+    }
+    const f = front();
+    for (const p of pk) { p.x += speed * dt; p.el.style.transform = `translateX(${p.x}px)`; p.el.classList.toggle('front', p === f); }
+    for (const p of pk.filter(q => q.x > W - 52)) {
+      pk = pk.filter(q => q !== p);
+      p.el.style.transition = 'transform .4s, opacity .4s'; p.el.style.transform = `translate(${p.x + 30}px, 70px) rotate(40deg)`; p.el.style.opacity = '0';
+      setTimeout(() => p.el.remove(), 420);
+      combo = 0; api.add(-5, W - 40, belt.offsetTop); api.info('Combo: 0 · Paket verpasst!');
+    }
+    raf = requestAnimationFrame(loop);
+  }
+  raf = requestAnimationFrame(loop);
+  return {
+    destroy() { cancelAnimationFrame(raf); },
+    ctrl: c => send(+c, false),
+    swipe: d => { if (d === 'l') send(0, true); else if (d === 'r') send(2, true); else if (d === 'u') send(1, true); },
+    tap(t) {
+      const el = t.closest?.('.pp-pkg'), p = el && pk.find(q => q.id === +el.dataset.id);
+      if (p?.cov) { p.cov = false; el.classList.remove('cov'); el.querySelector('span').textContent = TY[p.type].s; }
+    },
+  };
+}
+
+/* ---------- 2) Schattenstapel ---------- */
+function gameStapel(api) {
+  const W = 6, H = 8, A = api.area;
+  const SH = [{ n: 'Kiste', c: '#C98A4B', s: [[0, 0]] }, { n: 'Sofa', c: '#E5483F', s: [[0, 0], [1, 0]] }, { n: 'Blumentopf', c: '#35C95B', s: [[0, 0], [0, 1]] },
+    { n: 'Baustein', c: '#8A5CF6', s: [[0, 0], [1, 0], [0, 1]] }, { n: 'Reifen', c: '#4A5270', s: [[0, 0]] }, { n: 'Regal', c: '#3DA5F5', s: [[0, 0], [1, 0], [2, 0]] },
+    { n: 'Treppe', c: '#FF9A3D', s: [[0, 0], [1, 0], [1, 1]] }];
+  let grid, target, piece, px, task = 0, taskEnd, tick;
+  A.innerHTML = `<div class="gg" style="grid-template-columns:repeat(${W},1fr);grid-template-rows:repeat(${H},1fr)"></div>`;
+  const gg = A.querySelector('.gg');
+  for (let i = 0; i < W * H; i++) gg.appendChild(document.createElement('div'));
+  api.ctrl.innerHTML = `<button class="gbtn blue" data-c="l">◀</button><button class="gbtn blue" data-c="rot">⟳</button><button class="gbtn blue" data-c="r">▶</button><button class="gbtn" data-c="drop">⬇</button><button class="gbtn gold" data-c="done">FERTIG</button>`;
+  const cellEl = (x, y) => gg.children[(H - 1 - y) * W + x];
+  const norm = s => { const mx = Math.min(...s.map(c => c[0])), my = Math.min(...s.map(c => c[1])); return s.map(([x, y]) => [x - mx, y - my]); };
+  const pw = () => Math.max(...piece.s.map(c => c[0])) + 1, ph = () => Math.max(...piece.s.map(c => c[1])) + 1;
+  const clampX = () => { px = Math.max(0, Math.min(W - pw(), px)); };
+  const fits = (x0, y0) => piece.s.every(([x, y]) => y0 + y >= 0 && y0 + y < H && !grid[y0 + y][x0 + x]);
+  function landY() { let y = H - ph(); if (!fits(px, y)) return null; while (fits(px, y - 1)) y--; return y; }
+  function newPiece() { const t = SH[rnd(SH.length)]; piece = { ...t, s: norm(t.s) }; px = Math.floor((W - 1) / 2); clampX(); }
+  function newTask() {
+    task++; grid = Array.from({ length: H }, () => Array(W).fill(null));
+    do { target = new Set(); let h = 1 + rnd(3); for (let x = 0; x < W; x++) { h = Math.max(0, Math.min(5, h + rnd(3) - 1)); for (let y = 0; y < h; y++) target.add(x + ',' + y); } } while (target.size < 7 || target.size > 18);
+    taskEnd = Date.now() + 40000; newPiece(); render();
+  }
+  function render() {
+    const ly = landY(), ghost = new Set(ly == null ? [] : piece.s.map(([x, y]) => (px + x) + ',' + (ly + y)));
+    const top = new Set(piece.s.map(([x, y]) => (px + x) + ',' + (H - ph() + y)));
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const el = cellEl(x, y), k = x + ',' + y, f = grid[y][x], isTop = top.has(k) && !f;
+      el.className = 'st-cell' + (target.has(k) ? ' tg' : '') + (f ? ' f' : '') + (!f && !isTop && ghost.has(k) ? ' ghost' : '') + (isTop ? ' cur' : '');
+      el.style.background = f || (isTop ? piece.c : '');
+    }
+    api.info(`🏗️ Aufgabe ${task} · ${piece.n} · noch ${Math.max(0, Math.ceil((taskEnd - Date.now()) / 1000))} s`);
+  }
+  function drop() {
+    const y0 = landY(); if (y0 == null) { api.float('Kein Platz mehr – FERTIG drücken!', null, null, true); return; }
+    const cells = piece.s.map(([x, y]) => [px + x, y0 + y]), own = new Set(cells.map(c => c.join(',')));
+    const bottoms = cells.filter(([x, y]) => !own.has(x + ',' + (y - 1)));
+    const sup = bottoms.filter(([x, y]) => y === 0 || grid[y - 1][x]).length;
+    if (bottoms.length > 1 && sup / bottoms.length < .5) { api.add(-5); api.float('Kippt runter! 💥', null, null, true); newPiece(); render(); return; }
+    cells.forEach(([x, y]) => { grid[y][x] = piece.c; });
+    const over = bottoms.length - sup; if (over) api.add(3 * over); // riskanter Überhang
+    newPiece(); render();
+  }
+  function score() {
+    let match = 0, extra = 0, miss = 0;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const f = !!grid[y][x], t = target.has(x + ',' + y); if (f && t) match++; else if (f) extra++; else if (t) miss++; }
+    let pts = match * 10 - extra * 4;
+    if (!miss && !extra) { pts += 50; api.banner('🌟 PERFEKTE FORM! +50'); } else api.banner(`${match} von ${target.size} Schattenfeldern getroffen`);
+    api.add(pts); newTask();
+  }
+  newTask();
+  tick = setInterval(() => { if (Date.now() >= taskEnd) score(); else render(); }, 500);
+  const ctl = c => {
+    if (c === 'l' || c === 'r') { px += c === 'l' ? -1 : 1; clampX(); render(); }
+    if (c === 'rot') { piece.s = norm(piece.s.map(([x, y]) => [y, -x])); clampX(); render(); }
+    if (c === 'drop') drop();
+    if (c === 'done') score();
+  };
+  return { destroy() { clearInterval(tick); }, ctrl: ctl, swipe: d => ctl(d === 'd' ? 'drop' : d === 'u' ? 'rot' : d), tap: () => ctl('rot') };
+}
+
+/* ---------- 3) Wolkenkurier ---------- */
+function gameKurier(api) {
+  const W = 7, H = 9, A = api.area;
+  let map, base, start, goal, limit, turns, drone, routeN = 0, tick;
+  A.innerHTML = `<div class="gg" style="grid-template-columns:repeat(${W},1fr);grid-template-rows:repeat(${H},1fr)"></div><div class="wk-drone"></div>`;
+  const gg = A.querySelector('.gg'), dr = A.querySelector('.wk-drone');
+  for (let i = 0; i < W * H; i++) gg.appendChild(document.createElement('div'));
+  dr.innerHTML = miniHam();
+  api.ctrl.innerHTML = arrowCtrl();
+  const inb = (x, y) => x >= 0 && y >= 0 && x < W && y < H;
+  function minTurns() { // 0-1-BFS über (Feld, Richtung)
+    const dist = new Map(), dq = [];
+    for (const d of Object.keys(DIRS)) { dist.set(`${start.x},${start.y},${d}`, 0); dq.push([start.x, start.y, d, 0]); }
+    while (dq.length) {
+      const [x, y, d, c] = dq.shift(); if (c > dist.get(`${x},${y},${d}`)) continue;
+      if (x === goal.x && y === goal.y) return c;
+      const nx = x + DIRS[d][0], ny = y + DIRS[d][1];
+      if (inb(nx, ny) && map[ny][nx] !== 'cloud') { const k = `${nx},${ny},${d}`; if (!dist.has(k) || dist.get(k) > c) { dist.set(k, c); dq.unshift([nx, ny, d, c]); } }
+      for (const d2 of Object.keys(DIRS)) if (d2 !== d) { const k = `${x},${y},${d2}`; if (!dist.has(k) || dist.get(k) > c + 1) { dist.set(k, c + 1); dq.push([x, y, d2, c + 1]); } }
+    }
+    return null;
+  }
+  function newRoute() {
+    routeN++; limit = null;
+    for (let tries = 0; tries < 300 && limit == null; tries++) {
+      map = Array.from({ length: H }, () => Array(W).fill('sky'));
+      start = { x: rnd(W), y: H - 1 }; goal = { x: rnd(W), y: rnd(2) };
+      const dens = Math.min(.34, .16 + routeN * .03);
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (Math.random() < dens && !(x === start.x && y === start.y) && !(x === goal.x && y === goal.y)) map[y][x] = 'cloud';
+      const mt = minTurns(); if (mt != null && mt >= 1) limit = mt + 1;
+    }
+    if (limit == null) { map = Array.from({ length: H }, () => Array(W).fill('sky')); limit = 2; }
+    const free = []; for (let y = 1; y < H - 1; y++) for (let x = 0; x < W; x++) if (map[y][x] === 'sky' && !(x === goal.x && y === goal.y)) free.push([x, y]);
+    shuffle(free); free.slice(0, 1).forEach(([x, y]) => { map[y][x] = 'charge'; }); free.slice(1, 3).forEach(([x, y]) => { map[y][x] = 'stamp'; });
+    base = JSON.stringify(map); reset(); api.banner(`✉️ Lieferung ${routeN} · max. ${limit} Wechsel`);
+  }
+  function reset() { map = JSON.parse(base); drone = { x: start.x, y: start.y, dir: null }; turns = limit; render(); }
+  function render() {
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const el = gg.children[y * W + x], t = map[y][x], isG = x === goal.x && y === goal.y, isS = x === start.x && y === start.y;
+      const cls = 'wk-cell' + (t === 'cloud' ? ' cloud' : '') + (isG ? ' goal' : '') + (isS ? ' start' : ''), html = isG ? '🏝️' : t === 'charge' ? ICONS.bolt : t === 'stamp' ? '✉️' : '';
+      if (el.className !== cls) el.className = cls;
+      if (el.dataset.h !== html) { el.dataset.h = html; el.innerHTML = html; }
+    }
+    placeOnCell(dr, gg.children[drone.y * W + drone.x], gg);
+    api.info(`↻ Richtungswechsel übrig: <b style="color:#FFE45C;font-size:15px">${turns}</b> · ${drone.dir ? 'fliegt ' + ARROWS[drone.dir] : 'Wische zum Starten!'}`);
+  }
+  function step() {
+    if (!drone.dir) return;
+    const nx = drone.x + DIRS[drone.dir][0], ny = drone.y + DIRS[drone.dir][1];
+    if (!inb(nx, ny) || map[ny][nx] === 'cloud') { api.add(-3); api.float('💥 Crash!', null, null, true); reset(); return; }
+    drone.x = nx; drone.y = ny; const t = map[ny][nx];
+    if (t === 'charge') { turns++; map[ny][nx] = 'sky'; api.float('+1 ↻'); }
+    if (t === 'stamp') { map[ny][nx] = 'sky'; api.add(5); }
+    if (nx === goal.x && ny === goal.y) { render(); api.add(20 + 5 * turns); newRoute(); return; }
+    render();
+  }
+  function steer(d) {
+    if (!drone.dir) { drone.dir = d; render(); return; }
+    if (d === drone.dir) return;
+    if (turns <= 0) { api.float('Keine Wechsel mehr!', null, null, true); return; }
+    turns--; drone.dir = d; render();
+  }
+  setTimeout(newRoute, 20);
+  tick = setInterval(step, 340);
+  return { destroy() { clearInterval(tick); }, swipe: steer, ctrl: steer };
+}
+
+/* ---------- 4) Kühlschrank-Kommando ---------- */
+function gameFridge(api) {
+  const W = 4, H = 5, A = api.area;
+  const IT = { milk: { e: '🥛', w: 1, h: 2, c: '#E8F1FF' }, cheese: { e: '🧀', w: 1, h: 1, c: '#FFE27A' }, cuc: { e: '🥒', w: 3, h: 1, c: '#9DF77A' }, berry: { e: '🍓', w: 1, h: 1, c: '#FFB3C7' },
+    egg: { e: '🥚', w: 2, h: 1, c: '#FFF1D6' }, carrot: { e: '🥕', w: 1, h: 2, c: '#FFC08A' }, gold: { e: '⭐', w: 1, h: 1, c: '#FFC83D' } };
+  const KEYS = ['milk', 'cheese', 'cuc', 'berry', 'egg', 'carrot'];
+  let placed = [], queue = [], orders = [], ice = new Map(), uid = 0, combo = 0, rot = false, tick;
+  const t0 = Date.now(); let nextBig = 20, nextIce = 25, lastArr = 0;
+  A.innerHTML = `<div class="kk-orders"></div><div class="kk-grid"></div><div class="kk-queue"></div>`;
+  const grid = A.querySelector('.kk-grid'), qEl = A.querySelector('.kk-queue'), oEl = A.querySelector('.kk-orders');
+  for (let i = 0; i < W * H; i++) { const c = document.createElement('div'); c.dataset.cell = i; grid.appendChild(c); }
+  api.ctrl.innerHTML = `<button class="gbtn blue" data-c="rot">⟳ DREHEN</button><button class="gbtn red" data-c="trash">🗑 WEG (−3)</button>`;
+  const newItem = () => Math.random() < .08 ? 'gold' : KEYS[rnd(KEYS.length)];
+  const newOrder = () => { if (Math.random() < .15) { const k = ['cheese', 'berry'][rnd(2)]; return [k, k, k]; } const a = shuffle(KEYS.slice()); return [a[0], a[1]]; };
+  const occ = () => { const o = Array.from({ length: H }, () => Array(W).fill(null)); for (const p of placed) for (let y = p.y; y < p.y + p.h; y++) for (let x = p.x; x < p.x + p.w; x++) o[y][x] = p; return o; };
+  const cur = () => { const k = queue[0]; if (!k) return null; const t = IT[k]; return rot ? { w: t.h, h: t.w } : { w: t.w, h: t.h }; };
+  function matchOrder(o) {
+    const pool = placed.slice(), take = []; let missing = 0;
+    for (const k of o) { const i = pool.findIndex(p => p.k === k); if (i >= 0) take.push(pool.splice(i, 1)[0]); else missing++; }
+    if (!missing) return take;
+    if (missing === 1) { const g = pool.find(p => p.k === 'gold'); if (g) return [...take, g]; }
+    return null;
+  }
+  function render() {
+    const now = Date.now();
+    [...grid.children].forEach((c, i) => { if (c.dataset.cell != null) c.className = ice.get(i) > now ? 'ice' : ''; });
+    grid.querySelectorAll('.kk-item').forEach(e => e.remove());
+    for (const p of placed) {
+      const el = document.createElement('div'), c0 = grid.children[p.y * W + p.x], c1 = grid.children[(p.y + p.h - 1) * W + p.x + p.w - 1];
+      el.className = 'kk-item'; el.textContent = IT[p.k].e; el.style.background = IT[p.k].c;
+      el.style.left = c0.offsetLeft + 'px'; el.style.top = c0.offsetTop + 'px';
+      el.style.width = c1.offsetLeft + c1.offsetWidth - c0.offsetLeft + 'px'; el.style.height = c1.offsetTop + c1.offsetHeight - c0.offsetTop + 'px';
+      grid.appendChild(el);
+    }
+    qEl.innerHTML = queue.length ? queue.slice(0, 6).map((k, i) => { const t = IT[k], s = i === 0 && rot ? [t.h, t.w] : [t.w, t.h]; return `<div class="q${i === 0 ? ' next' : ''}" style="width:${s[0] * 20 + 10}px;height:${s[1] * 20 + 10}px;background:${t.c}">${t.e}</div>`; }).join('') + (queue.length > 6 ? `<b style="color:#FFE45C">+${queue.length - 6}</b>` : '')
+      : '<span style="font-weight:700;color:#BFD3EE;font-size:12px">Warte auf die nächste Lieferung …</span>';
+    oEl.innerHTML = orders.map((o, i) => `<div class="kk-order${matchOrder(o) ? ' ready' : ''}" data-order="${i}"><small>BESTELLUNG ${i + 1}</small>${o.map(k => IT[k].e).join(' ')}</div>`).join('');
+    api.info(`Kombo: ${combo} · Wartende Teile: ${queue.length}`);
+  }
+  function deliver(i) {
+    const take = matchOrder(orders[i]);
+    if (!take) { api.float('Da fehlt noch was!', null, 60, true); return; }
+    placed = placed.filter(p => !take.includes(p)); combo++;
+    api.add(orders[i].length * 8 + (combo - 1) * 5, null, 60); orders[i] = newOrder(); render();
+  }
+  function place(cell) {
+    const s = cur(); if (!s) return;
+    const x = cell % W, y = Math.floor(cell / W), o = occ(), now = Date.now();
+    if (x + s.w > W || y + s.h > H) { api.float('Passt nicht!', null, null, true); return; }
+    for (let yy = y; yy < y + s.h; yy++) for (let xx = x; xx < x + s.w; xx++) if (o[yy][xx] || ice.get(yy * W + xx) > now) { api.float(o[yy][xx] ? 'Besetzt!' : 'Vereist! 🧊', null, null, true); return; }
+    placed.push({ id: ++uid, k: queue.shift(), x, y, w: s.w, h: s.h }); rot = false; api.add(1); render();
+  }
+  tick = setInterval(() => {
+    const el = (Date.now() - t0) / 1000;
+    if (el - lastArr >= 4) { lastArr = el; if (queue.length < 8) queue.push(newItem()); }
+    if (el >= nextBig) { nextBig += 20; for (let i = 0; i < 3; i++) { if (queue.length >= 8) { api.add(-2); combo = 0; } else queue.push(newItem()); } api.banner('🛒 Großeinkauf! +3 Teile'); }
+    if (el >= nextIce) {
+      nextIce += 20; const o = occ(), free = [];
+      for (let i = 0; i < W * H; i++) if (!o[Math.floor(i / W)][i % W]) free.push(i);
+      shuffle(free).slice(0, 2).forEach(i => ice.set(i, Date.now() + 8000)); api.banner('🧊 Zwei Fächer sind vereist!');
+    }
+    render();
+  }, 500);
+  queue = [newItem(), newItem(), newItem()]; orders = [newOrder(), newOrder()];
+  setTimeout(render, 20);
+  return {
+    destroy() { clearInterval(tick); },
+    tap(t) { const c = t.closest?.('[data-cell]'); if (c) { place(+c.dataset.cell); return; } const o = t.closest?.('[data-order]'); if (o) deliver(+o.dataset.order); },
+    ctrl(c) {
+      if (c === 'rot') { rot = !rot; render(); }
+      if (c === 'trash' && queue.length) { queue.shift(); rot = false; combo = 0; api.add(-3); render(); }
+    },
+  };
+}
+
+/* ---------- 5) Lichtdieb ---------- */
+function gameLicht(api) {
+  const W = 6, H = 8, A = api.area;
+  let crates, gems, ent, exitP, me, lamps, beat, nextT, room = 0, roomGain = 0, clean = true, tick;
+  A.innerHTML = `<div class="gg" style="grid-template-columns:repeat(${W},1fr);grid-template-rows:repeat(${H},1fr)"></div><div class="ld-thief"></div>`;
+  const gg = A.querySelector('.gg'), th = A.querySelector('.ld-thief');
+  for (let i = 0; i < W * H; i++) { const c = document.createElement('div'); c.dataset.i = i; gg.appendChild(c); }
+  th.innerHTML = miniHam('determined');
+  api.ctrl.innerHTML = arrowCtrl();
+  const key = (x, y) => x + ',' + y;
+  function reach() {
+    const seen = new Set([key(ent.x, ent.y)]), q = [[ent.x, ent.y]];
+    while (q.length) { const [x, y] = q.shift(); for (const [dx, dy] of Object.values(DIRS)) { const nx = x + dx, ny = y + dy, k = key(nx, ny); if (nx >= 0 && ny >= 0 && nx < W && ny < H && !crates.has(k) && !seen.has(k)) { seen.add(k); q.push([nx, ny]); } } }
+    return seen;
+  }
+  const center = l => l.axis === 'x' ? [l.pos, l.line] : [l.line, l.pos];
+  const span = l => l.axis === 'x' ? W : H;
+  function advance(l) { const n = { ...l }; let p = n.pos + n.dir; if (p < 0 || p >= span(n)) { n.dir *= -1; p = n.pos + n.dir; } n.pos = p; return n; }
+  function litSet(ls) {
+    const s = new Set();
+    for (const l of ls) { const [cx, cy] = center(l); for (const [dx, dy] of [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]]) { const x = cx + dx, y = cy + dy; if (x >= 0 && y >= 0 && x < W && y < H && !crates.has(key(x, y))) s.add(key(x, y)); } }
+    s.delete(key(ent.x, ent.y)); return s;
+  }
+  function newRoom() {
+    room++; ent = { x: 0, y: H - 1 }; exitP = { x: W - 1, y: 0 };
+    do {
+      crates = new Set();
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (Math.random() < .16 && !(x === ent.x && y === ent.y) && !(x === exitP.x && y === exitP.y)) crates.add(key(x, y));
+    } while (!reach().has(key(exitP.x, exitP.y)));
+    gems = new Set(shuffle([...reach()].filter(k => k !== key(ent.x, ent.y) && k !== key(exitP.x, exitP.y))).slice(0, 3));
+    lamps = [{ axis: 'x', line: 2 + rnd(H - 4), pos: rnd(W), dir: 1 }, { axis: 'y', line: 1 + rnd(W - 2), pos: rnd(H - 2), dir: 1 }];
+    if (room >= 3) lamps.push({ axis: 'x', line: 1 + rnd(H - 3), pos: rnd(W), dir: -1 });
+    beat = Math.max(650, 1300 - room * 90); nextT = Date.now() + beat;
+    me = { ...ent }; roomGain = 0; clean = true; api.banner(`💎 Raum ${room}`); render();
+  }
+  function render() {
+    const lit = litSet(lamps), warn = Date.now() > nextT - beat * .45 ? litSet(lamps.map(advance)) : new Set();
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+      const k = key(x, y), el = gg.children[y * W + x], isExit = x === exitP.x && y === exitP.y;
+      const cls = 'ld-cell' + (crates.has(k) ? ' crate' : isExit ? ' exit' : lit.has(k) ? ' lit' : '') + (warn.has(k) && !lit.has(k) && !crates.has(k) ? ' warn' : '');
+      const html = gems.has(k) ? gemSVG : isExit ? '🚪' : (x === ent.x && y === ent.y ? '🏠' : '');
+      if (el.className !== cls) el.className = cls;
+      if (el.dataset.h !== html) { el.dataset.h = html; el.innerHTML = html; }
+    }
+    placeOnCell(th, gg.children[me.y * W + me.x], gg);
+    api.info(`Raum ${room} · 💎 hier: ${roomGain / 5} · ${clean ? '🤫 unentdeckt' : '🚨 entdeckt'}`);
+  }
+  function check() {
+    if (!litSet(lamps).has(key(me.x, me.y))) return;
+    const loss = Math.ceil(roomGain / 10) * 5; roomGain -= loss; clean = false;
+    if (loss) api.add(-loss); api.float('🚨 Entdeckt!', null, null, true);
+    th.classList.remove('caught'); void th.offsetWidth; th.classList.add('caught');
+    me = { ...ent }; render();
+  }
+  function move(d) {
+    const nx = me.x + DIRS[d][0], ny = me.y + DIRS[d][1], k = key(nx, ny);
+    if (nx < 0 || ny < 0 || nx >= W || ny >= H || crates.has(k)) return;
+    me = { x: nx, y: ny };
+    if (gems.has(k)) { gems.delete(k); roomGain += 5; api.add(5); }
+    if (nx === exitP.x && ny === exitP.y) { api.add(20 + (clean ? 15 : 0)); if (clean) setTimeout(() => api.float('🤫 Unentdeckt-Bonus!'), 300); newRoom(); return; }
+    render(); check();
+  }
+  newRoom();
+  tick = setInterval(() => { if (Date.now() >= nextT) { lamps = lamps.map(advance); nextT = Date.now() + beat; render(); check(); } else render(); }, 120);
+  return {
+    destroy() { clearInterval(tick); },
+    swipe: move, ctrl: move,
+    tap(t) {
+      const c = t.closest?.('[data-i]'); if (!c) return;
+      const i = +c.dataset.i, dx = i % W - me.x, dy = Math.floor(i / W) - me.y;
+      if (Math.abs(dx) + Math.abs(dy) === 1) move(dx === 1 ? 'r' : dx === -1 ? 'l' : dy === 1 ? 'd' : 'u');
+    },
+  };
+}
 
 /* ---------- Gewicht ---------- */
 let wRange = 30;
@@ -2103,16 +2683,38 @@ const NAG_MSGS = [
   'Faules Schwein, geh ins Gym! 🐷 Dein Hamster knabbert vor Hunger die Hanteln an!',
   'Letzte Warnung, faules Schwein! 🐷 Ab ins Gym, sonst schrumpft dein Hamster!',
 ];
+const MISSED_MSGS = [
+  'Du hast gestern das Training verpasst! 😢 Dein Hamster hat die ganze Nacht auf dich gewartet …',
+  'Gestern geschwänzt, heute gehst du aber, oder? Dein Hamster knurrt schon vor Hunger 🐹',
+  'Dein Hamster hat gestern umsonst die Hanteln bereitgelegt. Heute ins Gym! 💪',
+  'Zweiter Tag ohne Training wäre bitter … Dein Hamster schrumpft sonst! Ab ins Gym!',
+  'Letzte Chance für heute! Mach’s wieder gut – dein Hamster zählt auf dich! 🥺',
+];
 const notifSupported = () => 'Notification' in window;
+/* Gestern war ein Gym-Tag, aber kein Training und kein Ruhetag eingetragen? */
+function missedDay(dk) {
+  const y = dayNum(dk) - 1, yk = keyFromNum(y);
+  return !!schedOf(y) && !state.workouts.some(w => w.day === yk) && !state.restDays.includes(yk) && yk >= state.created;
+}
 function remindersFor(dk) {
   const n = dayNum(dk), tm = schedOf(n) && state.schedTimes?.[dowIdx(n)];
-  if (!tm) return [];
-  const [h, m] = tm.split(':').map(Number);
-  const base = new Date(+dk.slice(0, 4), +dk.slice(5, 7) - 1, +dk.slice(8), h, m).getTime();
-  const out = PRE_MSGS.map(([o, f], i) => ({ id: 'p' + i, ts: base + o * 60000, kind: 'pre', body: f(tm) })).filter(r => dayKey(r.ts) === dk);
-  NAG_MSGS.forEach((b, i) => out.push({ id: 'n' + i, ts: base + i * 30 * 60000, kind: 'nag', body: b }));
-  return out;
+  const at = (h, m) => new Date(+dk.slice(0, 4), +dk.slice(5, 7) - 1, +dk.slice(8), h, m).getTime();
+  const out = [];
+  let base = null;
+  if (tm) {
+    const [h, m] = tm.split(':').map(Number); base = at(h, m);
+    PRE_MSGS.forEach(([o, f], i) => { const ts = base + o * 60000; if (dayKey(ts) === dk) out.push({ id: 'p' + i, ts, kind: 'pre', body: f(tm) }); });
+    // Verpasst: erste Erinnerung nach 15 Min, danach alle 30 Min (4×)
+    NAG_MSGS.forEach((b, i) => out.push({ id: 'n' + i, ts: base + (15 + i * 30) * 60000, kind: 'nag', body: b }));
+  }
+  // Gestern verpasst → heute öfter erinnern
+  if (missedDay(dk)) [9, 12, 15, 18, 20].forEach((h, i) => {
+    const ts = at(h, 0);
+    if (base == null || ts < base - 30 * 60000) out.push({ id: 'm' + i, ts, kind: 'missed', body: MISSED_MSGS[i] });
+  });
+  return out.sort((a, b) => a.ts - b.ts);
 }
+const reminderTitle = r => r.kind === 'nag' ? '🐷 FAULES SCHWEIN!' : r.kind === 'missed' ? '😢 Dein Hamster vermisst dich!' : '🐹 Hamster Gym';
 function notify(title, body, tag) {
   if (!notifSupported() || Notification.permission !== 'granted') { toast(body); return; }
   const opts = { body, icon: 'icon-192.png', badge: 'icon-192.png', tag, renotify: true, vibrate: [200, 100, 200], data: { url: './' } };
@@ -2129,14 +2731,14 @@ function checkReminders() {
     if (sent.includes(r.id) || now < r.ts) continue;
     sent.push(r.id); save();
     if (started || now > r.ts + 10 * 60000) continue; // schon trainiert oder zu alt → nicht nachholen
-    notify(r.kind === 'nag' ? '🐷 FAULES SCHWEIN!' : '🐹 Hamster Gym', r.body, 'hg-' + r.id);
+    notify(reminderTitle(r), r.body, 'hg-' + r.id);
   }
 }
 /* Für den Service Worker (Hintergrund-Sync, wo der Browser es erlaubt) */
 function syncReminderCache() {
   if (!('caches' in window) || !location.protocol.startsWith('http')) return;
   const t = dayNum(today()), items = [];
-  if (state.notifyOn) for (let d = 0; d < 3; d++) { const dk = keyFromNum(t + d); for (const r of remindersFor(dk)) items.push({ ...r, day: dk, key: dk + r.id, title: r.kind === 'nag' ? '🐷 FAULES SCHWEIN!' : '🐹 Hamster Gym' }); }
+  if (state.notifyOn) for (let d = 0; d < 3; d++) { const dk = keyFromNum(t + d); for (const r of remindersFor(dk)) items.push({ ...r, day: dk, key: dk + r.id, title: reminderTitle(r) }); }
   const blocked = [...new Set(state.workouts.map(w => w.day))].filter(d => dayNum(d) >= t);
   if (state.session) blocked.push(today());
   caches.open('hamster-gym-data').then(c => c.put('reminders.json', new Response(JSON.stringify({ items, blocked, sent: Object.entries(state.remindersSent).flatMap(([d, a]) => a.map(id => d + id)) }))));
