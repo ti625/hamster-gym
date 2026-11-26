@@ -927,7 +927,7 @@ function completeWorkout(durationMin, rating = 0) {
   state.lastActiveDay = day; state.lastDecayDay = day;
   const w = { id: 'w' + Date.now().toString(36), ts: nowTs(), day, type, types, durationMin, exercises: exs, volume, sets, reps, km,
     xp, coins: coins + levelCoins, gains: g, prs: prs.map(p => p.name), planId: s.planId || null, planName: s.planName || null,
-    rating: rating || null, taps: s.taps || 0 };
+    rating: rating || null, taps: s.taps || 0, tapGot: s.tapGot || [] };
   const prev = findPrev(w);
   state.workouts.push(w);
   state.session = null;
@@ -1750,12 +1750,22 @@ function renderRest(full) {
   $('#rbTime').textContent = fmtClock(left);
   $('#rbProg').style.width = (left / r.total * 100) + '%';
 }
-/* Tap-Spiel: nur während der Satzpause. 10.000 Taps in einem Training = ⚡ Blitz */
-const TAP_GOAL = 10000;
+/* Tap-Spiel: nur während der Satzpause. Pro Training: 1.500 Taps = halbe, 3.000 Taps = volle Belohnung
+   (zufällig XP zum Ausgeben oder Münzen) */
+const TAP_GOAL = 3000, TAP_HALF = 1500, TAP_XP = 60, TAP_COINS = 40;
+function tapReward(full) {
+  const xp = Math.random() < .5, amt = (xp ? TAP_XP : TAP_COINS) / (full ? 1 : 2);
+  if (xp) state.xpBank = (state.xpBank || 0) + amt; else state.coins += amt;
+  confetti(full ? 60 : 30); renderTopbar();
+  toast(`👆 ${fmt(full ? TAP_GOAL : TAP_HALF)} Taps! Du bekommst ${xp ? `⭐ +${amt} XP` : `🪙 +${amt} Münzen`}${full ? '' : ' – bei 3.000 gibt’s die volle Belohnung!'}`);
+  return `${xp ? '⭐' : '🪙'} +${amt}`;
+}
 function updateTap() {
   const s = state.session; if (!s || !$('#tapTxt')) return;
   const n = s.taps || 0;
-  $('#tapTxt').textContent = s.tapDone ? `${fmt(n)} Taps – ⚡ Blitz kassiert!` : `${fmt(n)} / ${fmt(TAP_GOAL)} Taps → ⚡ Blitz`;
+  $('#tapTxt').textContent = s.tapDone ? `${fmt(n)} Taps – alles kassiert! (${s.tapGot.join(' · ')})`
+    : s.tapHalf ? `${fmt(n)} / ${fmt(TAP_GOAL)} Taps → volle Belohnung`
+    : `${fmt(n)} / ${fmt(TAP_HALF)} Taps → halbe Belohnung`;
   $('#tapProg').style.width = Math.min(100, n / TAP_GOAL * 100) + '%';
 }
 $('#restBar').addEventListener('pointerdown', e => {
@@ -1766,10 +1776,9 @@ $('#restBar').addEventListener('pointerdown', e => {
   h.classList.remove('bop'); void h.offsetWidth; h.classList.add('bop');
   const p = document.createElement('span'); p.className = 'tapplus'; p.textContent = '+1';
   p.style.left = (e.offsetX || 30) + 'px'; h.appendChild(p); setTimeout(() => p.remove(), 600);
-  if (!s.tapDone && s.taps >= TAP_GOAL) {
-    s.tapDone = true; state.energy += 1; state.bolts = (state.bolts || 0) + 1;
-    confetti(50); toast('⚡ 10.000 Taps! Du bekommst einen BLITZ (+1 Energie)!'); renderTopbar();
-  }
+  s.tapGot = s.tapGot || [];
+  if (!s.tapHalf && s.taps >= TAP_HALF) { s.tapHalf = true; s.tapGot.push(tapReward(false)); }
+  if (!s.tapDone && s.taps >= TAP_GOAL) { s.tapDone = true; s.tapGot.push(tapReward(true)); }
   updateTap(); save();
 });
 $('#restBar').addEventListener('click', e => {
@@ -1979,7 +1988,7 @@ function showResult(r) {
     <div class="center" style="font-weight:700;font-size:14px">${gains}</div>
     <div class="center muted" style="margin-top:2px">${body}${r.dFat > .05 ? ' · Bauch −' + r.dFat.toFixed(1).replace('.', ',') : ''}</div>
     ${r.w.rating ? `<p class="center rating" style="font-size:24px;margin:4px 0">${'★'.repeat(r.w.rating)}${'☆'.repeat(5 - r.w.rating)}</p>` : ''}
-    ${r.w.taps ? `<p class="center" style="font-weight:700;margin:4px 0">👆 ${fmt(r.w.taps)} Taps in den Satzpausen${r.w.taps >= TAP_GOAL ? ' – ⚡ Blitz verdient!' : ''}</p>` : ''}
+    ${r.w.taps ? `<p class="center" style="font-weight:700;margin:4px 0">👆 ${fmt(r.w.taps)} Taps in den Satzpausen${r.w.tapGot?.length ? ' – ' + r.w.tapGot.join(' · ') : ''}</p>` : ''}
     ${r.lucky ? '<p class="center" style="font-weight:700;margin:4px 0">🍀 Glückshamster: doppelte Münzen!</p>' : ''}
     ${prHtml}
     <div class="panel" style="margin:10px 0 0;padding:8px 10px;background:#fff"><b class="disp" style="font-size:16px">📊 VERGLEICH ZUM LETZTEN MAL</b>${compareHTML(r.w, r.prev)}</div>

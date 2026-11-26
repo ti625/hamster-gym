@@ -1,6 +1,6 @@
 /* Hamster Gym – Service Worker: macht die App offline-fähig.
    Bei jeder neuen Version CACHE hochzählen, damit Geräte das Update laden. */
-const CACHE = 'hamster-gym-v10';
+const CACHE = 'hamster-gym-v11';
 const FONT_CACHE = 'hamster-gym-fonts';
 const DATA_CACHE = 'hamster-gym-data';
 
