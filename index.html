@@ -281,6 +281,13 @@ label.fl{display:block;font-weight:700;font-size:13px;margin:8px 0 4px}
 .cmpt{width:100%;border-collapse:collapse;font-size:13px}
 .cmpt td{padding:5px 3px;border-bottom:1px dashed #E3CBA2;vertical-align:top}
 .cmpt td:last-child{text-align:right}
+.pe-row{display:grid;grid-template-columns:1fr 56px 34px;gap:6px;align-items:center;margin-bottom:6px}
+.setcmp{margin-top:4px;display:flex;flex-direction:column;gap:2px}
+.setcmp>div{display:grid;grid-template-columns:44px 1fr auto;column-gap:6px;align-items:center;background:#FFF8E8;border-radius:8px;padding:3px 6px;font-size:12.5px}
+.setcmp .sn{font-size:10.5px;font-weight:800;opacity:.6}
+.setcmp .was{grid-column:2;font-size:11px;opacity:.6;font-weight:600}
+.setcmp .dd{grid-column:3;grid-row:1 / span 2;text-align:right}
+.sethint{font-size:11px;font-weight:700;color:#8a6a45;margin:-3px 0 6px 40px}
 .lasttime{font-size:12px;font-weight:600;color:#7A5A3A;margin:-2px 0 6px}
 select.inp{text-align:left;padding:0 8px}
 
@@ -303,6 +310,10 @@ select.inp{text-align:left;padding:0 8px}
 .setno{cursor:pointer}
 #restBar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 4px);width:min(424px,calc(100% - 16px));z-index:45;display:none;background:linear-gradient(#26406A,#17283F);border:4px solid var(--ol);border-radius:22px;box-shadow:0 5px 0 var(--ol),0 0 24px rgba(0,0,0,.4);padding:10px 12px;overflow:hidden}
 #restBar.show{display:block;animation:pop .3s cubic-bezier(.3,1.5,.5,1)}
+#restBar.dock{bottom:auto;top:calc(var(--top-h) + env(safe-area-inset-top) + 4px);padding:8px 10px}
+#restBar.dock .rb-time{font-size:34px;min-width:92px}
+#restBar.dock .tapgame{margin-top:6px;padding:4px 8px 4px 4px}
+#restBar.dock #tapHam{width:48px;height:48px}
 #restBar.done{background:linear-gradient(#8BEF63,#2DBB45);animation:flash .5s 3}
 @keyframes flash{50%{transform:translateX(-50%) scale(1.04)}}
 .rb-top{display:flex;align-items:center;gap:10px}
@@ -361,67 +372,52 @@ select.inp{text-align:left;padding:0 8px}
 .gl-end .mh{width:110px;height:110px}
 .gl-end .mh svg{width:100%;height:100%}
 .gcell{position:absolute;border-radius:7px;box-sizing:border-box}
-/* Paketpanik */
-.pp-trucks{position:absolute;left:0;right:0;top:8px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:0 8px}
-.pp-truck{background:#17283F;border:3px solid var(--ol);border-radius:14px;padding:4px 2px 3px;text-align:center;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}
-.pp-truck svg{width:70%;display:block;margin:0 auto}
-.pp-truck span{font-size:20px;display:block;line-height:1.1}
-.pp-truck b{font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-weight:400;font-size:12px;color:var(--c)}
-.pp-truck.flash{animation:flashok .4s}
-@keyframes flashok{50%{transform:scale(1.12);background:#2DBB45}}
-.pp-belt{position:absolute;left:0;right:0;top:56%;height:78px;background:repeating-linear-gradient(90deg,#3D4660 0 18px,#46506B 18px 36px);border-top:4px solid var(--ol);border-bottom:4px solid var(--ol);animation:belt 1s linear infinite}
-@keyframes belt{to{background-position:36px 0}}
-.pp-pkg{position:absolute;top:8px;left:0;width:58px;height:58px;border-radius:10px;background:linear-gradient(#E2A866,#C98A4B);border:3px solid var(--ol);display:grid;place-items:center;box-shadow:inset 0 -5px 0 rgba(0,0,0,.15)}
-.pp-pkg::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:8px;margin-left:-4px;background:#F4D9A8;opacity:.7}
-.pp-pkg span{position:relative;font-size:26px}
-.pp-pkg.cov span{font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-size:30px;color:#fff;text-shadow:0 2px 0 var(--ol)}
-.pp-pkg.cov{background:linear-gradient(#8790A8,#5F6B80)}
-.pp-pkg.frag{background:linear-gradient(#FFB3C7,#E57FA0)}
-.pp-pkg i{position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);font-style:normal;font-size:7.5px;font-weight:800;background:#F0504A;color:#fff;border:2px solid var(--ol);border-radius:6px;padding:0 3px;white-space:nowrap}
-.pp-pkg.front{outline:3px solid #FFE45C;outline-offset:2px}
-.pp-hint{position:absolute;left:0;right:0;bottom:10px;text-align:center;font-size:12px;font-weight:700;color:#BFD3EE;padding:0 10px}
 /* Raster-Spiele */
 .gg{position:absolute;inset:8px;display:grid;gap:3px}
-.gg>div{border-radius:7px;position:relative;display:grid;place-items:center;font-size:20px;line-height:1}
-.st-cell{background:#17283F}
-.st-cell.tg{background:#22395A;outline:2px dashed #7FA6D8;outline-offset:-4px}
-.st-cell.f{border:3px solid var(--ol);box-shadow:inset 0 -4px 0 rgba(0,0,0,.2)}
-.st-cell.ghost{background:rgba(255,255,255,.18)!important;outline:2px dashed #fff}
-.st-cell.cur{border:3px solid #FFE45C}
-.wk-cell{background:#7FD3F7}
-.wk-cell.cloud{background:#fff;border:3px solid #BFE6F7;border-radius:40%}
-.wk-cell.goal{background:#35C95B;border:3px solid var(--ol)}
-.wk-cell.start{background:#BDEBFF}
-.wk-cell svg{width:90%;height:90%}
-.wk-drone{position:absolute;z-index:3;transition:left .25s linear,top .25s linear;display:grid;place-items:center}
-.wk-drone .hm{width:100%;height:100%}
-.wk-drone::before{content:'';position:absolute;top:-4px;left:12%;right:12%;height:6px;border-radius:4px;background:#2B2F3A;border:2px solid var(--ol);animation:prop .12s linear infinite}
-@keyframes prop{50%{transform:scaleX(.3)}}
-.wk-arrow{position:absolute;z-index:4;font-size:16px;color:#F0504A;text-shadow:0 1px 0 #fff}
-.kk-grid{position:absolute;left:10px;right:10px;top:78px;bottom:96px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(5,1fr);gap:3px;background:#DDEBF5;border:4px solid var(--ol);border-radius:14px;padding:4px}
-.kk-grid>div{background:#F4FAFF;border-radius:6px}
-.kk-grid>div.ice{background:#9EE3FF;box-shadow:inset 0 0 0 3px #fff}
-.kk-item{position:absolute;z-index:2;border-radius:9px;border:3px solid var(--ol);display:grid;place-items:center;font-size:24px;pointer-events:none;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12)}
-.kk-orders{position:absolute;left:8px;right:8px;top:6px;display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.kk-order{background:var(--cream);color:var(--brown);border:3px solid var(--ol);border-radius:12px;padding:3px 6px;font-size:18px;text-align:center;box-shadow:0 3px 0 var(--ol)}
-.kk-order small{display:block;font-family:'Lilita One','Fredoka',system-ui,sans-serif;font-size:10px}
-.kk-order.ready{background:#9DF77A;animation:pulsetxt .5s infinite alternate}
-.kk-queue{position:absolute;left:8px;right:8px;bottom:6px;height:82px;display:flex;align-items:center;gap:6px;background:#17283F;border:3px solid #07101C;border-radius:14px;padding:4px 8px;overflow:hidden}
-.kk-queue .q{flex:none;border-radius:8px;border:3px solid var(--ol);display:grid;place-items:center;font-size:20px}
-.kk-queue .q.next{outline:3px solid #FFE45C;outline-offset:2px}
+.gg>div{border-radius:8px;position:relative;display:grid;place-items:center;font-size:20px;line-height:1;transition:background .2s}
+.gg>div svg{width:88%;height:88%}
+/* UFO-Kurier */
+.gl-area.sky{background:linear-gradient(#1FB4EE,#8FE0FF);border-color:#0D5E86}
+.uf-cell{background:rgba(255,255,255,.12)}
+.uf-cell.cloud{background:none}
+.uf-cell.cloud svg{width:118%;height:118%;filter:drop-shadow(0 2px 0 rgba(0,0,0,.12));animation:cloudbob 3s ease-in-out infinite}
+@keyframes cloudbob{50%{transform:translateY(-2px)}}
+.uf-cell.goal{background:rgba(53,201,91,.25);box-shadow:inset 0 0 0 3px #35C95B}
+.uf-cell.goal svg{width:100%;height:100%;animation:cloudbob 2s ease-in-out infinite}
+.uf-cell.start{background:rgba(255,255,255,.35);box-shadow:inset 0 0 0 3px #fff}
+.uf-cell.wind{background:repeating-linear-gradient(45deg,rgba(255,255,255,.35) 0 6px,rgba(255,255,255,.1) 6px 12px)}
+.uf-cell.wind span{font-size:20px;color:#1F6FB8;text-shadow:0 1px 0 #fff;animation:windpush .8s ease-in-out infinite}
+@keyframes windpush{50%{transform:scale(1.25)}}
+.uf-cell.tr::after{content:'';width:22%;height:22%;border-radius:50%;background:#FFE45C;border:2px solid var(--ol);opacity:.8}
+.ufo{position:absolute;z-index:3;transition:left .2s linear,top .2s linear;--tilt:0deg;pointer-events:none}
+.ufo svg{width:120%;height:120%;margin:-10%;display:block;transform:rotate(var(--tilt));transition:transform .25s;animation:ufobob 1.2s ease-in-out infinite}
+@keyframes ufobob{50%{translate:0 -3px}}
+.ufo .ufo-lights circle{animation:twinkle 1s ease-in-out infinite}
+.ufo .ufo-lights circle:nth-child(2n){animation-delay:.5s}
+.ufo.crash svg{animation:ufocrash .5s ease-in}
+@keyframes ufocrash{30%{transform:rotate(25deg) scale(1.15)}100%{transform:rotate(-360deg) scale(.2);opacity:0}}
+.ufo.beam::after{content:'';position:absolute;left:20%;right:20%;top:70%;height:110%;background:linear-gradient(rgba(255,246,176,.9),rgba(255,246,176,0));clip-path:polygon(30% 0,70% 0,100% 100%,0 100%);animation:beam .7s ease-out}
+@keyframes beam{from{opacity:0;transform:scaleY(.2);transform-origin:top}}
+/* Lichtdieb */
+.gl-area.night{background:radial-gradient(circle at 50% 50%,#1B2438,#090E18)}
+.gl-area.alarm::after{content:'';position:absolute;inset:0;z-index:7;pointer-events:none;background:rgba(240,80,74,.45);animation:alarm .5s ease-out forwards}
+@keyframes alarm{to{opacity:0}}
 .ld-cell{background:#1B2438}
-.ld-cell.crate{background:linear-gradient(#C98A4B,#9A6531);border:3px solid var(--ol)}
-.ld-cell.exit{background:#35C95B;border:3px solid var(--ol)}
-.ld-cell.lit{background:#FFE45C;box-shadow:0 0 14px #FFE45C}
-.ld-cell.warn{outline:2px dashed #FFE45C;outline-offset:-4px}
-.ld-cell.near{background:#26324A}
-.ld-gem{width:62%;height:62%}
-.ld-thief{position:absolute;z-index:3;transition:left .15s,top .15s}
+.ld-cell.alt{background:#1F2A40}
+.ld-cell.crate{background:linear-gradient(#C98A4B,#9A6531);border:3px solid var(--ol);box-shadow:inset 0 -4px 0 rgba(0,0,0,.25)}
+.ld-cell.crate::before{content:'';position:absolute;inset:22% 22%;border:2px solid #7A4A1F;border-radius:3px;opacity:.6}
+.ld-cell.exit{background:#35C95B;border:3px solid var(--ol);box-shadow:0 0 12px #35C95B}
+.ld-cell.ent{background:#2A3A58}
+.ld-cell.lit{background:radial-gradient(circle,#FFF6B0,#FFD23F);box-shadow:0 0 16px #FFE45C;z-index:1}
+.ld-cell.warn{box-shadow:inset 0 0 0 2px #FFE45C;background:#3A3A2A}
+.ld-gem{width:62%!important;height:62%!important;animation:gem 1.4s ease-in-out infinite;filter:drop-shadow(0 0 4px #7FE3FF)}
+@keyframes gem{50%{transform:scale(1.15) rotate(6deg)}}
+.ld-lampic{width:70%!important;height:70%!important;animation:spin 3s linear infinite}
+.ld-thief{position:absolute;z-index:3;transition:left .16s,top .16s;pointer-events:none}
 .ld-thief .hm{width:100%;height:100%}
 .ld-thief::after{content:'';position:absolute;left:16%;right:16%;top:38%;height:18%;background:#141821;border-radius:8px;border:2px solid var(--ol)}
 .ld-thief.caught{animation:caught .5s 2}
 @keyframes caught{50%{transform:scale(1.3) rotate(15deg)}}
-.ld-lamp{position:absolute;z-index:2;font-size:14px;pointer-events:none}
 
 /* ---------- Gewicht ---------- */
 .wchart{width:100%;display:block;touch-action:none}
@@ -496,7 +492,7 @@ select.inp{text-align:left;padding:0 8px}
 @keyframes excl{to{transform:scale(1.25)}}
 .hm.static *{animation:none!important}
 @media (prefers-reduced-motion:reduce){.hm *,.train-btn,.train-btn::after{animation:none!important}}
-@media (max-width:420px){.pill .plus{display:none}.gear{width:42px}.pill{padding-right:7px}}
+@media (max-width:440px){.pill .plus{display:none}.gear{width:38px;height:42px}.gear svg{width:26px;height:26px}.pill{padding:0 5px 0 1px;height:42px;gap:1px}.pill svg{width:26px;height:26px}.pill b{font-size:14.5px}.pill .en small{font-size:9px}.avatar{width:50px;height:50px}.pinfo{margin-left:-12px;padding:3px 6px 4px 16px}.pname{font-size:12.5px}.xpbar span{font-size:10px}.topbar{gap:4px;padding-left:6px;padding-right:6px}}
 @media (max-width:370px){.pill b{font-size:15px}.pill svg{width:28px;height:28px}.navbtn{height:72px;font-size:12px}.navbtn svg{width:38px;height:38px}.train-btn{font-size:34px}}
 </style>
 </head>
@@ -511,6 +507,7 @@ select.inp{text-align:left;padding:0 8px}
       </div>
     </button>
     <button class="pill" id="btnEnergy" aria-label="Energie"><span id="icoBolt"></span><div class="en"><b id="enText">3/5</b><small id="enTimer">--:--</small></div></button>
+    <button class="pill" id="btnXp" aria-label="XP zum Ausgeben"><span id="icoStar"></span><div class="en"><b id="xpBankText">0</b><small>XP</small></div></button>
     <button class="pill" id="btnCoins" aria-label="Münzen"><span id="icoCoin"></span><b id="coinText">0</b><span class="plus">+</span></button>
     <button class="gear" id="btnSettings" aria-label="Einstellungen"></button>
   </header>
@@ -583,6 +580,7 @@ const $$ = s => [...document.querySelectorAll(s)];
 const clamp = (v, a = 0, b = 1) => Math.max(a, Math.min(b, v));
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = n => Math.round(n).toLocaleString('de-DE');
+const fmtCompact = n => n >= 100000 ? Math.round(n / 1000) + 'k' : n >= 10000 ? (Math.round(n / 100) / 10).toLocaleString('de-DE') + 'k' : fmt(n);
 const DAY = 86400000, HOUR = 3600000;
 const pad = n => String(n).padStart(2, '0');
 
@@ -643,6 +641,8 @@ const UPGRADES = [
   { id: 'god',    name: 'GÖTTLICHER FUNKE', desc: '+10 % XP pro Stufe – nur für Halbgötter',        max: 3, base: 900, ico: 'halo', lvl: 30 },
 ];
 const upgCost = (u, lvl) => Math.round(u.base * (1 + lvl * .8) / 10) * 10;
+/* Upgrades werden mit gesammelten XP bezahlt (das Level bleibt dabei erhalten) */
+const upgXp = (u, lvl) => Math.round(upgCost(u, lvl) * 2.5 / 10) * 10;
 
 const BOOSTS = [
   { id: 'protein',  name: 'PROTEIN BOOST',  lvl: 1,  cost: 1, kind: 'charge', desc: 'Nächstes Training: +25 % XP', ico: 'shaker', col: '#FFB3D1' },
@@ -681,6 +681,13 @@ const SHOP = [
   { cat: 'neck', id: 'towel', name: 'Gym-Handtuch', price: 70 },
   { cat: 'neck', id: 'medal', name: 'Siegermedaille', price: 200, lvl: 5 },
   { cat: 'neck', id: 'chain', name: 'Goldkette', price: 450, lvl: 10 },
+  { cat: 'top', id: 'black', name: 'Schwarzer Stringer', price: 120 },
+  { cat: 'top', id: 'white', name: 'Weißer Stringer', price: 120 },
+  { cat: 'top', id: 'grey', name: 'Grauer Gym-Stringer', price: 120 },
+  { cat: 'top', id: 'red', name: 'Roter Stringer', price: 140 },
+  { cat: 'top', id: 'pink', name: 'Pinker Stringer', price: 160 },
+  { cat: 'top', id: 'neon', name: 'Neon-Stringer', price: 180, lvl: 5 },
+  { cat: 'top', id: 'gold', name: 'Goldener Stringer', price: 600, lvl: 15 },
   { cat: 'shorts', id: 'green', name: 'Grüne Shorts', price: 80 },
   { cat: 'shorts', id: 'red', name: 'Rote Shorts', price: 80 },
   { cat: 'shorts', id: 'blue', name: 'Blaue Shorts', price: 80 },
@@ -703,7 +710,7 @@ const SHOP = [
   { cat: 'deco', id: 'punch', name: 'Boxsack', price: 250 },
   { cat: 'deco', id: 'trophy', name: 'Pokal', price: 400, lvl: 10 },
 ];
-const SHOP_CATS = { band: 'STIRNBAND', eyes: 'BRILLEN', hat: 'KOPF', neck: 'HALS', shorts: 'SHORTS', skin: 'FELL', deco: 'GYM-DEKO' };
+const SHOP_CATS = { band: 'STIRNBAND', eyes: 'BRILLEN', hat: 'KOPF', neck: 'HALS', top: 'TANKTOPS', shorts: 'SHORTS', skin: 'FELL', deco: 'GYM-DEKO' };
 
 /* ============================== STORE ================================ */
 const Store = {
@@ -715,13 +722,13 @@ const Store = {
 function defaultState() {
   const t = Date.now();
   return {
-    v: 1, name: 'Hamster', totalXp: 0, coins: 240, energy: 3, energyTs: t,
+    v: 1, name: 'Hamster', totalXp: 0, xpBank: 0, coins: 240, energy: 3, energyTs: t,
     stats: { str: 10, end: 10, dis: 10 }, muscle: 0, fat: 95,
     created: dayKey(t), lastActiveDay: null, lastDecayDay: dayKey(t),
     workouts: [], restDays: [], prs: {},
     upgrades: { xp: 0, str: 0, end: 0, energy: 0, memory: 0, coin: 0, regen: 0, dis: 0, pr: 0, luck: 0, lab: 0, titan: 0, god: 0 },
     boosts: [], owned: { band_green: 1, skin_gold: 1 },
-    equipped: { band: 'green', eyes: null, hat: null, neck: null, shorts: null, skin: 'gold', deco: [] },
+    equipped: { band: 'green', eyes: null, hat: null, neck: null, top: null, shorts: null, skin: 'gold', deco: [] },
     plans: [], schedule: {}, schedTimes: {}, weights: {}, weightGoal: null,
     exNotes: {}, bolts: 0, notifyOn: false, remindersSent: {}, gameRecords: {}, weightCoinDay: null, shieldUntil: 0, restCfg: { on: true, dur: 120 },
     config: { xp: { kraft: 50, cardio: 30, ausdauer: 35, custom: 25 } },
@@ -831,7 +838,7 @@ function hamsterParams(extra = {}) {
   if (testo) { m = Math.max(m, 1); f = Math.min(f, .06); }
   if (god) { m = 1.3; f = .01; }
   const form = state.muscle >= muscleCap(li.level) * .8; // Endlevel-Extras nur, wenn der Hamster in Form ist
-  const p = { m, f, skin: e.skin, band: e.band, eyes: e.eyes, hat: e.hat, neck: e.neck, shorts: e.shorts, mood: moodNow(),
+  const p = { m, f, skin: e.skin, band: e.band, eyes: e.eyes, hat: e.hat, neck: e.neck, top: e.top, shorts: e.shorts, mood: moodNow(),
     gold: testo || god || (si >= 4 && m > .85) };
   if (si >= 5 && form) Object.assign(p, { cape: st.cape, laurel: st.laurel, halo: st.halo, god: st.god });
   if (god) Object.assign(p, { god: true, halo: true, cape: p.cape || '#FFFFFF' });
@@ -904,7 +911,7 @@ function completeWorkout(durationMin, rating = 0) {
   if (boostActive('godmode')) coins *= 2;
   const lucky = Math.random() < .1 * up.luck; if (lucky) coins *= 2;
 
-  state.totalXp += xp;
+  state.totalXp += xp; state.xpBank = (state.xpBank || 0) + xp;
   const after = levelInfo(), stageAfter = stageIdx(after.level);
   let levelCoins = 0;
   for (let l = before.level + 1; l <= after.level; l++) levelCoins += 50 + 10 * l;
@@ -932,7 +939,7 @@ function deleteWorkout(id) {
   const i = state.workouts.findIndex(w => w.id === id); if (i < 0) return;
   const w = state.workouts[i];
   state.workouts.splice(i, 1);
-  state.totalXp = Math.max(0, state.totalXp - w.xp);
+  state.totalXp = Math.max(0, state.totalXp - w.xp); state.xpBank = Math.max(0, (state.xpBank || 0) - w.xp);
   state.coins = Math.max(0, state.coins - w.coins);
   for (const k of ['str', 'end', 'dis']) state.stats[k] = Math.max(10, state.stats[k] - (w.gains?.[k] || 0));
   // Rekorde neu berechnen
@@ -973,6 +980,21 @@ function delta(a, b, unit = '', dec = 0) {
   const t = (r > 0 ? '+' : '−') + Math.abs(r).toLocaleString('de-DE') + unit;
   return `<span class="dl ${r > 0 ? 'up' : 'down'}">${r > 0 ? '▲' : '▼'} ${t}</span>`;
 }
+/* Gleiche Sätze vergleichen: Satz 1 mit Satz 1, Satz 2 mit Satz 2 … */
+function setCmp(e, o) {
+  const n = Math.max(e.sets.length, o.sets.length), st = e.kind === 'strength';
+  const f = s => !s ? '–' : st ? `${fmtKg(s.kg)} kg × ${s.reps}` : `${fmtKg(s.min || 0)} min · ${fmtKg(s.km || 0)} km`;
+  let h = '<div class="setcmp">';
+  for (let j = 0; j < n; j++) {
+    const s = e.sets[j], p = o.sets[j];
+    let d;
+    if (s && p) d = st ? ((s.kg !== p.kg ? delta(s.kg, p.kg, ' kg', 1) : '') + (s.reps !== p.reps ? ' ' + delta(s.reps, p.reps, ' Wdh') : '') || '<span class="dl eq">= gleich</span>')
+      : ((s.km || 0) !== (p.km || 0) ? delta(s.km || 0, p.km || 0, ' km', 1) : delta(s.min || 0, p.min || 0, ' min', 1));
+    else d = s ? '<span class="dl up">+ neuer Satz</span>' : '<span class="dl down">fehlt</span>';
+    h += `<div><span class="sn">${st ? 'Satz' : 'Int.'} ${j + 1}</span><b>${f(s)}</b><span class="was">vorher ${f(p)}</span><span class="dd">${d}</span></div>`;
+  }
+  return h + '</div>';
+}
 function compareHTML(a, b) {
   if (!b) return '<div class="muted">Noch kein vergleichbares Training vorhanden – beim nächsten Mal siehst du hier deinen Fortschritt.</div>';
   const bm = new Map(b.exercises.map(e => [e.name, e]));
@@ -980,10 +1002,9 @@ function compareHTML(a, b) {
     const o = bm.get(e.name);
     if (!o) return `<tr><td><b>${esc(e.name)}</b><div class="muted">neu</div></td><td colspan="2">${setsTxt(e)}</td></tr>`;
     if (e.kind === 'strength') {
-      const ba = exBest(e), bb = exBest(o);
-      return `<tr><td><b>${esc(e.name)}</b><div class="muted">Bester Satz ${fmtKg(ba.kg)}×${ba.reps} ${delta(ba.kg, bb.kg, ' kg', 1)}</div></td><td>${fmt(exVol(e))} kg<br><span class="muted">vorher ${fmt(exVol(o))}</span></td><td>${delta(exVol(e), exVol(o), ' kg')}</td></tr>`;
+      return `<tr><td colspan="3"><b>${esc(e.name)}</b> <span class="muted">Volumen ${fmt(exVol(e))} kg</span> ${delta(exVol(e), exVol(o), ' kg')}${setCmp(e, o)}</td></tr>`;
     }
-    return `<tr><td><b>${esc(e.name)}</b><div class="muted">${fmtKg(exMin(e))} min (${delta(exMin(e), exMin(o), ' min', 1)})</div></td><td>${fmtKg(exKm(e))} km<br><span class="muted">vorher ${fmtKg(exKm(o))}</span></td><td>${delta(exKm(e), exKm(o), ' km', 1)}</td></tr>`;
+    return `<tr><td colspan="3"><b>${esc(e.name)}</b> <span class="muted">${fmtKg(exMin(e))} min · ${fmtKg(exKm(e))} km</span> ${delta(exKm(e), exKm(o), ' km', 1)}${setCmp(e, o)}</td></tr>`;
   }).join('');
   const missing = b.exercises.filter(e => !a.exercises.some(x => x.name === e.name)).map(e => esc(e.name));
   return `<div class="muted" style="margin-bottom:4px">Verglichen mit ${fmtDate(b.ts)}${b.planName ? ' · ' + esc(b.planName) : ''}</div>
@@ -1074,6 +1095,7 @@ const SKINS = {
   cosmic:   { fur: '#7C5CD6', dark: '#4E3699', belly: '#C9B8FF', ear: '#FF9EE0' },
 };
 const BANDS = { green: ['#35C95B', '#1E8F45'], red: ['#F0504A', '#B32B2B'], blue: ['#3DA5F5', '#1F6FB8'], pink: ['#FF7FC0', '#C94C90'], gold: ['#FFD54A', '#D9A21B'], orange: ['#FF9A3D', '#C96A12'], purple: ['#9B6BFF', '#6A3FD0'], black: ['#2B2F3A', '#111'] };
+const TOPS = { black: ['#2B2F3A', '#FFC83D'], white: ['#F4F4F4', '#3B2314'], grey: ['#8E97A8', '#2B2F3A'], red: ['#D8423C', '#fff'], pink: ['#FF7FC0', '#fff'], neon: ['#7CFF4F', '#1E2B3C'], gold: ['#F2B825', '#7A4A00'] };
 const SHORTS = { green: '#1F7A47', red: '#D8423C', black: '#2B2F3A', blue: '#2F6FD6', pink: '#E95CA6', gold: '#F2B825' };
 let UID = 0;
 const n1 = v => (+v).toFixed(1);
@@ -1154,6 +1176,15 @@ function hamsterSVG(o = {}) {
   if (o.shorts && SHORTS[o.shorts]) {
     const sc = SHORTS[o.shorts], sy = 191 - 4 * m;
     det += `<rect x="0" y="${n1(sy)}" width="240" height="40" fill="${sc}"/><rect x="0" y="${n1(sy)}" width="240" height="5" fill="#fff" opacity=".35"/><path d="M${cx} ${n1(sy + 12)} V218" stroke="${OL}" stroke-width="3"/><path d="M0 ${n1(sy)} H240" stroke="${OL}" stroke-width="3"/>`;
+  }
+  // Bodybuilder-Stringer: dünne Träger, extrem tiefe Armausschnitte, hängt weit über die Hüfte
+  if (o.top && TOPS[o.top]) {
+    const [tc, tp] = TOPS[o.top], wB = Math.max(B, S * .72);
+    const tank = `M${cx - 21} 102 L${cx - 13} 102 Q${cx - 11} 128 ${cx} 133 Q${cx + 11} 128 ${cx + 13} 102 L${cx + 21} 102 Q${n1(cx + S * .3)} 150 ${n1(cx + wB * .6)} 176 Q${n1(cx + H * .95)} 198 ${n1(cx + H + 6)} 230 L${n1(cx - H - 6)} 230 Q${n1(cx - H * .95)} 198 ${n1(cx - wB * .6)} 176 Q${n1(cx - S * .3)} 150 ${cx - 21} 102Z`;
+    det += `<path d="${tank}" fill="${tc}" stroke="${OL}" stroke-width="3" stroke-linejoin="round"/>`
+      + `<path d="M${n1(cx - wB * .5)} 182 Q${cx} 190 ${n1(cx + wB * .5)} 182" fill="none" stroke="${OL}" stroke-width="1.5" opacity=".25"/>`
+      + `<g transform="translate(${cx} 158)" fill="${tp}"><ellipse cx="0" cy="3" rx="5" ry="4"/><circle cx="-5" cy="-3" r="2.2"/><circle cx="-1.6" cy="-5.5" r="2.2"/><circle cx="2" cy="-5.5" r="2.2"/><circle cx="5.4" cy="-3" r="2.2"/></g>`
+      + `<path d="M${cx - 17} 104 Q${cx - 14} 124 ${cx - 6} 130" fill="none" stroke="#fff" stroke-width="2" opacity=".35" stroke-linecap="round"/>`;
   }
   h += `<g clip-path="url(#${id}b)">${det}</g>`;
   h += `<path d="${body}" fill="none" stroke="${OL}" stroke-width="7" stroke-linejoin="round"/>`;
@@ -1412,7 +1443,8 @@ function renderTopbar() {
   $('#xpFillTop').style.width = pct + '%';
   $('#xpTextTop').textContent = li.max ? 'MAX' : `${fmt(li.cur)} / ${fmt(li.need)} XP`;
   $('#avatarTop').innerHTML = hamsterSVG(hamsterParams({ crop: true, static: true }));
-  $('#coinText').textContent = fmt(state.coins);
+  $('#coinText').textContent = fmtCompact(state.coins);
+  $('#xpBankText').textContent = fmtCompact(state.xpBank || 0);
   renderEnergy();
 }
 function renderEnergy() {
@@ -1587,13 +1619,13 @@ function openScreen(name) {
   renderScreen(name);
   $('#scr-' + name).classList.add('open'); $('#scr-' + name).scrollTop = 0;
   $$('.navbtn').forEach(b => b.classList.toggle('active', b.dataset.nav === name));
-  $('#topbar').classList.add('solid');
+  $('#topbar').classList.add('solid'); dockRest();
 }
 function closeScreen() {
   $$('.screen').forEach(s => s.classList.remove('open'));
   currentScreen = null;
   $$('.navbtn').forEach(b => b.classList.remove('active'));
-  $('#topbar').classList.toggle('solid', window.scrollY > 30);
+  $('#topbar').classList.toggle('solid', window.scrollY > 30); dockRest();
   renderHome();
 }
 function renderScreen(n) {
@@ -1609,7 +1641,7 @@ function renderTraining() {
     $('#trainSub').textContent = 'Was trainieren wir heute?';
     const plans = state.plans.map(p => {
       const T = TYPES[p.type], last = state.workouts.filter(w => w.planId === p.id).sort((a, b) => b.ts - a.ts)[0];
-      return `<div class="plan"><div class="ti" style="background:linear-gradient(${T.c1},${T.c2})">${ICONS[TYPE_ICON[p.type]]}</div><div class="pt"><b>${esc(p.name)}</b><span>${p.exercises.map(e => esc(e.name)).join(', ')}</span><span>${last ? 'Zuletzt ' + fmtDate(last.ts) : 'Noch nie trainiert'}</span></div><button class="iconbtn" data-delplan="${p.id}" aria-label="Plan löschen">✕</button><button class="gbtn sm" data-plan="${p.id}">START</button></div>`;
+      return `<div class="plan"><div class="ti" style="background:linear-gradient(${T.c1},${T.c2})">${ICONS[TYPE_ICON[p.type]]}</div><div class="pt"><b>${esc(p.name)}</b><span>${p.exercises.map(e => esc(e.name)).join(', ')}</span><span>${last ? 'Zuletzt ' + fmtDate(last.ts) : 'Noch nie trainiert'}</span></div><button class="iconbtn" data-editplan="${p.id}" aria-label="Plan bearbeiten" style="background:#FFF1D6">✏️</button><button class="iconbtn" data-delplan="${p.id}" aria-label="Plan löschen">✕</button><button class="gbtn sm" data-plan="${p.id}">START</button></div>`;
     }).join('');
     const tv = todaySched();
     const todayBtn = tv && !trainedToday() ? `<button class="gbtn wide big" data-today style="margin-bottom:14px">▶ HEUTE: ${esc(schedLabel(tv).toUpperCase())}</button>` : '';
@@ -1634,13 +1666,13 @@ const fmtClock = s => `${Math.floor(s / 60)}:${pad(Math.max(0, s) % 60)}`;
 function exCard(e, i) {
   const pr = state.prs[e.name];
   const prTag = e.kind === 'strength' && pr ? `<span class="prtag">Rekord: ${fmtKg(pr.kg)} kg × ${pr.reps}</span>` : '';
-  const head = `<div class="exhead"><b class="disp">${esc(e.name)}</b>${prTag}<button class="iconbtn" data-act="rmex" data-i="${i}" aria-label="Übung entfernen">✕</button></div>`;
+  const head = `<div class="exhead"><b class="disp">${esc(e.name)}</b>${prTag}<button class="iconbtn" data-act="renex" data-i="${i}" aria-label="Übung umbenennen" style="background:#FFF1D6">✏️</button><button class="iconbtn" data-act="rmex" data-i="${i}" aria-label="Übung entfernen">✕</button></div>`;
   const last = lastExercise(e.name);
   const lastLine = (last ? `<div class="lasttime">Letztes Mal (${fmtDate(last.w.ts)}): ${setsTxt(last.e)}</div>` : '') +
     `<input class="inp left exnote" data-note="${i}" maxlength="120" placeholder="📝 Notiz, z. B. Sitzhöhe 4, enger Griff …" value="${esc(state.exNotes?.[e.name] || '')}">`;
   const no = (st, j, ok) => `<button class="setno${st.done ? ' ok' : ''}" data-act="done" data-i="${i}" data-j="${j}" aria-label="Satz abhaken">${st.done ? '✓' : j + 1}</button>`;
   if (e.kind === 'strength') {
-    return `<div class="panel ex">${head}${lastLine}<div class="setgrid h"><span>SATZ</span><span>KG</span><span>WDH</span><span></span></div>${e.sets.map((st, j) => `<div class="setgrid">${no(st, j)}<input class="inp" inputmode="decimal" placeholder="0" data-i="${i}" data-j="${j}" data-k="kg" value="${esc(st.kg)}"><input class="inp" inputmode="numeric" placeholder="${st.hint ? esc(st.hint) : '0'}" data-i="${i}" data-j="${j}" data-k="reps" value="${esc(st.reps)}"><button class="rmset" data-act="rmset" data-i="${i}" data-j="${j}" aria-label="Satz löschen">✕</button></div>`).join('')}<button class="addset" data-act="addset" data-i="${i}">+ SATZ</button></div>`;
+    return `<div class="panel ex">${head}${lastLine}<div class="setgrid h"><span>SATZ</span><span>KG</span><span>WDH</span><span></span></div>${e.sets.map((st, j) => `<div class="setgrid">${no(st, j)}<input class="inp" inputmode="decimal" placeholder="0" data-i="${i}" data-j="${j}" data-k="kg" value="${esc(st.kg)}"><input class="inp" inputmode="numeric" placeholder="${st.hint ? esc(st.hint) : '0'}" data-i="${i}" data-j="${j}" data-k="reps" value="${esc(st.reps)}"><button class="rmset" data-act="rmset" data-i="${i}" data-j="${j}" aria-label="Satz löschen">✕</button></div>${last?.e.sets[j] ? `<div class="sethint">↳ letztes Mal Satz ${j + 1}: ${fmtKg(last.e.sets[j].kg)} kg × ${last.e.sets[j].reps}</div>` : ''}`).join('')}<button class="addset" data-act="addset" data-i="${i}">+ SATZ</button></div>`;
   }
   return `<div class="panel ex">${head}${lastLine}<div class="setgrid h"><span>#</span><span>MINUTEN</span><span>KM</span><span></span></div>${e.sets.map((st, j) => `<div class="setgrid">${no(st, j)}<input class="inp" inputmode="decimal" placeholder="${st.hint ? esc(st.hint) : '0'}" data-i="${i}" data-j="${j}" data-k="min" value="${esc(st.min)}"><input class="inp" inputmode="decimal" placeholder="0" data-i="${i}" data-j="${j}" data-k="km" value="${esc(st.km)}"><button class="rmset" data-act="rmset" data-i="${i}" data-j="${j}" aria-label="Eintrag löschen">✕</button></div>`).join('')}<button class="addset" data-act="addset" data-i="${i}">+ INTERVALL</button></div>`;
 }
@@ -1654,22 +1686,58 @@ function beep() {
   } catch {}
   navigator.vibrate?.([200, 100, 200]);
 }
+/* Satzpause in der Benachrichtigungsleiste (Pull-down) + Meldung am Ende */
+let restNoteTs = 0;
+const restNotifyOn = () => notifSupported() && Notification.permission === 'granted' && state.restCfg.notify !== false;
+function showNote(title, opts) {
+  opts = { icon: 'icon-192.png', badge: 'icon-192.png', data: { url: './' }, ...opts };
+  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.ready.then(reg => reg.showNotification(title, opts)).catch(() => {});
+  else try { new Notification(title, opts); } catch {}
+}
+function closeNotes(tag) {
+  if (!('serviceWorker' in navigator) || !location.protocol.startsWith('http')) return;
+  navigator.serviceWorker.getRegistration().then(reg => reg?.getNotifications({ tag })).then(ns => ns?.forEach(n => n.close())).catch(() => {});
+}
+function restNotify() {
+  const r = state.session?.rest; if (!r || !restNotifyOn()) return;
+  const left = Math.max(0, Math.ceil((r.end - Date.now()) / 1000));
+  const endAt = new Date(r.end).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  showNote(`⏱ Satzpause: noch ${fmtClock(left)}`, { body: `Endet um ${endAt} Uhr · Tippe, um zurück ins Training zu gehen`, tag: 'hg-rest', renotify: false, silent: true, timestamp: r.end });
+  restNoteTs = Date.now();
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') restNotify(); else closeNotes('hg-rest');
+});
 function startRest(sec = state.restCfg.dur) {
   if (!state.session) return;
   try { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); audioCtx.resume?.(); } catch {}
   state.session.rest = { end: Date.now() + sec * 1000, total: sec };
+  // Einmalig fragen, ob die Pause in den Benachrichtigungen erscheinen darf
+  if (notifSupported() && Notification.permission === 'default' && !state.restAsked) {
+    state.restAsked = true;
+    Notification.requestPermission().then(p => { if (p === 'granted') toast('🔔 Die Satzpause erscheint jetzt auch in deinen Benachrichtigungen.'); });
+  }
   save(); renderRest(true);
 }
-function stopRest() { if (state.session) state.session.rest = null; save(); $('#restBar').className = ''; $('#restBar').innerHTML = ''; }
+function stopRest() { if (state.session) state.session.rest = null; save(); $('#restBar').className = ''; $('#restBar').innerHTML = ''; closeNotes('hg-rest'); dockRest(); }
+/* Die Pausen-Leiste dockt im Training oben an und bleibt beim Scrollen sichtbar */
+function dockRest() {
+  const bar = $('#restBar'), scr = $('#scr-training'), on = currentScreen === 'training' && bar.classList.contains('show');
+  bar.classList.toggle('dock', currentScreen === 'training');
+  scr.style.paddingTop = on ? `calc(var(--top-h) + env(safe-area-inset-top) + ${bar.offsetHeight + 16}px)` : '';
+}
 function renderRest(full) {
   const bar = $('#restBar'), r = state.session?.rest;
-  if (!r) { if (bar.innerHTML) { bar.className = ''; bar.innerHTML = ''; } return; }
+  if (!r) { if (bar.innerHTML) { bar.className = ''; bar.innerHTML = ''; dockRest(); } return; }
   const left = Math.ceil((r.end - Date.now()) / 1000);
+  if (document.visibilityState === 'hidden' && left > 0 && Date.now() - restNoteTs > 10000) restNotify();
   if (left <= 0) {
     if (!bar.classList.contains('done')) {
-      beep(); bar.className = 'show done';
+      beep(); bar.className = 'show done'; closeNotes('hg-rest');
+      if (document.visibilityState === 'hidden' && restNotifyOn()) showNote('✅ Pause vorbei – nächster Satz! 💪', { body: 'Dein Hamster wartet schon auf dich.', tag: 'hg-rest-end', renotify: true, vibrate: [300, 100, 300, 100, 300] });
       bar.innerHTML = `<div class="rb-top"><div><div class="rb-time disp ol">LOS!</div><div class="rb-lbl" style="color:#fff">PAUSE VORBEI</div></div><div style="font-weight:700;font-size:14px">Nächster Satz! 💪</div><div class="rb-btns"><button class="gbtn gold" data-rb="next">OK</button></div></div>`;
       setTimeout(() => { if (state.session?.rest && state.session.rest.end <= Date.now()) stopRest(); }, 6000);
+      dockRest();
     }
     return;
   }
@@ -1677,7 +1745,7 @@ function renderRest(full) {
     bar.className = 'show';
     bar.innerHTML = `<div class="rb-top"><div><div class="rb-time disp ol" id="rbTime"></div><div class="rb-lbl">SATZPAUSE</div></div><div class="rb-btns"><button class="gbtn gray sm" data-rb="-15">−15s</button><button class="gbtn gray sm" data-rb="15">+15s</button><button class="gbtn sm" data-rb="next">WEITER ›</button></div></div><div class="rb-prog"><i id="rbProg"></i></div>
       <div class="tapgame"><button id="tapHam" aria-label="Hamster antippen">${hamsterSVG(hamsterParams({ crop: true, static: true, mood: 'cheer' }))}</button><div class="tapinfo"><b class="disp">👆 TAP-CHALLENGE</b><span id="tapTxt"></span><div class="tapbar"><i id="tapProg"></i></div></div><button class="gbtn purple sm" data-rb="game" style="flex:none">🎮 SPIEL</button></div>`;
-    updateTap();
+    updateTap(); dockRest();
   }
   $('#rbTime').textContent = fmtClock(left);
   $('#rbProg').style.width = (left / r.total * 100) + '%';
@@ -1730,6 +1798,7 @@ $('#trainingBody').addEventListener('click', e => {
   if (st) { startSession(st.dataset.start); renderTraining(); renderHome(); pickExercise(); return; }
   const pl = e.target.closest('[data-plan]');
   if (pl) { const p = state.plans.find(x => x.id === pl.dataset.plan); if (p) { startSession(p.type, p); renderTraining(); renderHome(); toast(`📋 Plan „${esc(p.name)}“ geladen – Gewichte vom letzten Mal sind eingetragen.`); } return; }
+  const ep = e.target.closest('[data-editplan]'); if (ep) { editPlan(ep.dataset.editplan); return; }
   const dp = e.target.closest('[data-delplan]');
   if (dp) { const p = state.plans.find(x => x.id === dp.dataset.delplan); confirmBox('PLAN LÖSCHEN?', `„${esc(p.name)}“ wird gelöscht. Deine gespeicherten Trainings bleiben erhalten.`, 'LÖSCHEN', 'red', () => { state.plans = state.plans.filter(x => x !== p); for (const k in state.schedule) if (state.schedule[k] === p.id) state.schedule[k] = 'free'; save(true); renderTraining(); }); return; }
   const b = e.target.closest('[data-act]'); if (!b) return;
@@ -1741,6 +1810,7 @@ $('#trainingBody').addEventListener('click', e => {
       if (set.done && state.restCfg.on) startRest();
       break;
     }
+    case 'renex': renameDialog(s.exercises[i].name, nn => { s.exercises[i].name = nn; save(); renderTraining(); }); break;
     case 'part':
       if (s.type !== b.dataset.p) { s.type = b.dataset.p; save(); renderTraining(); toast(`🔁 Weiter mit ${TYPES[s.type].name} – neue Übungen zählen jetzt dazu.`); pickExercise(); }
       break;
@@ -1750,7 +1820,12 @@ $('#trainingBody').addEventListener('click', e => {
     case 'saveplan': planDialog(s.type, s.exercises, s.planId, s.planName, p => { s.planId = p.id; s.planName = p.name; save(); renderTraining(); }); break;
     case 'addex': pickExercise(); break;
     case 'rmex': s.exercises.splice(i, 1); save(); renderTraining(); break;
-    case 'addset': { const ex = s.exercises[i], last = ex.sets[ex.sets.length - 1]; ex.sets.push(ex.kind === 'strength' ? { kg: last?.kg ?? '', reps: last?.reps ?? '' } : { min: '', km: '' }); save(); renderTraining(); break; }
+    case 'addset': {
+      // Neuer Satz: Werte vom gleichen Satz beim letzten Mal, sonst vom vorherigen Satz übernehmen
+      const ex = s.exercises[i], prev = ex.sets[ex.sets.length - 1], ls = lastExercise(ex.name)?.e.sets[ex.sets.length];
+      ex.sets.push(ex.kind === 'strength' ? (ls ? { kg: ls.kg, reps: '', hint: ls.reps } : { kg: prev?.kg ?? '', reps: prev?.reps ?? '' }) : { min: '', km: '', hint: ls?.min ?? '' });
+      save(); renderTraining(); break;
+    }
     case 'rmset': s.exercises[i].sets.splice(j, 1); if (!s.exercises[i].sets.length) s.exercises.splice(i, 1); save(); renderTraining(); break;
     case 'cancel': confirmBox('ABBRECHEN?', 'Das laufende Training wird verworfen. Dein Hamster bekommt keine XP.', 'VERWERFEN', 'red', () => { state.session = null; save(true); renderRest(); renderTraining(); renderHome(); }); break;
     case 'finish': finishDialog(); break;
@@ -1769,6 +1844,51 @@ $('#trainingBody').addEventListener('input', e => {
   state.session.exercises[+t.dataset.i].sets[+t.dataset.j][t.dataset.k] = v;
   save();
 });
+/* Übungsnamen korrigieren – auf Wunsch überall (Verlauf, Rekorde, Notizen, andere Pläne) */
+function renameExercise(oldN, newN) {
+  if (!newN || oldN === newN) return;
+  for (const w of state.workouts) for (const e of w.exercises) if (e.name === oldN) e.name = newN;
+  for (const p of state.plans) for (const e of p.exercises) if (e.name === oldN) e.name = newN;
+  if (state.session) for (const e of state.session.exercises) if (e.name === oldN) e.name = newN;
+  if (state.prs[oldN]) { const a = state.prs[oldN], b = state.prs[newN]; state.prs[newN] = !b || a.kg > b.kg || (a.kg === b.kg && a.reps > b.reps) ? a : b; delete state.prs[oldN]; }
+  if (state.exNotes?.[oldN]) { if (!state.exNotes[newN]) state.exNotes[newN] = state.exNotes[oldN]; delete state.exNotes[oldN]; }
+}
+function renameDialog(oldN, done) {
+  openModal(`<h2>ÜBUNG UMBENENNEN</h2><label class="fl">NEUER NAME</label><input class="inp left" id="rnName" maxlength="40" value="${esc(oldN)}">
+    <label style="display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:600;font-size:13px"><input type="checkbox" id="rnAll" checked style="width:20px;height:20px"> Überall ändern (Pläne, Verlauf, Rekorde, Notizen)</label>
+    <div class="row" style="margin-top:12px"><button class="gbtn gray" data-x>ABBRECHEN</button><button class="gbtn" data-ok>SPEICHERN</button></div>`, mc => {
+    const inp = mc.querySelector('#rnName'); setTimeout(() => { inp.focus(); inp.select(); }, 50);
+    mc.querySelector('[data-x]').onclick = closeModal;
+    mc.querySelector('[data-ok]').onclick = () => {
+      const nn = inp.value.trim(); if (!nn) return toast('Bitte einen Namen eingeben.');
+      if (mc.querySelector('#rnAll').checked) renameExercise(oldN, nn);
+      done(nn); save(true); closeModal(); toast(`✏️ „${esc(oldN)}“ heißt jetzt „${esc(nn)}“`);
+    };
+  });
+}
+function editPlan(id) {
+  const p = state.plans.find(x => x.id === id); if (!p) return;
+  const rows = p.exercises.map((e, i) => `<div class="pe-row" data-row="${i}"><input class="inp left" data-pn="${i}" maxlength="40" value="${esc(e.name)}"><input class="inp" data-ps="${i}" inputmode="numeric" value="${e.sets}" aria-label="Sätze"><button class="iconbtn" data-prm="${i}" aria-label="Übung entfernen">✕</button></div>`).join('');
+  openModal(`<h2>PLAN BEARBEITEN</h2><label class="fl">NAME DES PLANS</label><input class="inp left" id="peName" maxlength="30" value="${esc(p.name)}">
+    <label class="fl">ÜBUNGEN <span class="muted">(Name · Sätze)</span></label><div id="peRows">${rows}</div>
+    <label style="display:flex;gap:8px;align-items:center;margin-top:8px;font-weight:600;font-size:13px"><input type="checkbox" id="peAll" checked style="width:20px;height:20px"> Umbenennungen überall übernehmen (Verlauf, Rekorde, Notizen)</label>
+    <div class="row" style="margin-top:12px"><button class="gbtn gray" data-x>ABBRECHEN</button><button class="gbtn" data-ok>SPEICHERN</button></div>`, mc => {
+    mc.querySelector('[data-x]').onclick = closeModal;
+    mc.querySelectorAll('[data-prm]').forEach(b => b.onclick = () => b.closest('.pe-row').remove());
+    mc.querySelector('[data-ok]').onclick = () => {
+      const name = mc.querySelector('#peName').value.trim(); if (!name) return toast('Bitte gib dem Plan einen Namen.');
+      const all = mc.querySelector('#peAll').checked, ex = [];
+      mc.querySelectorAll('.pe-row').forEach(r => {
+        const i = +r.dataset.row, old = p.exercises[i], nn = r.querySelector('[data-pn]').value.trim() || old.name;
+        const sets = Math.max(1, Math.min(20, Math.round(+r.querySelector('[data-ps]').value) || old.sets));
+        if (nn !== old.name && all) renameExercise(old.name, nn);
+        ex.push({ ...old, name: nn, sets });
+      });
+      if (!ex.length) return toast('Ein Plan braucht mindestens eine Übung.');
+      p.name = name; p.exercises = ex; save(true); closeModal(); renderTraining(); toast('✅ Plan gespeichert');
+    };
+  });
+}
 function planDialog(type, exercises, id, name, done, cancel) {
   openModal(`<h2>${id ? 'PLAN AKTUALISIEREN' : 'PLAN SPEICHERN'}</h2>
     <p class="center muted" style="opacity:1;font-weight:600">${exercises.map(e => `${esc(e.name)} (${e.sets.length} ${e.kind === 'strength' ? 'Sätze' : 'Int.'})`).join(' · ')}</p>
@@ -1801,7 +1921,11 @@ function pickExercise() {
     let ck = kinds[0];
     const add = (name, kind) => {
       name = name.trim(); if (!name) return toast('Bitte einen Namen eingeben.');
-      s.exercises.push({ name, kind, part: s.type, sets: [kind === 'strength' ? { kg: state.prs[name]?.kg ?? '', reps: '' } : { min: '', km: '' }] });
+      // Gleiche Satzzahl & Gewichte wie beim letzten Mal vorbereiten (Wdh. als grauer Vorschlag)
+      const le = lastExercise(name)?.e;
+      const sets = le ? le.sets.map(ls => kind === 'strength' ? { kg: ls.kg, reps: '', hint: ls.reps } : { min: '', km: '', hint: ls.min })
+        : [kind === 'strength' ? { kg: state.prs[name]?.kg ?? '', reps: '' } : { min: '', km: '' }];
+      s.exercises.push({ name, kind, part: s.type, sets });
       save(); closeModal(); renderTraining();
       setTimeout(() => { const inputs = $$('#trainingBody input'); const target = inputs[inputs.length - (inputs.length ? 1 : 0)]; target?.focus(); }, 50);
     };
@@ -1994,18 +2118,18 @@ $('#trackerBody').addEventListener('click', e => {
 
 /* ---------- Upgrades ---------- */
 function renderUpgrades() {
-  $('#upgradesBody').innerHTML = `<div class="banner" style="margin:0 0 14px">${ICONS.coin.replace('<svg', '<svg width="26" height="26"')}<span>Du hast <b>${fmt(state.coins)}</b> Münzen. Münzen gibt es für jedes Training, Rekorde und Level-Ups.</span></div>` +
+  $('#upgradesBody').innerHTML = `<div class="banner" style="margin:0 0 14px">${ICONS.star.replace('<svg', '<svg width="26" height="26"')}<span>Du hast <b>${fmt(state.xpBank)} XP</b> zum Ausgeben. Upgrades kosten XP – dein Level bleibt dabei erhalten. Münzen sind für den Shop.</span></div>` +
     UPGRADES.map(u => {
-      const lv = state.upgrades[u.id] || 0, maxed = lv >= u.max, c = upgCost(u, lv), locked = u.lvl && levelInfo().level < u.lvl;
+      const lv = state.upgrades[u.id] || 0, maxed = lv >= u.max, c = upgXp(u, lv), locked = u.lvl && levelInfo().level < u.lvl;
       return `<div class="panel card ${locked ? 'locked-card' : ''}"><div class="ic">${ICONS[u.ico]}</div><div class="tx"><b>${u.name}</b><p>${u.desc}</p><div class="pips">${Array.from({ length: u.max }, (_, i) => `<i class="${i < lv ? 'on' : ''}"></i>`).join('')}</div></div>
-      <div class="act">${locked ? `<span class="tag">🔒 LVL ${u.lvl}</span>` : maxed ? '<span class="tag green">MAX</span>' : `<button class="gbtn gold sm" data-up="${u.id}" ${state.coins < c ? 'disabled' : ''}><span class="cost">${ICONS.coin}${fmt(c)}</span></button>`}</div></div>`;
+      <div class="act">${locked ? `<span class="tag">🔒 LVL ${u.lvl}</span>` : maxed ? '<span class="tag green">MAX</span>' : `<button class="gbtn purple sm" data-up="${u.id}" ${state.xpBank < c ? 'disabled' : ''}><span class="cost">${ICONS.star}${fmt(c)} XP</span></button>`}</div></div>`;
     }).join('');
 }
 $('#upgradesBody').addEventListener('click', e => {
   const b = e.target.closest('[data-up]'); if (!b) return;
-  const u = UPGRADES.find(x => x.id === b.dataset.up), lv = state.upgrades[u.id] || 0, c = upgCost(u, lv);
-  if (lv >= u.max || state.coins < c || (u.lvl && levelInfo().level < u.lvl)) return;
-  state.coins -= c; state.upgrades[u.id] = lv + 1; save(true);
+  const u = UPGRADES.find(x => x.id === b.dataset.up), lv = state.upgrades[u.id] || 0, c = upgXp(u, lv);
+  if (lv >= u.max || state.xpBank < c || (u.lvl && levelInfo().level < u.lvl)) return;
+  state.xpBank -= c; state.upgrades[u.id] = lv + 1; save(true);
   toast(`⬆️ ${u.name} ist jetzt Stufe ${lv + 1}!`); renderAll();
 });
 
@@ -2067,18 +2191,11 @@ $('#shopBody').addEventListener('click', ev => {
 const rnd = n => Math.floor(Math.random() * n);
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const GAMES = [
-  { id: 'paket', name: 'PAKETPANIK', icon: '📦', desc: 'Sortiere die Pakete vom Förderband in den richtigen Lieferwagen – es wird immer hektischer!',
-    how: 'Wische das vorderste (gelb umrandete) Paket nach links, oben oder rechts – oder tippe die Tasten. Graue Pakete erst antippen, zerbrechliche nur per Taste senden!', make: gamePaket },
-  { id: 'stapel', name: 'SCHATTENSTAPEL', icon: '🧱', desc: 'Staple verrückte Gegenstände so, dass sie genau die Schattenform treffen.',
-    how: '◀ ▶ verschieben, ⟳ drehen, ⬇ absetzen (oder wischen). Gestrichelte Felder sind die Zielform. Zu wenig Halt = es kippt! FERTIG wertet aus.', make: gameStapel },
-  { id: 'kurier', name: 'WOLKENKURIER', icon: '🚁', desc: 'Fliege die Hamster-Drohne zur Insel – aber du darfst nur ein paar Mal abbiegen!',
-    how: 'Die erste Wischbewegung startet die Drohne. Jeder weitere Richtungswechsel kostet ein ↻. Wolken = Crash. ⚡ = +1 Wechsel, ✉️ = Bonus.', make: gameKurier },
-  { id: 'fridge', name: 'KÜHLSCHRANK-KOMMANDO', icon: '🧊', desc: 'Räum den Kühlschrank ein und liefere Bestellungen aus, bevor alles überquillt.',
-    how: 'Tippe ein Feld, um das gelb markierte Teil dort einzuräumen (⟳ dreht es). Leuchtet eine Bestellung grün, tippe sie zum Liefern. ⭐ ersetzt eine fehlende Zutat.', make: gameFridge },
+  { id: 'ufo', name: 'UFO-KURIER', icon: '🛸', desc: 'Flieg dein Hamster-UFO zur Insel – aber du darfst nur ein paar Mal abbiegen!',
+    how: 'Die erste Wischbewegung startet das UFO. Jeder weitere Richtungswechsel kostet ein ●. Wolken = Crash. 🌬️-Felder schieben dich weiter. ⚡ = +1 Wechsel, ✉️ = Bonus. Lieferungen in Folge geben Serien-Bonus.', make: gameUfo },
   { id: 'licht', name: 'LICHTDIEB', icon: '💎', desc: 'Schleich als Bandit-Hamster an den Scheinwerfern vorbei und klau die Kristalle.',
-    how: 'Tippe ein Nachbarfeld oder wische für einen Schritt. Gestrichelte Felder leuchten gleich auf! Erwischt = Kristalle weg. Ab durch die grüne Tür 🚪.', make: gameLicht },
-];
-let G = null, lastGameId = null;
+    how: 'Tippe auf ein Feld – dein Hamster läuft automatisch hin (nochmal tippen = stopp). Wischen oder Pfeile = ein Schritt. Gestrichelt = dort leuchtet es gleich! Unentdeckt & schnell durch die Tür 🚪 gibt Bonus.', make: gameLicht },
+];let G = null, lastGameId = null;
 const restLeft = () => { const r = state.session?.rest; return r ? Math.max(0, r.end - Date.now()) : 0; };
 function offerGame(def) {
   if (!state.session?.rest || restLeft() < 5000) { toast('Die Satzpause ist gleich vorbei!'); return; }
@@ -2157,354 +2274,224 @@ function closeGame() {
 }
 $('#glClose').onclick = () => { if (G && !G.over) endGame('quit'); else closeGame(); };
 /* Kleine Grafik-Helfer für die Spiele */
-const truckSVG = c => `<svg viewBox="0 0 64 40"><rect x="3" y="5" width="38" height="25" rx="4" fill="${c}" stroke="${IK}" stroke-width="3"/><path d="M41 13h11l9 9v8H41z" fill="#fff" stroke="${IK}" stroke-width="3" stroke-linejoin="round"/><path d="M45 16h6l5 6H45z" fill="#9BD6FF"/><circle cx="15" cy="32" r="5.5" fill="#2B2F3A" stroke="${IK}" stroke-width="2.5"/><circle cx="50" cy="32" r="5.5" fill="#2B2F3A" stroke="${IK}" stroke-width="2.5"/></svg>`;
 const gemSVG = `<svg class="ld-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 12L2 9z" fill="#7FE3FF" stroke="${IK}" stroke-width="2" stroke-linejoin="round"/><path d="M2 9h20M9 3l3 18 3-18" stroke="${IK}" stroke-width="1.2" fill="none" opacity=".45"/><path d="M7 5l-2 4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 const miniHam = (mood = 'determined') => hamsterSVG({ m: .3, f: .4, band: state.equipped.band || 'green', skin: state.equipped.skin, crop: true, static: true, mood });
 const placeOnCell = (el, cell, grid) => { el.style.left = grid.offsetLeft + cell.offsetLeft + 'px'; el.style.top = grid.offsetTop + cell.offsetTop + 'px'; el.style.width = cell.offsetWidth + 'px'; el.style.height = cell.offsetHeight + 'px'; };
 const DIRS = { u: [0, -1], d: [0, 1], l: [-1, 0], r: [1, 0] }, ARROWS = { l: '◀', u: '▲', d: '▼', r: '▶' };
 const arrowCtrl = () => ['l', 'u', 'd', 'r'].map(k => `<button class="gbtn blue" data-c="${k}">${ARROWS[k]}</button>`).join('');
 
-/* ---------- 1) Paketpanik ---------- */
-function gamePaket(api) {
-  const TY = [{ s: '🏙️', n: 'STADT', c: '#3DA5F5' }, { s: '🌾', n: 'LAND', c: '#35C95B' }, { s: '⚡', n: 'EXPRESS', c: '#F5A91C' }];
-  const A = api.area; let order = [0, 1, 2], pk = [], combo = 0, cover = 0, frag = 0, raf, t0 = performance.now(), last = t0, nextSpawn = 0, nextDis = 30, disN = 0, uid = 0;
-  A.innerHTML = `<div class="pp-trucks"></div><div class="pp-belt"></div><div class="pp-hint">Wische ↖ ↑ ↗ oder tippe unten auf den Laster</div>`;
-  api.ctrl.innerHTML = [0, 1, 2].map(i => `<button class="gbtn blue" data-c="${i}"></button>`).join('');
-  const trucks = A.querySelector('.pp-trucks'), belt = A.querySelector('.pp-belt');
-  const draw = () => {
-    trucks.innerHTML = order.map(t => `<div class="pp-truck" style="--c:${TY[t].c}">${truckSVG(TY[t].c)}<span>${TY[t].s}</span><b>${TY[t].n}</b></div>`).join('');
-    api.ctrl.querySelectorAll('[data-c]').forEach((b, i) => { b.innerHTML = `${['◀', '▲', '▶'][i]} ${TY[order[i]].s}`; });
-  };
-  draw(); api.info('Combo: 0');
-  function spawn() {
-    const p = { id: ++uid, type: rnd(3), x: -64, cov: false, frag: false };
-    if (cover > 0) { p.cov = true; cover--; } else if (frag > 0) { p.frag = true; frag--; }
-    p.el = document.createElement('div'); p.el.className = 'pp-pkg' + (p.cov ? ' cov' : '') + (p.frag ? ' frag' : ''); p.el.dataset.id = p.id;
-    p.el.innerHTML = `<span>${p.cov ? '?' : TY[p.type].s}</span>${p.frag ? '<i>ZERBRECHLICH</i>' : ''}`;
-    p.el.style.transform = `translateX(${p.x}px)`;
-    belt.appendChild(p.el); pk.push(p);
-  }
-  const front = () => pk.reduce((a, b) => !a || b.x > a.x ? b : a, null);
-  function send(slot, swipe) {
-    const p = front(); if (!p) return;
-    if (p.cov) { api.float('Erst antippen!', p.x + 30, belt.offsetTop, true); return; }
-    pk = pk.filter(q => q !== p);
-    const tEl = trucks.children[slot], ar = A.getBoundingClientRect(), tr = tEl.getBoundingClientRect(), br = belt.getBoundingClientRect();
-    const tx = tr.left - ar.left + tr.width / 2 - 29, ty = tr.top - br.top - 6;
-    p.el.style.transition = 'transform .35s ease-in, opacity .35s'; p.el.style.transform = `translate(${tx}px, ${ty}px) scale(.45)`; p.el.style.opacity = '0';
-    setTimeout(() => p.el.remove(), 380);
-    const right = order[slot] === p.type, broke = p.frag && swipe;
-    if (right && !broke) { combo++; api.add(10 * (1 + Math.floor(combo / 3)), tx + 30, 70); tEl.classList.add('flash'); setTimeout(() => tEl.classList.remove('flash'), 420); }
-    else { combo = 0; api.add(-5, tx + 30, 70); api.float(broke ? 'Zerbrochen! 💥' : 'Falscher Laster!', A.clientWidth / 2, belt.offsetTop - 18, true); }
-    api.info(`Combo: ${combo}${combo >= 3 ? ` · Punkte ×${1 + Math.floor(combo / 3)}` : ''}`);
-  }
-  function loop(ts) {
-    const dt = Math.min(.05, (ts - last) / 1000), el = (ts - t0) / 1000; last = ts;
-    const speed = 42 + el * .9, W = A.clientWidth;
-    if (el >= nextSpawn) { spawn(); nextSpawn = el + Math.max(.85, 2.6 - el * .014); }
-    if (el >= nextDis) {
-      nextDis += 30; const k = disN++ % 3;
-      if (k === 0) { shuffle(order); draw(); api.banner('🔀 Die Laster tauschen die Plätze!'); }
-      if (k === 1) { cover = 3; api.banner('❓ Verdeckte Pakete – erst antippen!'); }
-      if (k === 2) { frag = 2; api.banner('🍷 Zerbrechlich – nur per Taste senden!'); }
-    }
-    const f = front();
-    for (const p of pk) { p.x += speed * dt; p.el.style.transform = `translateX(${p.x}px)`; p.el.classList.toggle('front', p === f); }
-    for (const p of pk.filter(q => q.x > W - 52)) {
-      pk = pk.filter(q => q !== p);
-      p.el.style.transition = 'transform .4s, opacity .4s'; p.el.style.transform = `translate(${p.x + 30}px, 70px) rotate(40deg)`; p.el.style.opacity = '0';
-      setTimeout(() => p.el.remove(), 420);
-      combo = 0; api.add(-5, W - 40, belt.offsetTop); api.info('Combo: 0 · Paket verpasst!');
-    }
-    raf = requestAnimationFrame(loop);
-  }
-  raf = requestAnimationFrame(loop);
-  return {
-    destroy() { cancelAnimationFrame(raf); },
-    ctrl: c => send(+c, false),
-    swipe: d => { if (d === 'l') send(0, true); else if (d === 'r') send(2, true); else if (d === 'u') send(1, true); },
-    tap(t) {
-      const el = t.closest?.('.pp-pkg'), p = el && pk.find(q => q.id === +el.dataset.id);
-      if (p?.cov) { p.cov = false; el.classList.remove('cov'); el.querySelector('span').textContent = TY[p.type].s; }
-    },
-  };
-}
-
-/* ---------- 2) Schattenstapel ---------- */
-function gameStapel(api) {
-  const W = 6, H = 8, A = api.area;
-  const SH = [{ n: 'Kiste', c: '#C98A4B', s: [[0, 0]] }, { n: 'Sofa', c: '#E5483F', s: [[0, 0], [1, 0]] }, { n: 'Blumentopf', c: '#35C95B', s: [[0, 0], [0, 1]] },
-    { n: 'Baustein', c: '#8A5CF6', s: [[0, 0], [1, 0], [0, 1]] }, { n: 'Reifen', c: '#4A5270', s: [[0, 0]] }, { n: 'Regal', c: '#3DA5F5', s: [[0, 0], [1, 0], [2, 0]] },
-    { n: 'Treppe', c: '#FF9A3D', s: [[0, 0], [1, 0], [1, 1]] }];
-  let grid, target, piece, px, task = 0, taskEnd, tick;
-  A.innerHTML = `<div class="gg" style="grid-template-columns:repeat(${W},1fr);grid-template-rows:repeat(${H},1fr)"></div>`;
-  const gg = A.querySelector('.gg');
-  for (let i = 0; i < W * H; i++) gg.appendChild(document.createElement('div'));
-  api.ctrl.innerHTML = `<button class="gbtn blue" data-c="l">◀</button><button class="gbtn blue" data-c="rot">⟳</button><button class="gbtn blue" data-c="r">▶</button><button class="gbtn" data-c="drop">⬇</button><button class="gbtn gold" data-c="done">FERTIG</button>`;
-  const cellEl = (x, y) => gg.children[(H - 1 - y) * W + x];
-  const norm = s => { const mx = Math.min(...s.map(c => c[0])), my = Math.min(...s.map(c => c[1])); return s.map(([x, y]) => [x - mx, y - my]); };
-  const pw = () => Math.max(...piece.s.map(c => c[0])) + 1, ph = () => Math.max(...piece.s.map(c => c[1])) + 1;
-  const clampX = () => { px = Math.max(0, Math.min(W - pw(), px)); };
-  const fits = (x0, y0) => piece.s.every(([x, y]) => y0 + y >= 0 && y0 + y < H && !grid[y0 + y][x0 + x]);
-  function landY() { let y = H - ph(); if (!fits(px, y)) return null; while (fits(px, y - 1)) y--; return y; }
-  function newPiece() { const t = SH[rnd(SH.length)]; piece = { ...t, s: norm(t.s) }; px = Math.floor((W - 1) / 2); clampX(); }
-  function newTask() {
-    task++; grid = Array.from({ length: H }, () => Array(W).fill(null));
-    do { target = new Set(); let h = 1 + rnd(3); for (let x = 0; x < W; x++) { h = Math.max(0, Math.min(5, h + rnd(3) - 1)); for (let y = 0; y < h; y++) target.add(x + ',' + y); } } while (target.size < 7 || target.size > 18);
-    taskEnd = Date.now() + 40000; newPiece(); render();
-  }
-  function render() {
-    const ly = landY(), ghost = new Set(ly == null ? [] : piece.s.map(([x, y]) => (px + x) + ',' + (ly + y)));
-    const top = new Set(piece.s.map(([x, y]) => (px + x) + ',' + (H - ph() + y)));
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-      const el = cellEl(x, y), k = x + ',' + y, f = grid[y][x], isTop = top.has(k) && !f;
-      el.className = 'st-cell' + (target.has(k) ? ' tg' : '') + (f ? ' f' : '') + (!f && !isTop && ghost.has(k) ? ' ghost' : '') + (isTop ? ' cur' : '');
-      el.style.background = f || (isTop ? piece.c : '');
-    }
-    api.info(`🏗️ Aufgabe ${task} · ${piece.n} · noch ${Math.max(0, Math.ceil((taskEnd - Date.now()) / 1000))} s`);
-  }
-  function drop() {
-    const y0 = landY(); if (y0 == null) { api.float('Kein Platz mehr – FERTIG drücken!', null, null, true); return; }
-    const cells = piece.s.map(([x, y]) => [px + x, y0 + y]), own = new Set(cells.map(c => c.join(',')));
-    const bottoms = cells.filter(([x, y]) => !own.has(x + ',' + (y - 1)));
-    const sup = bottoms.filter(([x, y]) => y === 0 || grid[y - 1][x]).length;
-    if (bottoms.length > 1 && sup / bottoms.length < .5) { api.add(-5); api.float('Kippt runter! 💥', null, null, true); newPiece(); render(); return; }
-    cells.forEach(([x, y]) => { grid[y][x] = piece.c; });
-    const over = bottoms.length - sup; if (over) api.add(3 * over); // riskanter Überhang
-    newPiece(); render();
-  }
-  function score() {
-    let match = 0, extra = 0, miss = 0;
-    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) { const f = !!grid[y][x], t = target.has(x + ',' + y); if (f && t) match++; else if (f) extra++; else if (t) miss++; }
-    let pts = match * 10 - extra * 4;
-    if (!miss && !extra) { pts += 50; api.banner('🌟 PERFEKTE FORM! +50'); } else api.banner(`${match} von ${target.size} Schattenfeldern getroffen`);
-    api.add(pts); newTask();
-  }
-  newTask();
-  tick = setInterval(() => { if (Date.now() >= taskEnd) score(); else render(); }, 500);
-  const ctl = c => {
-    if (c === 'l' || c === 'r') { px += c === 'l' ? -1 : 1; clampX(); render(); }
-    if (c === 'rot') { piece.s = norm(piece.s.map(([x, y]) => [y, -x])); clampX(); render(); }
-    if (c === 'drop') drop();
-    if (c === 'done') score();
-  };
-  return { destroy() { clearInterval(tick); }, ctrl: ctl, swipe: d => ctl(d === 'd' ? 'drop' : d === 'u' ? 'rot' : d), tap: () => ctl('rot') };
-}
-
-/* ---------- 3) Wolkenkurier ---------- */
-function gameKurier(api) {
+/* ---------- 1) UFO-Kurier ---------- */
+const ufoSVG = () => `<svg viewBox="0 0 100 74" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="70" rx="24" ry="3.5" fill="rgba(0,0,0,.2)"/>${miniHam('cheer').replace('<svg ', '<svg x="31" y="6" width="38" height="38" ')}<path d="M27 42 Q27 9 50 9 Q73 9 73 42Z" fill="#CFF6FF" fill-opacity=".45" stroke="${IK}" stroke-width="3"/><path d="M36 18 Q42 13 48 13" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/><ellipse cx="50" cy="46" rx="46" ry="12" fill="#A9B4C8" stroke="${IK}" stroke-width="3"/><ellipse cx="50" cy="42" rx="32" ry="5" fill="#E3E9F2"/><g class="ufo-lights" stroke="${IK}" stroke-width="1.5"><circle cx="16" cy="49" r="3.5" fill="#FFE45C"/><circle cx="33" cy="53" r="3.5" fill="#FF7FC0"/><circle cx="50" cy="54" r="3.5" fill="#7FE3FF"/><circle cx="67" cy="53" r="3.5" fill="#9DF77A"/><circle cx="84" cy="49" r="3.5" fill="#FFE45C"/></g></svg>`;
+const cloudSVG = `<svg viewBox="0 0 40 30"><path d="M8 24a7 7 0 0 1 1-14 10 10 0 0 1 19-2 8 8 0 0 1 5 15z" fill="#fff" stroke="#9CCBE6" stroke-width="2.5"/><path d="M12 13a6 6 0 0 1 6-4" stroke="#E6F7FF" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`;
+const islandSVG = `<svg viewBox="0 0 40 36"><ellipse cx="20" cy="27" rx="17" ry="6" fill="#C98A4B" stroke="${IK}" stroke-width="2.5"/><ellipse cx="20" cy="24" rx="16" ry="5" fill="#35C95B" stroke="${IK}" stroke-width="2.5"/><rect x="15" y="12" width="10" height="9" fill="#FFF1D6" stroke="${IK}" stroke-width="2"/><path d="M13 13l7-7 7 7z" fill="#F0504A" stroke="${IK}" stroke-width="2" stroke-linejoin="round"/><rect x="18" y="16" width="4" height="5" fill="#8B5A2B"/></svg>`;
+function gameUfo(api) {
   const W = 7, H = 9, A = api.area;
-  let map, base, start, goal, limit, turns, drone, routeN = 0, tick;
-  A.innerHTML = `<div class="gg" style="grid-template-columns:repeat(${W},1fr);grid-template-rows:repeat(${H},1fr)"></div><div class="wk-drone"></div>`;
-  const gg = A.querySelector('.gg'), dr = A.querySelector('.wk-drone');
+  let map, base, start, goal, limit, turns, ship, routeN = 0, tick, combo = 0, trail = [], busy = false;
+  A.classList.add('sky');
+  A.innerHTML = `<div class="gg" style="grid-template-columns:repeat(${W},1fr);grid-template-rows:repeat(${H},1fr)"></div><div class="ufo">${ufoSVG()}</div>`;
+  const gg = A.querySelector('.gg'), ufo = A.querySelector('.ufo');
   for (let i = 0; i < W * H; i++) gg.appendChild(document.createElement('div'));
-  dr.innerHTML = miniHam();
   api.ctrl.innerHTML = arrowCtrl();
   const inb = (x, y) => x >= 0 && y >= 0 && x < W && y < H;
-  function minTurns() { // 0-1-BFS über (Feld, Richtung)
+  const isWind = t => typeof t === 'string' && t[0] === 'w';
+  // Wo landet das UFO, wenn es (x,y) betritt? null = Crash. Wind schiebt ein Feld weiter.
+  function land(x, y) {
+    if (!inb(x, y) || map[y][x] === 'cloud') return null;
+    const t = map[y][x];
+    if (isWind(t)) {
+      const tx = x + DIRS[t[1]][0], ty = y + DIRS[t[1]][1];
+      if (!inb(tx, ty) || map[ty][tx] === 'cloud' || isWind(map[ty][tx])) return null;
+      return { x: tx, y: ty, pushed: true };
+    }
+    return { x, y };
+  }
+  function minTurns() { // 0-1-BFS über (Feld, Richtung) inkl. Wind
     const dist = new Map(), dq = [];
     for (const d of Object.keys(DIRS)) { dist.set(`${start.x},${start.y},${d}`, 0); dq.push([start.x, start.y, d, 0]); }
     while (dq.length) {
       const [x, y, d, c] = dq.shift(); if (c > dist.get(`${x},${y},${d}`)) continue;
       if (x === goal.x && y === goal.y) return c;
-      const nx = x + DIRS[d][0], ny = y + DIRS[d][1];
-      if (inb(nx, ny) && map[ny][nx] !== 'cloud') { const k = `${nx},${ny},${d}`; if (!dist.has(k) || dist.get(k) > c) { dist.set(k, c); dq.unshift([nx, ny, d, c]); } }
+      const L = land(x + DIRS[d][0], y + DIRS[d][1]);
+      if (L) { const k = `${L.x},${L.y},${d}`; if (!dist.has(k) || dist.get(k) > c) { dist.set(k, c); dq.unshift([L.x, L.y, d, c]); } }
       for (const d2 of Object.keys(DIRS)) if (d2 !== d) { const k = `${x},${y},${d2}`; if (!dist.has(k) || dist.get(k) > c + 1) { dist.set(k, c + 1); dq.push([x, y, d2, c + 1]); } }
     }
     return null;
   }
   function newRoute() {
     routeN++; limit = null;
-    for (let tries = 0; tries < 300 && limit == null; tries++) {
+    const dens = Math.min(.32, .15 + routeN * .025), winds = Math.min(4, Math.floor(routeN / 2));
+    for (let tries = 0; tries < 400 && limit == null; tries++) {
       map = Array.from({ length: H }, () => Array(W).fill('sky'));
       start = { x: rnd(W), y: H - 1 }; goal = { x: rnd(W), y: rnd(2) };
-      const dens = Math.min(.34, .16 + routeN * .03);
-      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (Math.random() < dens && !(x === start.x && y === start.y) && !(x === goal.x && y === goal.y)) map[y][x] = 'cloud';
-      const mt = minTurns(); if (mt != null && mt >= 1) limit = mt + 1;
+      const free = (x, y) => !(x === start.x && y === start.y) && !(x === goal.x && y === goal.y);
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (Math.random() < dens && free(x, y)) map[y][x] = 'cloud';
+      for (let n = 0; n < winds; n++) { const x = rnd(W), y = 1 + rnd(H - 2); if (map[y][x] === 'sky' && free(x, y)) map[y][x] = 'w' + 'udlr'[rnd(4)]; }
+      const mt = minTurns(); if (mt != null && mt >= 1 && mt <= 4) limit = mt + (routeN <= 2 ? 2 : 1);
     }
     if (limit == null) { map = Array.from({ length: H }, () => Array(W).fill('sky')); limit = 2; }
-    const free = []; for (let y = 1; y < H - 1; y++) for (let x = 0; x < W; x++) if (map[y][x] === 'sky' && !(x === goal.x && y === goal.y)) free.push([x, y]);
-    shuffle(free); free.slice(0, 1).forEach(([x, y]) => { map[y][x] = 'charge'; }); free.slice(1, 3).forEach(([x, y]) => { map[y][x] = 'stamp'; });
-    base = JSON.stringify(map); reset(); api.banner(`✉️ Lieferung ${routeN} · max. ${limit} Wechsel`);
+    const cells = []; for (let y = 1; y < H - 1; y++) for (let x = 0; x < W; x++) if (map[y][x] === 'sky' && !(x === goal.x && y === goal.y)) cells.push([x, y]);
+    shuffle(cells); cells.slice(0, 1).forEach(([x, y]) => { map[y][x] = 'charge'; }); cells.slice(1, 3).forEach(([x, y]) => { map[y][x] = 'stamp'; });
+    base = JSON.stringify(map); reset();
+    api.banner(`🛸 Lieferung ${routeN}${winds ? ' · 🌬️ Wind!' : ''}<br><small>max. ${limit} Richtungswechsel</small>`);
   }
-  function reset() { map = JSON.parse(base); drone = { x: start.x, y: start.y, dir: null }; turns = limit; render(); }
+  function reset() { map = JSON.parse(base); ship = { x: start.x, y: start.y, dir: null }; turns = limit; trail = []; render(); }
   function render() {
+    const tr = new Set(trail.map(([x, y]) => x + ',' + y));
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
       const el = gg.children[y * W + x], t = map[y][x], isG = x === goal.x && y === goal.y, isS = x === start.x && y === start.y;
-      const cls = 'wk-cell' + (t === 'cloud' ? ' cloud' : '') + (isG ? ' goal' : '') + (isS ? ' start' : ''), html = isG ? '🏝️' : t === 'charge' ? ICONS.bolt : t === 'stamp' ? '✉️' : '';
+      const cls = 'uf-cell' + (t === 'cloud' ? ' cloud' : '') + (isWind(t) ? ' wind' : '') + (isG ? ' goal' : '') + (isS ? ' start' : '') + (tr.has(x + ',' + y) ? ' tr' : '');
+      const html = isG ? islandSVG : t === 'cloud' ? cloudSVG : isWind(t) ? `<span>${ARROWS[t[1]]}</span>` : t === 'charge' ? ICONS.bolt : t === 'stamp' ? '✉️' : '';
       if (el.className !== cls) el.className = cls;
       if (el.dataset.h !== html) { el.dataset.h = html; el.innerHTML = html; }
     }
-    placeOnCell(dr, gg.children[drone.y * W + drone.x], gg);
-    api.info(`↻ Richtungswechsel übrig: <b style="color:#FFE45C;font-size:15px">${turns}</b> · ${drone.dir ? 'fliegt ' + ARROWS[drone.dir] : 'Wische zum Starten!'}`);
+    placeOnCell(ufo, gg.children[ship.y * W + ship.x], gg);
+    ufo.style.setProperty('--tilt', ship.dir === 'l' ? '-14deg' : ship.dir === 'r' ? '14deg' : '0deg');
+    api.info(`↻ <b style="color:#FFE45C;letter-spacing:2px">${'●'.repeat(turns)}<span style="opacity:.3">${'●'.repeat(Math.max(0, limit - turns))}</span></b> · ${ship.dir ? 'fliegt ' + ARROWS[ship.dir] : 'Wische zum Starten!'}${combo > 1 ? ` · 🔥 ${combo}er-Serie` : ''}`);
+  }
+  const cellCenter = (x, y) => { const c = gg.children[y * W + x]; return [gg.offsetLeft + c.offsetLeft + c.offsetWidth / 2, gg.offsetTop + c.offsetTop + c.offsetHeight / 2]; };
+  function crash() {
+    busy = true; combo = 0; api.add(-3, ...cellCenter(ship.x, ship.y));
+    ufo.classList.add('crash'); navigator.vibrate?.(120);
+    setTimeout(() => { ufo.classList.remove('crash'); busy = false; reset(); }, 550);
   }
   function step() {
-    if (!drone.dir) return;
-    const nx = drone.x + DIRS[drone.dir][0], ny = drone.y + DIRS[drone.dir][1];
-    if (!inb(nx, ny) || map[ny][nx] === 'cloud') { api.add(-3); api.float('💥 Crash!', null, null, true); reset(); return; }
-    drone.x = nx; drone.y = ny; const t = map[ny][nx];
-    if (t === 'charge') { turns++; map[ny][nx] = 'sky'; api.float('+1 ↻'); }
-    if (t === 'stamp') { map[ny][nx] = 'sky'; api.add(5); }
-    if (nx === goal.x && ny === goal.y) { render(); api.add(20 + 5 * turns); newRoute(); return; }
+    if (busy || !ship.dir) return;
+    const L = land(ship.x + DIRS[ship.dir][0], ship.y + DIRS[ship.dir][1]);
+    if (!L) { crash(); return; }
+    trail.push([ship.x, ship.y]); if (trail.length > 5) trail.shift();
+    ship.x = L.x; ship.y = L.y;
+    if (L.pushed) api.float('🌬️', ...cellCenter(L.x, L.y));
+    const t = map[L.y][L.x];
+    if (t === 'charge') { turns++; map[L.y][L.x] = 'sky'; api.float('+1 ↻', ...cellCenter(L.x, L.y)); }
+    if (t === 'stamp') { map[L.y][L.x] = 'sky'; api.add(5, ...cellCenter(L.x, L.y)); }
     render();
+    if (L.x === goal.x && L.y === goal.y) {
+      busy = true; combo++;
+      ufo.classList.add('beam');
+      api.add(20 + 5 * turns + 5 * (combo - 1), ...cellCenter(L.x, L.y));
+      setTimeout(() => { ufo.classList.remove('beam'); busy = false; newRoute(); }, 700);
+    }
   }
   function steer(d) {
-    if (!drone.dir) { drone.dir = d; render(); return; }
-    if (d === drone.dir) return;
+    if (busy) return;
+    if (!ship.dir) { ship.dir = d; render(); return; }
+    if (d === ship.dir) return;
     if (turns <= 0) { api.float('Keine Wechsel mehr!', null, null, true); return; }
-    turns--; drone.dir = d; render();
+    turns--; ship.dir = d; render();
   }
-  setTimeout(newRoute, 20);
-  tick = setInterval(step, 340);
-  return { destroy() { clearInterval(tick); }, swipe: steer, ctrl: steer };
+  const loop = () => { step(); tick = setTimeout(loop, Math.max(210, 370 - routeN * 14)); };
+  setTimeout(newRoute, 20); tick = setTimeout(loop, 400);
+  return { destroy() { clearTimeout(tick); A.classList.remove('sky'); }, swipe: steer, ctrl: steer };
 }
 
-/* ---------- 4) Kühlschrank-Kommando ---------- */
-function gameFridge(api) {
-  const W = 4, H = 5, A = api.area;
-  const IT = { milk: { e: '🥛', w: 1, h: 2, c: '#E8F1FF' }, cheese: { e: '🧀', w: 1, h: 1, c: '#FFE27A' }, cuc: { e: '🥒', w: 3, h: 1, c: '#9DF77A' }, berry: { e: '🍓', w: 1, h: 1, c: '#FFB3C7' },
-    egg: { e: '🥚', w: 2, h: 1, c: '#FFF1D6' }, carrot: { e: '🥕', w: 1, h: 2, c: '#FFC08A' }, gold: { e: '⭐', w: 1, h: 1, c: '#FFC83D' } };
-  const KEYS = ['milk', 'cheese', 'cuc', 'berry', 'egg', 'carrot'];
-  let placed = [], queue = [], orders = [], ice = new Map(), uid = 0, combo = 0, rot = false, tick;
-  const t0 = Date.now(); let nextBig = 20, nextIce = 25, lastArr = 0;
-  A.innerHTML = `<div class="kk-orders"></div><div class="kk-grid"></div><div class="kk-queue"></div>`;
-  const grid = A.querySelector('.kk-grid'), qEl = A.querySelector('.kk-queue'), oEl = A.querySelector('.kk-orders');
-  for (let i = 0; i < W * H; i++) { const c = document.createElement('div'); c.dataset.cell = i; grid.appendChild(c); }
-  api.ctrl.innerHTML = `<button class="gbtn blue" data-c="rot">⟳ DREHEN</button><button class="gbtn red" data-c="trash">🗑 WEG (−3)</button>`;
-  const newItem = () => Math.random() < .08 ? 'gold' : KEYS[rnd(KEYS.length)];
-  const newOrder = () => { if (Math.random() < .15) { const k = ['cheese', 'berry'][rnd(2)]; return [k, k, k]; } const a = shuffle(KEYS.slice()); return [a[0], a[1]]; };
-  const occ = () => { const o = Array.from({ length: H }, () => Array(W).fill(null)); for (const p of placed) for (let y = p.y; y < p.y + p.h; y++) for (let x = p.x; x < p.x + p.w; x++) o[y][x] = p; return o; };
-  const cur = () => { const k = queue[0]; if (!k) return null; const t = IT[k]; return rot ? { w: t.h, h: t.w } : { w: t.w, h: t.h }; };
-  function matchOrder(o) {
-    const pool = placed.slice(), take = []; let missing = 0;
-    for (const k of o) { const i = pool.findIndex(p => p.k === k); if (i >= 0) take.push(pool.splice(i, 1)[0]); else missing++; }
-    if (!missing) return take;
-    if (missing === 1) { const g = pool.find(p => p.k === 'gold'); if (g) return [...take, g]; }
-    return null;
-  }
-  function render() {
-    const now = Date.now();
-    [...grid.children].forEach((c, i) => { if (c.dataset.cell != null) c.className = ice.get(i) > now ? 'ice' : ''; });
-    grid.querySelectorAll('.kk-item').forEach(e => e.remove());
-    for (const p of placed) {
-      const el = document.createElement('div'), c0 = grid.children[p.y * W + p.x], c1 = grid.children[(p.y + p.h - 1) * W + p.x + p.w - 1];
-      el.className = 'kk-item'; el.textContent = IT[p.k].e; el.style.background = IT[p.k].c;
-      el.style.left = c0.offsetLeft + 'px'; el.style.top = c0.offsetTop + 'px';
-      el.style.width = c1.offsetLeft + c1.offsetWidth - c0.offsetLeft + 'px'; el.style.height = c1.offsetTop + c1.offsetHeight - c0.offsetTop + 'px';
-      grid.appendChild(el);
-    }
-    qEl.innerHTML = queue.length ? queue.slice(0, 6).map((k, i) => { const t = IT[k], s = i === 0 && rot ? [t.h, t.w] : [t.w, t.h]; return `<div class="q${i === 0 ? ' next' : ''}" style="width:${s[0] * 20 + 10}px;height:${s[1] * 20 + 10}px;background:${t.c}">${t.e}</div>`; }).join('') + (queue.length > 6 ? `<b style="color:#FFE45C">+${queue.length - 6}</b>` : '')
-      : '<span style="font-weight:700;color:#BFD3EE;font-size:12px">Warte auf die nächste Lieferung …</span>';
-    oEl.innerHTML = orders.map((o, i) => `<div class="kk-order${matchOrder(o) ? ' ready' : ''}" data-order="${i}"><small>BESTELLUNG ${i + 1}</small>${o.map(k => IT[k].e).join(' ')}</div>`).join('');
-    api.info(`Kombo: ${combo} · Wartende Teile: ${queue.length}`);
-  }
-  function deliver(i) {
-    const take = matchOrder(orders[i]);
-    if (!take) { api.float('Da fehlt noch was!', null, 60, true); return; }
-    placed = placed.filter(p => !take.includes(p)); combo++;
-    api.add(orders[i].length * 8 + (combo - 1) * 5, null, 60); orders[i] = newOrder(); render();
-  }
-  function place(cell) {
-    const s = cur(); if (!s) return;
-    const x = cell % W, y = Math.floor(cell / W), o = occ(), now = Date.now();
-    if (x + s.w > W || y + s.h > H) { api.float('Passt nicht!', null, null, true); return; }
-    for (let yy = y; yy < y + s.h; yy++) for (let xx = x; xx < x + s.w; xx++) if (o[yy][xx] || ice.get(yy * W + xx) > now) { api.float(o[yy][xx] ? 'Besetzt!' : 'Vereist! 🧊', null, null, true); return; }
-    placed.push({ id: ++uid, k: queue.shift(), x, y, w: s.w, h: s.h }); rot = false; api.add(1); render();
-  }
-  tick = setInterval(() => {
-    const el = (Date.now() - t0) / 1000;
-    if (el - lastArr >= 4) { lastArr = el; if (queue.length < 8) queue.push(newItem()); }
-    if (el >= nextBig) { nextBig += 20; for (let i = 0; i < 3; i++) { if (queue.length >= 8) { api.add(-2); combo = 0; } else queue.push(newItem()); } api.banner('🛒 Großeinkauf! +3 Teile'); }
-    if (el >= nextIce) {
-      nextIce += 20; const o = occ(), free = [];
-      for (let i = 0; i < W * H; i++) if (!o[Math.floor(i / W)][i % W]) free.push(i);
-      shuffle(free).slice(0, 2).forEach(i => ice.set(i, Date.now() + 8000)); api.banner('🧊 Zwei Fächer sind vereist!');
-    }
-    render();
-  }, 500);
-  queue = [newItem(), newItem(), newItem()]; orders = [newOrder(), newOrder()];
-  setTimeout(render, 20);
-  return {
-    destroy() { clearInterval(tick); },
-    tap(t) { const c = t.closest?.('[data-cell]'); if (c) { place(+c.dataset.cell); return; } const o = t.closest?.('[data-order]'); if (o) deliver(+o.dataset.order); },
-    ctrl(c) {
-      if (c === 'rot') { rot = !rot; render(); }
-      if (c === 'trash' && queue.length) { queue.shift(); rot = false; combo = 0; api.add(-3); render(); }
-    },
-  };
-}
-
-/* ---------- 5) Lichtdieb ---------- */
+/* ---------- 2) Lichtdieb ---------- */
+const lampSVG = `<svg viewBox="0 0 24 24" class="ld-lampic"><circle cx="12" cy="12" r="6" fill="#FFF6B0" stroke="${IK}" stroke-width="2"/><g stroke="#FFE45C" stroke-width="2.4" stroke-linecap="round"><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4 4l2 2M18 18l2 2M4 20l2-2M18 6l2-2"/></g></svg>`;
 function gameLicht(api) {
   const W = 6, H = 8, A = api.area;
-  let crates, gems, ent, exitP, me, lamps, beat, nextT, room = 0, roomGain = 0, clean = true, tick;
-  A.innerHTML = `<div class="gg" style="grid-template-columns:repeat(${W},1fr);grid-template-rows:repeat(${H},1fr)"></div><div class="ld-thief"></div>`;
+  let crates, gems, ent, exitP, me, lamps, beat, nextT, room = 0, roomGain = 0, clean = true, streak = 0, roomStart, path = [], tick, walk;
+  A.classList.add('night');
+  A.innerHTML = `<div class="gg" style="grid-template-columns:repeat(${W},1fr);grid-template-rows:repeat(${H},1fr)"></div><div class="ld-thief">${miniHam('determined')}</div>`;
   const gg = A.querySelector('.gg'), th = A.querySelector('.ld-thief');
   for (let i = 0; i < W * H; i++) { const c = document.createElement('div'); c.dataset.i = i; gg.appendChild(c); }
-  th.innerHTML = miniHam('determined');
   api.ctrl.innerHTML = arrowCtrl();
-  const key = (x, y) => x + ',' + y;
-  function reach() {
-    const seen = new Set([key(ent.x, ent.y)]), q = [[ent.x, ent.y]];
-    while (q.length) { const [x, y] = q.shift(); for (const [dx, dy] of Object.values(DIRS)) { const nx = x + dx, ny = y + dy, k = key(nx, ny); if (nx >= 0 && ny >= 0 && nx < W && ny < H && !crates.has(k) && !seen.has(k)) { seen.add(k); q.push([nx, ny]); } } }
-    return seen;
+  const key = (x, y) => x + ',' + y, inb = (x, y) => x >= 0 && y >= 0 && x < W && y < H;
+  function bfs(from, to) { // kürzester Weg um Kisten herum (für Tippen-zum-Laufen)
+    const prev = new Map([[key(from.x, from.y), null]]), q = [[from.x, from.y]];
+    while (q.length) {
+      const [x, y] = q.shift(); if (to && x === to.x && y === to.y) break;
+      for (const [d, [dx, dy]] of Object.entries(DIRS)) { const nx = x + dx, ny = y + dy, k = key(nx, ny); if (inb(nx, ny) && !crates.has(k) && !prev.has(k)) { prev.set(k, [x, y, d]); q.push([nx, ny]); } }
+    }
+    if (!to) return prev;
+    if (!prev.has(key(to.x, to.y))) return null;
+    const p = []; let k = key(to.x, to.y);
+    while (prev.get(k)) { const [px, py, d] = prev.get(k); p.unshift(d); k = key(px, py); }
+    return p;
   }
-  const center = l => l.axis === 'x' ? [l.pos, l.line] : [l.line, l.pos];
-  const span = l => l.axis === 'x' ? W : H;
-  function advance(l) { const n = { ...l }; let p = n.pos + n.dir; if (p < 0 || p >= span(n)) { n.dir *= -1; p = n.pos + n.dir; } n.pos = p; return n; }
-  function litSet(ls) {
-    const s = new Set();
-    for (const l of ls) { const [cx, cy] = center(l); for (const [dx, dy] of [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]]) { const x = cx + dx, y = cy + dy; if (x >= 0 && y >= 0 && x < W && y < H && !crates.has(key(x, y))) s.add(key(x, y)); } }
-    s.delete(key(ent.x, ent.y)); return s;
+  // Scheinwerfer: Reihe/Spalte abfahren oder als „Blinker“ zwischen + und × wechseln
+  function lampCells(l) {
+    const out = [];
+    if (l.type === 'blink') {
+      const pts = l.phase ? [[0, 0], [1, 1], [-1, -1], [1, -1], [-1, 1]] : [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1], [2, 0], [-2, 0], [0, 2], [0, -2]];
+      for (const [dx, dy] of pts) out.push([l.x + dx, l.y + dy]);
+    } else {
+      const [cx, cy] = l.type === 'row' ? [l.pos, l.line] : [l.line, l.pos];
+      for (const [dx, dy] of [[0, 0], [1, 0], [-1, 0], [0, 1], [0, -1]]) out.push([cx + dx, cy + dy]);
+    }
+    return out.filter(([x, y]) => inb(x, y) && !crates.has(key(x, y)));
   }
+  const lampCenter = l => l.type === 'blink' ? [l.x, l.y] : l.type === 'row' ? [l.pos, l.line] : [l.line, l.pos];
+  function advance(l) {
+    const n = { ...l };
+    if (n.type === 'blink') { n.phase ^= 1; return n; }
+    const span = n.type === 'row' ? W : H; let p = n.pos + n.dir;
+    if (p < 0 || p >= span) { n.dir *= -1; p = n.pos + n.dir; }
+    n.pos = p; return n;
+  }
+  function litSet(ls) { const s = new Set(); for (const l of ls) for (const [x, y] of lampCells(l)) s.add(key(x, y)); s.delete(key(ent.x, ent.y)); return s; }
   function newRoom() {
     room++; ent = { x: 0, y: H - 1 }; exitP = { x: W - 1, y: 0 };
     do {
       crates = new Set();
-      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (Math.random() < .16 && !(x === ent.x && y === ent.y) && !(x === exitP.x && y === exitP.y)) crates.add(key(x, y));
-    } while (!reach().has(key(exitP.x, exitP.y)));
-    gems = new Set(shuffle([...reach()].filter(k => k !== key(ent.x, ent.y) && k !== key(exitP.x, exitP.y))).slice(0, 3));
-    lamps = [{ axis: 'x', line: 2 + rnd(H - 4), pos: rnd(W), dir: 1 }, { axis: 'y', line: 1 + rnd(W - 2), pos: rnd(H - 2), dir: 1 }];
-    if (room >= 3) lamps.push({ axis: 'x', line: 1 + rnd(H - 3), pos: rnd(W), dir: -1 });
-    beat = Math.max(650, 1300 - room * 90); nextT = Date.now() + beat;
-    me = { ...ent }; roomGain = 0; clean = true; api.banner(`💎 Raum ${room}`); render();
+      for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (Math.random() < .17 && !(x <= 1 && y >= H - 2) && !(x === exitP.x && y === exitP.y)) crates.add(key(x, y));
+    } while (!bfs(ent, exitP));
+    const reach = [...bfs(ent).keys()].filter(k => k !== key(ent.x, ent.y) && k !== key(exitP.x, exitP.y));
+    gems = new Set(shuffle(reach).slice(0, room >= 3 ? 4 : 3));
+    lamps = [{ type: 'row', line: 2 + rnd(H - 4), pos: rnd(W), dir: 1 }, { type: 'col', line: 1 + rnd(W - 2), pos: rnd(H - 2), dir: 1 }];
+    if (room >= 2) lamps.push({ type: 'blink', x: 1 + rnd(W - 2), y: 1 + rnd(H - 3), phase: 0 });
+    if (room >= 4) lamps.push({ type: 'row', line: 1 + rnd(H - 3), pos: rnd(W), dir: -1 });
+    beat = Math.max(600, 1250 - room * 80); nextT = Date.now() + beat;
+    me = { ...ent }; roomGain = 0; clean = true; path = []; roomStart = Date.now();
+    api.banner(`💎 Raum ${room}${room === 2 ? '<br><small>Neu: Blink-Scheinwerfer!</small>' : ''}`); render();
   }
   function render() {
     const lit = litSet(lamps), warn = Date.now() > nextT - beat * .45 ? litSet(lamps.map(advance)) : new Set();
+    const centers = new Set(lamps.map(l => key(...lampCenter(l)))), target = path.length ? null : null;
     for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
-      const k = key(x, y), el = gg.children[y * W + x], isExit = x === exitP.x && y === exitP.y;
-      const cls = 'ld-cell' + (crates.has(k) ? ' crate' : isExit ? ' exit' : lit.has(k) ? ' lit' : '') + (warn.has(k) && !lit.has(k) && !crates.has(k) ? ' warn' : '');
-      const html = gems.has(k) ? gemSVG : isExit ? '🚪' : (x === ent.x && y === ent.y ? '🏠' : '');
+      const k = key(x, y), el = gg.children[y * W + x], isExit = x === exitP.x && y === exitP.y, isEnt = x === ent.x && y === ent.y;
+      const cls = 'ld-cell' + ((x + y) % 2 ? ' alt' : '') + (crates.has(k) ? ' crate' : isExit ? ' exit' : isEnt ? ' ent' : lit.has(k) ? ' lit' : '') + (warn.has(k) && !lit.has(k) && !crates.has(k) ? ' warn' : '');
+      const html = gems.has(k) ? gemSVG : isExit ? '🚪' : isEnt ? '🏠' : centers.has(k) && !crates.has(k) ? lampSVG : '';
       if (el.className !== cls) el.className = cls;
       if (el.dataset.h !== html) { el.dataset.h = html; el.innerHTML = html; }
     }
     placeOnCell(th, gg.children[me.y * W + me.x], gg);
-    api.info(`Raum ${room} · 💎 hier: ${roomGain / 5} · ${clean ? '🤫 unentdeckt' : '🚨 entdeckt'}`);
+    const left = gems.size;
+    api.info(`Raum ${room} · 💎 ${roomGain / 5} geklaut${left ? ` (${left} übrig)` : ''} · ${clean ? '🤫 unentdeckt' : '🚨 entdeckt'}${streak ? ` · 🔥 ${streak}` : ''}`);
   }
   function check() {
-    if (!litSet(lamps).has(key(me.x, me.y))) return;
-    const loss = Math.ceil(roomGain / 10) * 5; roomGain -= loss; clean = false;
+    if (!litSet(lamps).has(key(me.x, me.y))) return false;
+    const loss = Math.ceil(roomGain / 10) * 5; roomGain -= loss; clean = false; path = [];
     if (loss) api.add(-loss); api.float('🚨 Entdeckt!', null, null, true);
+    A.classList.remove('alarm'); void A.offsetWidth; A.classList.add('alarm'); navigator.vibrate?.(200);
     th.classList.remove('caught'); void th.offsetWidth; th.classList.add('caught');
-    me = { ...ent }; render();
+    me = { ...ent }; render(); return true;
   }
   function move(d) {
     const nx = me.x + DIRS[d][0], ny = me.y + DIRS[d][1], k = key(nx, ny);
-    if (nx < 0 || ny < 0 || nx >= W || ny >= H || crates.has(k)) return;
+    if (!inb(nx, ny) || crates.has(k)) { path = []; return; }
     me = { x: nx, y: ny };
     if (gems.has(k)) { gems.delete(k); roomGain += 5; api.add(5); }
-    if (nx === exitP.x && ny === exitP.y) { api.add(20 + (clean ? 15 : 0)); if (clean) setTimeout(() => api.float('🤫 Unentdeckt-Bonus!'), 300); newRoom(); return; }
+    if (nx === exitP.x && ny === exitP.y) {
+      const fast = Date.now() - roomStart < 20000;
+      streak = clean ? streak + 1 : 0;
+      api.add(20 + (clean ? 5 + 10 * streak : 0) + (fast ? 10 : 0));
+      setTimeout(() => api.float(clean ? `🤫 Unentdeckt ×${streak}!` : '🚪 Geschafft!'), 250);
+      if (fast) setTimeout(() => api.float('⚡ Schnell! +10'), 650);
+      newRoom(); return;
+    }
     render(); check();
   }
   newRoom();
-  tick = setInterval(() => { if (Date.now() >= nextT) { lamps = lamps.map(advance); nextT = Date.now() + beat; render(); check(); } else render(); }, 120);
+  tick = setInterval(() => { if (Date.now() >= nextT) { lamps = lamps.map(advance); nextT = Date.now() + beat; render(); check(); } else render(); }, 110);
+  walk = setInterval(() => { if (path.length) move(path.shift()); }, 210);
+  const stepCtl = d => { path = []; move(d); };
   return {
-    destroy() { clearInterval(tick); },
-    swipe: move, ctrl: move,
-    tap(t) {
+    destroy() { clearInterval(tick); clearInterval(walk); A.classList.remove('night', 'alarm'); },
+    swipe: stepCtl, ctrl: stepCtl,
+    tap(t) { // Feld antippen = automatisch hinlaufen (nochmal tippen zum Anhalten)
       const c = t.closest?.('[data-i]'); if (!c) return;
-      const i = +c.dataset.i, dx = i % W - me.x, dy = Math.floor(i / W) - me.y;
-      if (Math.abs(dx) + Math.abs(dy) === 1) move(dx === 1 ? 'r' : dx === -1 ? 'l' : dy === 1 ? 'd' : 'u');
+      const i = +c.dataset.i, to = { x: i % W, y: Math.floor(i / W) };
+      if (path.length || (to.x === me.x && to.y === me.y)) { path = []; if (to.x === me.x && to.y === me.y) return; }
+      path = bfs(me, to) || [];
     },
   };
 }
@@ -2769,6 +2756,8 @@ function openSettings() {
     <label class="fl">🔔 ERINNERUNGEN</label>
     <div class="row">${state.notifyOn ? '<button class="gbtn gray sm" data-notifoff>AUSSCHALTEN</button>' : '<button class="gbtn gold sm" data-notifon>AKTIVIEREN</button>'}<button class="gbtn blue sm" data-notiftest>TEST-POPUP</button></div>
     <div class="muted" style="opacity:1;font-weight:600;line-height:1.4;margin-top:4px">Uhrzeiten stellst du im Wochenplan (Training → Tag antippen) ein. Hinweis: Die Popups kommen zuverlässig, solange die App geöffnet ist oder im Hintergrund läuft. Ist sie komplett geschlossen, kann der Browser sie verzögern oder auslassen.</div>
+    <label class="fl">⏱ SATZPAUSE IN DEN BENACHRICHTIGUNGEN</label>
+    <div class="row"><button class="gbtn ${state.restCfg.notify !== false ? '' : 'gray'} sm" data-restnote>${state.restCfg.notify !== false ? 'AN – Timer in der Leiste + Meldung am Ende' : 'AUS'}</button></div>
     <label class="fl">APP</label>
     ${installEvt ? '<button class="gbtn wide sm" data-install>📲 ALS APP INSTALLIEREN</button>' : `<div class="muted" style="opacity:1;font-weight:600;line-height:1.4">${matchMedia('(display-mode: standalone)').matches ? '✅ Läuft als installierte App – funktioniert auch offline.' : 'Installieren: Android/Chrome → Menü ⋮ → „App installieren“. iPhone/Safari → Teilen → „Zum Home-Bildschirm“.'}</div>`}
     <label class="fl">DATEN</label>
@@ -2779,6 +2768,11 @@ function openSettings() {
     <button class="gbtn red wide sm" data-reset style="margin-top:14px">FORTSCHRITT LÖSCHEN</button>
     <button class="gbtn gray wide" data-x style="margin-top:10px">SCHLIESSEN</button>`, mc => {
     mc.querySelector('[data-x]').onclick = closeModal;
+    mc.querySelector('[data-restnote]').onclick = async () => {
+      const on = state.restCfg.notify === false;
+      if (on && notifSupported() && Notification.permission !== 'granted') { const p = await Notification.requestPermission(); if (p !== 'granted') return toast('Benachrichtigungen sind im Browser nicht erlaubt.'); }
+      state.restCfg.notify = on; save(true); closeModal(); openSettings();
+    };
     mc.querySelector('[data-notifon]')?.addEventListener('click', async () => { if (await enableNotifications()) { closeModal(); openSettings(); } });
     mc.querySelector('[data-notifoff]')?.addEventListener('click', () => { state.notifyOn = false; save(true); syncReminderCache(); closeModal(); openSettings(); toast('🔕 Erinnerungen aus'); });
     mc.querySelector('[data-notiftest]').onclick = async () => {
@@ -2832,6 +2826,7 @@ $('#btnSettings').onclick = openSettings;
 $('#btnProfile').onclick = openSettings;
 $('#btnCoins').onclick = coinsInfo;
 $('#btnEnergy').onclick = () => openScreen('boosts');
+$('#btnXp').onclick = () => openScreen('upgrades');
 $$('[data-nav]').forEach(b => b.onclick = () => openScreen(b.dataset.nav));
 $$('[data-close]').forEach(b => b.onclick = closeScreen);
 $('#stageRow').addEventListener('click', e => { const s = e.target.closest('[data-stage]'); if (s) openStage(+s.dataset.stage); });
@@ -2847,6 +2842,7 @@ function migrate(s) {
   const d = defaultState();
   const out = { ...d, ...s, stats: { ...d.stats, ...s.stats }, upgrades: { ...d.upgrades, ...s.upgrades }, equipped: { ...d.equipped, ...s.equipped }, config: d.config }; // eigene XP-Werte gibt es nicht mehr
   if (out.session && !out.session.realStart) out.session.realStart = Date.now();
+  if (out.xpBank == null) out.xpBank = out.totalXp || 0; // bisher gesammelte XP stehen zum Ausgeben bereit
   return out;
 }
 let lastDay = '';
@@ -2865,7 +2861,7 @@ function iconMode(size) {
 function boot() {
   const iconSize = new URLSearchParams(location.search).get('icon');
   if (iconSize) { iconMode(+iconSize || 512); return; }
-  $('#icoBolt').innerHTML = ICONS.bolt; $('#icoCoin').innerHTML = ICONS.coin; $('#btnSettings').innerHTML = ICONS.gear;
+  $('#icoBolt').innerHTML = ICONS.bolt; $('#icoCoin').innerHTML = ICONS.coin; $('#icoStar').innerHTML = ICONS.star; $('#btnSettings').innerHTML = ICONS.gear;
   $('#icoDumbbell').innerHTML = ICONS.dumbbell; $('#icoBoltHint').innerHTML = ICONS.bolt;
   $$('[data-ico]').forEach(el => el.outerHTML = ICONS[el.dataset.ico]);
   const loaded = Store.load();
